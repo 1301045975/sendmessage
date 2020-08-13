@@ -152,34 +152,34 @@
               <label for>房源特色</label>
               <div>
                 <el-checkbox-group v-model="checkListHouseFeature">
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="必看好房">必看好房</el-checkbox>
-                    <el-checkbox label="满五年">满五年</el-checkbox>
-                    <el-checkbox label="满两年">满两年</el-checkbox>
-                    <el-checkbox label="近地铁">近地铁</el-checkbox>
+                  <span style="display:inline-block; margin:8px 20px">
+                    <el-checkbox label="必看好房" style="width:80px;">必看好房</el-checkbox>
+                    <el-checkbox label="满五年" style="width:80px;">满五年</el-checkbox>
+                    <el-checkbox label="满两年" style="width:80px;">满两年</el-checkbox>
+                    <el-checkbox label="近地铁" style="width:80px;">近地铁</el-checkbox>
                   </span>
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="VR房源">VR房源</el-checkbox>
-                    <el-checkbox label="VR看装修">VR看装修</el-checkbox>
-                    <el-checkbox label="7日新上">7日新上</el-checkbox>
-                    <el-checkbox label="随时看房">随时看房</el-checkbox>
+                  <span style="display:inline-block; margin:8px 20px">
+                    <el-checkbox label="VR房源" style="width:80px;">VR房源</el-checkbox>
+                    <el-checkbox label="VR看装修" style="width:80px;">VR看装修</el-checkbox>
+                    <el-checkbox label="7日新上" style="width:80px;">7日新上</el-checkbox>
+                    <el-checkbox label="随时看房" style="width:80px;">随时看房</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
               <label for>朝向</label>
               <div>
                 <el-checkbox-group v-model="checkList">
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 A">复选框 A</el-checkbox>
-                    <el-checkbox label="复选框 B">复选框 B</el-checkbox>
-                    <el-checkbox label="复选框 C">复选框 C</el-checkbox>
-                    <el-checkbox label="复选框 D">复选框 D</el-checkbox>
+                  <span style="display:inline-block; margin:8px 20px">
+                    <el-checkbox label="复选框 A" style="width:80px;">复选框 A</el-checkbox>
+                    <el-checkbox label="复选框 B" style="width:80px;">复选框 B</el-checkbox>
+                    <el-checkbox label="复选框 C" style="width:80px;">复选框 C</el-checkbox>
+                    <el-checkbox label="复选框 D" style="width:80px;">复选框 D</el-checkbox>
                   </span>
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 E">复选框 E</el-checkbox>
-                    <el-checkbox label="复选框 F">复选框 F</el-checkbox>
-                    <el-checkbox label="复选框 G">复选框 G</el-checkbox>
-                    <el-checkbox label="复选框 H">复选框 H</el-checkbox>
+                  <span style="display:inline-block; margin:8px 20px">
+                    <el-checkbox label="复选框 E" style="width:80px;">复选框 E</el-checkbox>
+                    <el-checkbox label="复选框 F" style="width:80px;">复选框 F</el-checkbox>
+                    <el-checkbox label="复选框 G" style="width:80px;">复选框 G</el-checkbox>
+                    <el-checkbox label="复选框 H" style="width:80px;">复选框 H</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
@@ -187,16 +187,16 @@
               <div>
                 <el-checkbox-group v-model="checkList">
                   <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 A">复选框 A</el-checkbox>
-                    <el-checkbox label="复选框 B">复选框 B</el-checkbox>
-                    <el-checkbox label="复选框 C">复选框 C</el-checkbox>
-                    <el-checkbox label="复选框 D">复选框 D</el-checkbox>
+                    <el-checkbox label="复选框 A" style="width:80px;">复选框 A</el-checkbox>
+                    <el-checkbox label="复选框 B" style="width:80px;">复选框 B</el-checkbox>
+                    <el-checkbox label="复选框 C" style="width:80px;">复选框 C</el-checkbox>
+                    <el-checkbox label="复选框 D" style="width:80px;">复选框 D</el-checkbox>
                   </span>
                   <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 E">复选框 E</el-checkbox>
-                    <el-checkbox label="复选框 F">复选框 F</el-checkbox>
-                    <el-checkbox label="复选框 G">复选框 G</el-checkbox>
-                    <el-checkbox label="复选框 H">复选框 H</el-checkbox>
+                    <el-checkbox label="复选框 E" style="width:80px;">复选框 E</el-checkbox>
+                    <el-checkbox label="复选框 F" style="width:80px;">复选框 F</el-checkbox>
+                    <el-checkbox label="复选框 G" style="width:80px;">复选框 G</el-checkbox>
+                    <el-checkbox label="复选框 H" style="width:80px;">复选框 H</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
@@ -204,16 +204,16 @@
               <div>
                 <el-checkbox-group v-model="checkList">
                   <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 A">复选框 A</el-checkbox>
-                    <el-checkbox label="复选框 B">复选框 B</el-checkbox>
-                    <el-checkbox label="复选框 C">复选框 C</el-checkbox>
-                    <el-checkbox label="复选框 D">复选框 D</el-checkbox>
+                    <el-checkbox label="复选框 A" style="width:80px;">复选框 A</el-checkbox>
+                    <el-checkbox label="复选框 B" style="width:80px;">复选框 B</el-checkbox>
+                    <el-checkbox label="复选框 C" style="width:80px;">复选框 C</el-checkbox>
+                    <el-checkbox label="复选框 D" style="width:80px;">复选框 D</el-checkbox>
                   </span>
                   <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 E">复选框 E</el-checkbox>
-                    <el-checkbox label="复选框 F">复选框 F</el-checkbox>
-                    <el-checkbox label="复选框 G">复选框 G</el-checkbox>
-                    <el-checkbox label="复选框 H">复选框 H</el-checkbox>
+                    <el-checkbox label="复选框 E" style="width:80px;">复选框 E</el-checkbox>
+                    <el-checkbox label="复选框 F" style="width:80px;">复选框 F</el-checkbox>
+                    <el-checkbox label="复选框 G" style="width:80px;">复选框 G</el-checkbox>
+                    <el-checkbox label="复选框 H" style="width:80px;">复选框 H</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
