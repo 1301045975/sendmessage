@@ -92,6 +92,7 @@ export default {
   padding: 5px;
   border-radius: 2px;
   background-color: white;
+  text-align: center;
 }
 #logo {
   background-color: white;

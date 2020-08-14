@@ -44,7 +44,7 @@
             </div>
             <div>
               <el-row :gutter="20" style="margin-left:10px">
-                <el-col :span="4">
+                <el-col :span="4" style="padding-left:3px">
                   <el-button size="medium">重置</el-button>
                 </el-col>
                 <el-col :span="4" :offset="8">
@@ -313,6 +313,7 @@ export default {
   // height: 40px;
   padding: 5px;
   background-color: white;
+  text-align: center;
 }
 #logo {
   background-color: white;

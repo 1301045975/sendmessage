@@ -96,6 +96,7 @@ export default {
       showEstate: false,
       posCity: "成都市",
       input: "",
+      height: "950px",
       zoneGeoPoints: [
         {
           lng: 104.08956175659785,
@@ -170,6 +171,14 @@ export default {
       ]
     };
   },
+  created() {
+    this.height = window.innerWidth + "px";
+    console.log(this.height);
+  },
+  mounted() {
+    this.height = window.innerWidth + "px";
+    console.log(this.height);
+  },
   methods: {
     handler({ BMap, map }) {
       // lng, lat 表示你要设置的经纬度
@@ -229,16 +238,16 @@ export default {
 
 <style lang="scss">
 #bm-view {
-  height: 850px;
+  height: 950px;
 }
 #map-header-wrapper {
   position: fixed;
-  top: 100px;
+  top: 40px;
   left: 50px;
 }
 #map-filter-wrapper {
   position: fixed;
-  top: 100px;
-  left: 550px;
+  top: 40px;
+  left: 500px;
 }
 </style>
