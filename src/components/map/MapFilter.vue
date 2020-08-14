@@ -4,7 +4,7 @@
       <el-col :span="6">
         <el-popover placement="top-start" title="" width="500" trigger="hover" content="这是价格过滤器">
           <div>
-            <label for="">价格（万）</label>
+            <label for=""><strong>价格（万）</strong></label>
             <div>
               <el-checkbox-group v-model="checkListPrice">
                 <span style="display:inline-block; margin:20px 20px">
@@ -13,7 +13,7 @@
                   <el-checkbox label="60-80" style="width:80px;">60-80</el-checkbox>
                   <el-checkbox label="80-100" style="width:80px;">80-100</el-checkbox>
                 </span>
-                <span style="display:inline-block; margin:20px 20px">
+                <span style="display:inline-block; margin:10px 20px">
                   <el-checkbox label="100-150" style="width:80px;">100-150</el-checkbox>
                   <el-checkbox label="150-200" style="width:80px;">150-200</el-checkbox>
                   <el-checkbox label="200-300" style="width:80px;">200-300</el-checkbox>
@@ -21,7 +21,7 @@
                 </span>
               </el-checkbox-group>
             </div>
-            <div style="margin-top:20px">
+            <div style="margin-top:10px">
               <el-divider></el-divider>
               <el-form :inline="true" :model="formPrice">
                 <el-form-item label>
@@ -65,7 +65,7 @@
       <el-col :span="6">
         <el-popover placement="top-start" title="" width="500" trigger="hover" content="这是房型过滤器。">
           <div>
-            <label for="">房型</label>
+            <label for=""><strong>房型</strong></label>
             <div>
               <el-checkbox-group v-model="checkListHouseType">
                 <span style="display:block; margin:20px 20px">
@@ -102,7 +102,7 @@
       <el-col :span="6">
         <el-popover placement="top-start" title="" width="500" trigger="hover" content="这是面积过滤器。">
           <div>
-            <label for="">面积</label>
+            <label for=""><strong>面积</strong></label>
             <div>
               <el-checkbox-group v-model="checkListArea">
                 <span style="display:block; margin:20px 20px">
@@ -149,16 +149,16 @@
         >
           <div style="height:400px;">
             <el-scrollbar style="height:100%">
-              <label for>房源特色</label>
-              <div>
+              <label for><strong>房源特色</strong></label>
+              <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkListHouseFeature">
-                  <span style="display:inline-block; margin:8px 20px">
+                  <span style="display:inline-block; margin:10px 20px">
                     <el-checkbox label="必看好房" style="width:80px;">必看好房</el-checkbox>
                     <el-checkbox label="满五年" style="width:80px;">满五年</el-checkbox>
                     <el-checkbox label="满两年" style="width:80px;">满两年</el-checkbox>
                     <el-checkbox label="近地铁" style="width:80px;">近地铁</el-checkbox>
                   </span>
-                  <span style="display:inline-block; margin:8px 20px">
+                  <span style="display:inline-block; margin:10px 20px">
                     <el-checkbox label="VR房源" style="width:80px;">VR房源</el-checkbox>
                     <el-checkbox label="VR看装修" style="width:80px;">VR看装修</el-checkbox>
                     <el-checkbox label="7日新上" style="width:80px;">7日新上</el-checkbox>
@@ -166,59 +166,70 @@
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for>朝向</label>
-              <div>
-                <el-checkbox-group v-model="checkList">
-                  <span style="display:inline-block; margin:8px 20px">
-                    <el-checkbox label="复选框 A" style="width:80px;">复选框 A</el-checkbox>
-                    <el-checkbox label="复选框 B" style="width:80px;">复选框 B</el-checkbox>
-                    <el-checkbox label="复选框 C" style="width:80px;">复选框 C</el-checkbox>
-                    <el-checkbox label="复选框 D" style="width:80px;">复选框 D</el-checkbox>
+              <label for><strong>朝向</strong></label>
+              <div style="margin-bottom:10px;padding:10px 0">
+                <el-checkbox-group v-model="checkListHouseDirection">
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="南北" style="width:80px;">南北</el-checkbox>
+                    <el-checkbox label="朝南" style="width:80px;">朝南</el-checkbox>
+                    <el-checkbox label="朝东" style="width:80px;">朝东</el-checkbox>
+                    <el-checkbox label="朝北" style="width:80px;">朝北</el-checkbox>
                   </span>
-                  <span style="display:inline-block; margin:8px 20px">
-                    <el-checkbox label="复选框 E" style="width:80px;">复选框 E</el-checkbox>
-                    <el-checkbox label="复选框 F" style="width:80px;">复选框 F</el-checkbox>
-                    <el-checkbox label="复选框 G" style="width:80px;">复选框 G</el-checkbox>
-                    <el-checkbox label="复选框 H" style="width:80px;">复选框 H</el-checkbox>
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="朝西" style="width:80px;">朝西</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for>楼层</label>
-              <div>
-                <el-checkbox-group v-model="checkList">
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 A" style="width:80px;">复选框 A</el-checkbox>
-                    <el-checkbox label="复选框 B" style="width:80px;">复选框 B</el-checkbox>
-                    <el-checkbox label="复选框 C" style="width:80px;">复选框 C</el-checkbox>
-                    <el-checkbox label="复选框 D" style="width:80px;">复选框 D</el-checkbox>
-                  </span>
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 E" style="width:80px;">复选框 E</el-checkbox>
-                    <el-checkbox label="复选框 F" style="width:80px;">复选框 F</el-checkbox>
-                    <el-checkbox label="复选框 G" style="width:80px;">复选框 G</el-checkbox>
-                    <el-checkbox label="复选框 H" style="width:80px;">复选框 H</el-checkbox>
+              <label for><strong>楼层</strong></label>
+              <div style="margin-bottom:10px;padding:10px 0">
+                <el-checkbox-group v-model="checkListHouseFloor">
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="低楼层" style="width:80px;">低楼层</el-checkbox>
+                    <el-checkbox label="中楼层" style="width:80px;">中楼层</el-checkbox>
+                    <el-checkbox label="高楼层" style="width:80px;">高楼层</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for>楼龄</label>
-              <div>
+              <label for><strong>楼龄</strong></label>
+              <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkList">
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 A" style="width:80px;">复选框 A</el-checkbox>
-                    <el-checkbox label="复选框 B" style="width:80px;">复选框 B</el-checkbox>
-                    <el-checkbox label="复选框 C" style="width:80px;">复选框 C</el-checkbox>
-                    <el-checkbox label="复选框 D" style="width:80px;">复选框 D</el-checkbox>
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="5年以内" style="width:80px;">5年以内</el-checkbox>
+                    <el-checkbox label="10年以内" style="width:80px;">10年以内</el-checkbox>
+                    <el-checkbox label="15年以内" style="width:80px;">15年以内</el-checkbox>
+                    <el-checkbox label="20年以内" style="width:80px;">20年以内</el-checkbox>
                   </span>
-                  <span style="display:inline-block; margin:20px 20px">
-                    <el-checkbox label="复选框 E" style="width:80px;">复选框 E</el-checkbox>
-                    <el-checkbox label="复选框 F" style="width:80px;">复选框 F</el-checkbox>
-                    <el-checkbox label="复选框 G" style="width:80px;">复选框 G</el-checkbox>
-                    <el-checkbox label="复选框 H" style="width:80px;">复选框 H</el-checkbox>
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="20年以上" style="width:80px;">20年以上</el-checkbox>
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for>用途</label>
-              <div style="margin:20px">
+              <label for><strong>用途</strong></label>
+              <div style="margin-bottom:10px;padding:10px 0">
+                <el-checkbox-group v-model="checkListHousePurpose">
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="普通住宅" style="width:80px;">普通住宅</el-checkbox>
+                    <el-checkbox label="商业类" style="width:80px;">商业类</el-checkbox>
+                    <el-checkbox label="别墅" style="width:80px;">别墅</el-checkbox>
+                    <el-checkbox label="四合院" style="width:80px;">四合院</el-checkbox>
+                  </span>
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="车位" style="width:80px;">车位</el-checkbox>
+                    <el-checkbox label="其他" style="width:80px;">其他</el-checkbox>
+                  </span>
+                </el-checkbox-group>
+              </div>
+              <label for><strong>电梯</strong></label>
+              <div style="margin-bottom:10px;padding:10px 0">
+                <el-checkbox-group v-model="checkListHouseElevator">
+                  <span style="display:inline-block; margin:10px 20px">
+                    <el-checkbox label="有电梯" style="width:80px;">有电梯</el-checkbox>
+                    <el-checkbox label="无电梯" style="width:80px;">无电梯</el-checkbox>
+                  </span>
+                </el-checkbox-group>
+              </div>
+            </el-scrollbar>
+            <div style="margin:20px">
                 <el-row :gutter="20" style="margin-left:10px">
                   <el-col :span="4">
                     <el-button size="medium">重置</el-button>
@@ -231,7 +242,6 @@
                   </el-col>
                 </el-row>
               </div>
-            </el-scrollbar>
           </div>
           <el-button type="text" slot="reference">
             更多
@@ -262,6 +272,7 @@ export default {
       checkListHouseFloor: [],
       checkListHouseAge: [],
       checkListHousePurpose: [],
+      checkListHouseElevator: [],
       // checkList: ["复选框 A", "复选框E"],
       // checkList: ["复选框 A", "复选框E"],
       formPrice: {

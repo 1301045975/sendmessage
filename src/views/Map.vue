@@ -68,11 +68,11 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import connect from "../connect.js";
-import ZoneOverlay from "@/components/ZoneOverlay.vue";
-import EstateOverlay from "@/components/EstateOverlay.vue";
+import ZoneOverlay from "@/components/map/ZoneOverlay.vue";
+import EstateOverlay from "@/components/map/EstateOverlay.vue";
 import BmBoundary from "vue-baidu-map/components/others/Boundary";
-import MapHeader from "@/components/MapHeader.vue";
-import MapFilter from "@/components/MapFilter.vue";
+import MapHeader from "@/components/map/MapHeader.vue";
+import MapFilter from "@/components//map/MapFilter.vue";
 
 export default {
   name: "Map",

@@ -4,7 +4,7 @@
       <el-col :span="6">
         <el-popover placement="top-start" title="" width="400" trigger="click" content="热门城市">
           <div>
-            <label for="">热门城市</label>
+            <label for=""><strong>热门城市</strong></label>
             <span style="display:block; margin:10px 0">
               <el-button type="text" slot="reference" style="margin: 10px 20px">北京</el-button>
               <el-button type="text" slot="reference" style="margin: 10px 20px">上海</el-button>
