@@ -2,7 +2,7 @@
   <div class="cfooter">
     <div style="width: 60%;margin: 0 auto">
       <el-row style="color: #fff;line-height: 80px">
-        <span>关于军军</span>
+        <span @click="gotoAboutPage">关于军军</span>
         <span>联系我们</span>
         <span>加入我们</span>
         <span>隐私声明</span>
@@ -23,7 +23,12 @@
 
 <script>
 export default {
-  name: "MyFooter"
+  name: "MyFooter",
+  methods: {
+    gotoAboutPage() {
+      this.$router.push("/about");
+    }
+  }
 };
 </script>
 

@@ -14,9 +14,6 @@
             </span>
           </el-col>
           <el-col :span="1" :offset="2" style="cursor: pointer">
-            <span @click="send('/newHouse')">新房</span>
-          </el-col>
-          <el-col :span="1" style="cursor: pointer">
             <span @click="send('/oldHouse')">二手房</span>
           </el-col>
           <el-col :span="1" style="cursor: pointer">
@@ -35,7 +32,8 @@
             <span @click="send('/tool')">工具</span>
           </el-col>
           <el-col :span="2" style="cursor: pointer">
-            <span @click="send('/publish')">发布房源</span>
+            <span @click="gotoMapPage">地图找房</span>
+            <!-- <span><router-link to="/map">地图找房</router-link></span> -->
           </el-col>
         </el-row>
       </el-header>
@@ -51,10 +49,6 @@
               style="color:#fff;cursor:pointer;padding-left:20px;"
               @click="searchType('oldHouse')"
             >找二手房</span>
-            <span
-              style="color:#fff;cursor:pointer;padding-left:20px;"
-              @click="searchType('newHouse')"
-            >找新房</span>
             <span
               style="color:#fff;cursor:pointer;padding-left:20px;"
               @click="searchType('rentHouse')"
@@ -292,6 +286,9 @@ export default {
     },
     searchHouse() {
       this.$router.push("/" + this.houseType + "/" + this.searchContent);
+    },
+    gotoMapPage() {
+      this.$router.push("/map");
     }
   }
 };
