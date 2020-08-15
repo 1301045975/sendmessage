@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/home/Index.vue";
 
 Vue.use(VueRouter);
 
@@ -17,12 +17,12 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import(/* webpackChunkName: "about" */ "../views/about/Index.vue")
   },
   {
     path: "/map",
     name: "Map",
-    component: () => import("../views/Map.vue")
+    component: () => import("../views/map/Index.vue")
   }
 ];
 
