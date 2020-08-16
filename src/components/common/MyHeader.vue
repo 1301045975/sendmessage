@@ -19,7 +19,7 @@
           <el-menu-item index="/publish">发布房源</el-menu-item>
           <el-menu-item index="/tool">工具</el-menu-item>
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
-
+          <el-menu-item @click="toggleLoginDialog">登录/注册</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
           <el-menu-item @click="center" style="float: right" v-show="logoutFlag">个人中心</el-menu-item>
           <!--<el-submenu index="person" style="float: right" v-show="logoutFlag">
@@ -28,13 +28,14 @@
                   <el-menu-item @click="center">最近联系</el-menu-item>
                   <el-menu-item @click="center">浏览记录</el-menu-item>
           </el-submenu>-->
-          <el-menu-item @click="center" style="float: right">{{loginOrRegis}}</el-menu-item>
+          <!-- <el-menu-item @click="center" style="float: right">{{loginOrRegis}}</el-menu-item> -->
           <!--            <el-menu-item index="10" style="float: right">注册</el-menu-item>-->
         </el-menu>
         <!-- </el-col>
 
         </el-row>-->
       </el-header>
+      <div><login-dialog ref="loginDialog"></login-dialog></div>
     </el-container>
   </div>
 </template>
@@ -43,8 +44,12 @@
 import store from "@/store";
 import { getToken } from "@/utils/auth"; // 验权
 import { mapGetters } from "vuex";
+import loginDialog from "@/components/login/loginDialog"
 export default {
   name: "MyHeader",
+  components:{
+    loginDialog
+  },
   computed: {
     ...mapGetters(["name"])
   },
@@ -54,7 +59,7 @@ export default {
       activeIndex2: "1",
       input: "",
       loginOrRegis: "登录注册",
-      logoutFlag: false
+      logoutFlag: false,
     };
   },
   created() {
@@ -93,6 +98,9 @@ export default {
     },
     download() {
       window.open("https://www.lianjia.com/client/");
+    },
+    toggleLoginDialog(){
+      this.$refs.loginDialog.showDialog(true);
     },
     logout() {
       this.$store.dispatch("LogOut").then(() => {
