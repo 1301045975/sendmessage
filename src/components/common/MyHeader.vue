@@ -19,7 +19,7 @@
           <el-menu-item index="/publish">发布房源</el-menu-item>
           <el-menu-item index="/tool">工具</el-menu-item>
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
-          <el-menu-item @click="toggleLoginDialog">登录/注册</el-menu-item>
+          <el-menu-item index="/about">关于</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
           <el-menu-item @click="center" style="float: right" v-show="logoutFlag">个人中心</el-menu-item>
           <!--<el-submenu index="person" style="float: right" v-show="logoutFlag">
@@ -35,7 +35,8 @@
 
         </el-row>-->
       </el-header>
-      <div><login-dialog ref="loginDialog"></login-dialog></div>
+      <el-button @click="toggleLoginDialog" v-show="!logoutFlag">登录/注册</el-button>
+      <div><login-dialog ref="loginDialog" :width="'460px'" :height="'600px'"></login-dialog></div>
     </el-container>
   </div>
 </template>

@@ -35,7 +35,12 @@
             <span @click="gotoMapPage">地图找房</span>
             <!-- <span><router-link to="/map">地图找房</router-link></span> -->
           </el-col>
+          <el-col :span="2" style="cursor: pointer">
+            <span @click="toggleLoginDialog">登录/注册</span>
+            <!-- <span><router-link to="/map">地图找房</router-link></span> -->
+          </el-col>
         </el-row>
+        <div><login-dialog ref="loginDialog" :width="'460px'" :height="'600px'"></login-dialog></div>
       </el-header>
       <el-main style="padding-top: 100px;">
         <el-row type="flex" justify="center">
@@ -220,11 +225,13 @@ import oldHouseApi from "@/api/oldhouse";
 
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
+import loginDialog from "@/components/login/loginDialog"
 export default {
   name: "Home",
   components: {
     MyHeader,
-    MyFooter
+    MyFooter,
+    loginDialog,
   },
   data() {
     return {
@@ -289,7 +296,10 @@ export default {
     },
     gotoMapPage() {
       this.$router.push("/map");
-    }
+    },
+    toggleLoginDialog(){
+      this.$refs.loginDialog.showDialog(true);
+    },
   }
 };
 </script>

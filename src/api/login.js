@@ -12,12 +12,20 @@ export function login(username, password,usertype) {
   })
 }
 
-export function register(pojo) {
+export function register(formData){
   return request({
-    url: '/rent/user',
+    url: '/user/register',
     method: 'post',
-    data: pojo
-  })
+    data: formData
+  });
+}
+
+export function sendAuthCode(telephone){
+  return request({
+    url: '/user/sendAuthCode',
+    method: 'get',
+    params: {telephone}
+  });
 }
 
 export function getInfo(token) {

@@ -1,12 +1,12 @@
 <template>
-<el-dialog :title="dialog.title" :visible.sync="dialog.show">
+<el-dialog :title="dialog.title" :width="width" :height="height" :visible.sync="dialog.show">
     <el-row v-show="loginShow">
       <el-row>
         <h2 style="color: #000">账号密码登录</h2>
       </el-row>
-      <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
-        <el-form-item label="" prop="username">
-          <el-input type="text" v-model="loginForm.username" placeholder="请输入手机号"></el-input>
+      <el-form autoComplete="on" :model="loginForm" :rules="formRules" ref="loginForm">
+        <el-form-item label="" prop="telephone">
+          <el-input type="text" v-model="loginForm.telephone" placeholder="请输入手机号"></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
           <el-input type="password" v-model="loginForm.password" @keyup.enter.native="handleLogin"
@@ -29,13 +29,24 @@
       <el-row>
         <h2 style="color: #000">欢迎注册</h2>
       </el-row>
-      <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
-        <el-form-item label="" prop="username">
-          <el-input type="text" v-model="loginForm.username" placeholder="请输入手机号"></el-input>
+      <el-form autoComplete="on" :model="registerForm" :rules="formRules" ref="registerForm">
+        <el-form-item label="" prop="telephone">
+          <el-input type="text" v-model="registerForm.telephone" placeholder="请输入手机号"></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
-          <el-input type="password" v-model="loginForm.password" @keyup.enter.native="handleRegis"
+          <el-input type="password" v-model="registerForm.password" @keyup.enter.native="handleRegis"
                     placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="password2">
+          <el-input type="password" v-model="foo.password2" @keyup.enter.native="handleRegis"
+                    placeholder="确认密码"></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="authCode">
+          <el-row :gutter="16">
+            <el-col :span="16"><el-input type="text" v-model="registerForm.authCode" @keyup.enter.native="handleRegis"
+                    placeholder="验证码"></el-input></el-col>
+            <el-col :span="8"><el-button @click="handleSendAuthCode" :disabled="!canSendAuthCode">{{authCodeMsg}}</el-button></el-col>
+          </el-row>
         </el-form-item>
         <el-form-item>
           <el-button type="success" :loading="loading" @click.native.prevent="handleRegis" class="cbtn-bg">立即注册
@@ -54,12 +65,20 @@
 </template>
 
 <script>
-import userApi from "@/api/user";
+import {register, login, sendAuthCode} from "@/api/login";
 import {validate11PhoneNum} from '@/utils/validate';
 
 export default {
   name: "loginDialog",
-  components: {
+  props: {
+    width: {
+      type: String,
+      default: '480px',
+    },
+    height: {
+      type: String,
+      default: '600px',
+    }
   },
   data(){
       const isValidate11PhoneNum = (rule, value, callback) => {
@@ -77,14 +96,38 @@ export default {
         }
       };
 
+      const isPasswordSame = (rule, _, callback) => {
+        if(!this.loginShow && this.foo.password2 != this.registerForm.password){
+          callback(new Error("两次密码不一样"));
+        }else{
+          callback();
+        }
+      };
+
+      const isValidAuthCode = (rule, value, callback) => {
+        if(value.length < 4){
+          callback(new Error("验证码长度不会小于4"));
+        }else{
+          callback();
+        }
+      };
+      
+
       return {
           loginForm:{
-              username: '',
-              password: ''
+              telephone: '15984803200',
+              password: '',
           },
-          loginRules:{
-              username:[{required: true, trigger: 'blur', validator: isValidate11PhoneNum}],
-              password:[{required: true, trigger: 'blur', validator: isValidatePass}]
+          registerForm:{
+              telephone: '15984803200',
+              password: '',
+              authCode: '',
+          },
+          formRules:{
+              telephone:[{required: true, trigger: 'blur', validator: isValidate11PhoneNum}],
+              password:[{required: true, trigger: 'blur', validator: isValidatePass}],
+              password2:[{required: true, trigger: 'blur', validator: isPasswordSame}],
+              authCode:[{required: true, trigger: 'blur', validator: isValidAuthCode}],
           },
           loading: false,
           dialog:{
@@ -92,7 +135,14 @@ export default {
               title: '登陆'
           },
           loginShow: true,
-
+          foo: {
+            password2: '',
+          },
+          authCodeMsg: '发送验证码',
+          SendAgainInitSec: 5,
+          sendAgainRemainSec: 5,
+          intervalHandler: '',
+          canSendAuthCode: true,
       };
   },
   computed:{
@@ -103,18 +153,30 @@ export default {
           this.$refs.loginForm.validate(valid => {
               if(valid){
                   this.loading = true;
+                  //
               }else{
                   console.log('validate failed...');
                   return false;
               }
           })
       },
-      handleRegister(){
-          this.$refs.loginForm.validate(valid => {
+      handleRegis(){
+          this.$refs.registerForm.validate(valid => {
               if(valid){
-                  this.loading = true;
+                this.loading = true;
+                register(this.registerForm)
+                .then(response => {
+                  this.$message({
+                    methods: response.message,
+                    type: (response.code == 200 ? 'success' : 'error'),
+                  });
+                })
+                .finally(() => {
+                  this.loading = false;
+                });
               }else{
                   console.log('validate failed...');
+                  this.loading = false;
                   return false;
               }
           })
@@ -135,12 +197,39 @@ export default {
       forget(){
           alert('忘记密码');
       },
-      indexShow(){
-          this.$router.push({path:'/'});
-      },
       showDialog(showFlg){
           this.dialog.show = showFlg;
-      }
+      },
+      handleSendAuthCode(){
+        if(!validate11PhoneNum(this.registerForm.telephone)){
+          return;
+        }
+        // 设置不可点击
+        this.authCodeMsg = this.sendAgainRemainSec + '后重新发送';
+        this.canSendAuthCode = false;
+        // 定时器
+        this.intervalHandler = setInterval(() => {
+          this.sendAgainRemainSec -= 1;
+          if(this.sendAgainRemainSec < 1){
+            clearInterval(this.intervalHandler);
+            this.sendAgainRemainSec = this.SendAgainInitSec;
+            this.authCodeMsg = "发送验证码";
+            this.canSendAuthCode = true;
+          }else{
+            this.authCodeMsg = this.sendAgainRemainSec + '后重新发送';
+          }
+        }, 1000);
+        // 调用服务器发送验证码
+        sendAuthCode(this.registerForm.telephone).then((response) => {
+          if(response.code == 200){
+            this.$message.success('验证码已经发送到手机');
+          }
+          else{
+            this.$message.error(response.message);
+          }
+        }).catch((err) => {
+        });
+      },
   }
 }
 </script>
