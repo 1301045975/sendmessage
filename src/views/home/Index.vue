@@ -35,12 +35,17 @@
             <span @click="gotoMapPage">地图找房</span>
             <!-- <span><router-link to="/map">地图找房</router-link></span> -->
           </el-col>
-          <el-col :span="2" style="cursor: pointer">
+          <el-col :span="2" style="cursor: pointer" v-show="!loginFlg">
             <span @click="toggleLoginDialog">登录/注册</span>
-            <!-- <span><router-link to="/map">地图找房</router-link></span> -->
+          </el-col>
+          <el-col :span="2" style="cursor: pointer" v-show="loginFlg">
+            <span>{{telephone}}</span>
+          </el-col>
+          <el-col :span="1" style="cursor: pointer" v-show="loginFlg">
+            <span @click="logout">退出</span>
           </el-col>
         </el-row>
-        <div><login-dialog ref="loginDialog" :width="'460px'" :height="'600px'"></login-dialog></div>
+        <div><login-dialog ref="loginDialog" :width="'460px'" :height="'600px'" @loginSuccess="loginCallback"></login-dialog></div>
       </el-header>
       <el-main style="padding-top: 100px;">
         <el-row type="flex" justify="center">
@@ -246,7 +251,9 @@ export default {
       getDownloadImage:
         "https://ajax.api.lianjia.com/qr/getDownloadQr?location=site_middle&ljweb_channel_key=site_index",
       ershouImage:
-        "http://117.51.142.27:9003/5eb404d9-76d8-4048-ad69-24ef1243fa67.jpg"
+        "http://117.51.142.27:9003/5eb404d9-76d8-4048-ad69-24ef1243fa67.jpg",
+      loginFlg: false,
+      telephone: '',
     };
   },
   mounted() {
@@ -300,6 +307,19 @@ export default {
     toggleLoginDialog(){
       this.$refs.loginDialog.showDialog(true);
     },
+    loginCallback(){
+        // 获取用户电话
+        this.telephone = this.$store.getters.mobile;
+        // 修改登陆状态
+        this.loginFlg = true;
+    },
+    logout(){
+        this.$store.dispatch('LogOut').then(() => {
+            this.$message.success("登出成功");
+            this.telephone = '';
+            this.loginFlg = false;
+        });
+    }
   }
 };
 </script>

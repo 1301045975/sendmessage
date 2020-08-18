@@ -20,8 +20,8 @@ const user = {
     SET_MOBILE: (state, mobile) => {
       state.mobile = mobile
     },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
+    SET_IMGURL: (state, imgurl) => {
+      state.imgurl = imgurl
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
@@ -34,31 +34,12 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password,userInfo.usertype).then(response => {
+        login(userInfo).then(response => {
           const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-    // 注册
-    Register({ commit }, userInfo) {
-      const username = userInfo.username.trim()
-      const password = userInfo.password.trim()
-      var userPojo = {
-        mobile: username,
-        usertype: "用户",
-        password: password
-      }
-      var jsonData = JSON.stringify(userPojo)
-      return new Promise((resolve, reject) => {
-        register(jsonData).then(response => {
-          alert(response.data)
+          const tokenStr = data.tokenHead+data.token
+          setToken(tokenStr)
+          commit('SET_TOKEN', tokenStr)
           resolve()
         }).catch(error => {
           reject(error)
@@ -69,13 +50,13 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(response => {
+        getInfo().then(response => {
           const data = response.data
-          commit('SET_ROLES', data.roles)
+          commit('SET_ROLES', data.rolesName)
           commit('SET_UID', data.uid)
-          commit('SET_NAME', data.name)
-          commit('SET_MOBILE', data.mobile)
-          commit('SET_AVATAR', data.avatar)
+          commit('SET_NAME', data.username)
+          commit('SET_MOBILE', data.telephone)
+          commit('SET_IMGURL', data.imgUrl)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -86,7 +67,7 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        logout().then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()

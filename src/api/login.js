@@ -1,22 +1,18 @@
 import request from '@/utils/request'
 
-export function login(username, password,usertype) {
+export function login(userInfo) {
   return request({
-    url: '/rent/user/login',
+    url: '/user/login',
     method: 'post',
-    data: {
-      username,
-      password,
-      usertype
-    }
+    data: userInfo
   })
 }
 
-export function register(formData){
+export function register(userInfo){
   return request({
     url: '/user/register',
     method: 'post',
-    data: formData
+    data: userInfo
   });
 }
 
@@ -30,7 +26,7 @@ export function sendAuthCode(telephone){
 
 export function getInfo(token) {
   return request({
-    url: '/rent/user/info',
+    url: '/user/getUserInfo',
     method: 'get',
     params: { token }
   })
@@ -38,7 +34,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/rent/user/logout',
-    method: 'post'
+    url: '/user/logout',
+    method: 'get'
   })
 }
