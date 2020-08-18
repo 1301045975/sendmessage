@@ -23,7 +23,13 @@ const routes = [
     path: "/map",
     name: "Map",
     component: () => import("../views/map/Index.vue")
+  },
+  {
+    path: "/personcenter",
+    name: "PersonCenter",
+    component: () => import("../views/shared/PersonCenter.vue")
   }
+
 ];
 
 const router = new VueRouter({
