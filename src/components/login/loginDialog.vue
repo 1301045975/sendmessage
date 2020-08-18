@@ -148,11 +148,11 @@ export default {
 
         return {
             loginForm: {
-                telephone: "15984803200",
+                telephone: "",
                 password: ""
             },
             registerForm: {
-                telephone: "15984803200",
+                telephone: "",
                 password: "",
                 authCode: ""
             },
