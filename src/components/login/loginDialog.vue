@@ -210,23 +210,26 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true;
-                    this.$store.dispatch('Login', this.loginForm)
-                    .then(() => {
-                        // 获取用户信息
-                        this.$store.dispatch('GetInfo')
+                    this.$store
+                        .dispatch("Login", this.loginForm)
                         .then(() => {
-                            // 通知父组件登陆成功
-                            this.noticeParentComp();
-                            this.showDialog(false);
-                            this.loading = false;
+                            // 获取用户信息
+                            this.$store
+                                .dispatch("GetInfo")
+                                .then(() => {
+                                    // 通知父组件登陆成功
+                                    // this.noticeParentComp();
+                                    // this.showDialog(false);
+                                    location.reload();
+                                    this.loading = false;
+                                })
+                                .catch(() => {
+                                    this.loading = false;
+                                });
                         })
                         .catch(() => {
                             this.loading = false;
-                        })
-                    })
-                    .catch(() => {
-                        this.loading = false;
-                    });
+                        });
                 } else {
                     console.log("validate failed...");
                     return false;
@@ -244,7 +247,7 @@ export default {
                                 type: response.code == 200 ? "success" : "error"
                             });
                             // 切换至登陆
-                            if(response.code == 200){
+                            if (response.code == 200) {
                                 this.loginForm.telephone = this.registerForm.telephone;
                                 this.loginForm.password = this.registerForm.password;
                                 this.tabForm(1);
@@ -312,8 +315,8 @@ export default {
                 .catch(err => {});
         },
         // 通知父组件已经登陆
-        noticeParentComp(){
-            this.$emit('loginSuccess');
+        noticeParentComp() {
+            this.$emit("loginSuccess");
         }
     }
 };
