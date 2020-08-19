@@ -33,6 +33,11 @@ const routes = [
     }
   },
   {
+    path: "/rent",
+    name: "Rent",
+    component: () => import("../views/rent/Index.vue")
+  },
+  {
     path: "/personcenter",
     name: "PersonCenter",
     component: () => import("../views/shared/PersonCenter.vue")
