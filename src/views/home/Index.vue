@@ -17,7 +17,7 @@
                         <span @click="send('/oldHouse')">二手房</span>
                     </el-col>
                     <el-col :span="1" style="cursor: pointer">
-                        <span @click="send('/rentHouse')">租房</span>
+                        <span @click="send('/rent')">租房</span>
                     </el-col>
                     <el-col :span="2" style="cursor: pointer">
                         <span @click="business()">商业办公</span>
