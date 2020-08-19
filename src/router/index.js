@@ -25,6 +25,11 @@ const routes = [
     component: () => import("../views/map/Index.vue")
   },
   {
+    path: "/me",
+    name: "Me",
+    component: () => import("../views/me/Index.vue")
+  },
+  {
     path: "/personcenter",
     name: "PersonCenter",
     component: () => import("../views/shared/PersonCenter.vue")

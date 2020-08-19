@@ -20,7 +20,7 @@
           <el-menu-item index="/tool">工具</el-menu-item>
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
           <el-menu-item index="/about">关于</el-menu-item>
-          <el-menu-item @click="toggleLoginDialog" v-show="!logoutFlag">登录/注册</el-menu-item>
+          <el-menu-item @click="toggleLoginDialog" style="float: right" v-show="!logoutFlag">登录/注册</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
           <el-menu-item @click="center" style="float: right" v-show="logoutFlag">个人中心</el-menu-item>
           <!--<el-submenu index="person" style="float: right" v-show="logoutFlag">
@@ -110,12 +110,13 @@ export default {
       this.$store.dispatch("LogOut").then(() => {
         location.reload(); // 为了重新实例化vue-router对象 避免bug
       });
+      this.$router.push({ path: "/" });
     },
     center() {
       if (this.loginOrRegis === "登录注册") {
         this.$router.push({ path: "/login" });
       } else {
-        this.$router.push({ path: "/center/house" });
+        this.$router.push({ path: "/me" });
       }
     }
   }

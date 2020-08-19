@@ -360,8 +360,8 @@ export default {
             if(this.loginOrRegis == '登录/注册'){
                 this.showLoginDialog();
             }else{
-                // this.$router.push({ path: "/center" });
-                alert('go to center');
+                this.$router.push({ path: "/me" });
+                // alert('go to center');
             }
         },
         logout() {
