@@ -32,16 +32,7 @@
     },
     methods: {
       doGetDicts() {
-        if (this.dialog) {
-          getDicts()
-            .then(res => {
-              this.direction = res.data.direction;//把请求返回的列表，赋值给之前定义的
-            })
-            .catch(err => {
-              this.loading = false;
-              console.log(err.response.data.message);
-            });
-        }
+
       }
     }
   }
