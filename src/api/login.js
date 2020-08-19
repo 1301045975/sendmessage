@@ -4,7 +4,6 @@ import pwdEncoder from "@/utils/passwordEncoder"
 export function login(userInfo) {
   let userInfoEn = Object.assign({}, userInfo);
   userInfoEn.password = pwdEncoder.encode(userInfoEn.password);
-  alert(123);
   return request({
     url: '/user/login',
     method: 'post',
