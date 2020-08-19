@@ -1,8 +1,8 @@
 <template>
   <bm-overlay ref="customOverlay" class="zone" pane="labelPane" @draw="draw">
     <div>
-      <p>{{ text.name }}</p>
-      <p>{{ text.houseCnt }}套</p>
+      <p>{{ name }}</p>
+      <p>{{ houseCnt }}套</p>
     </div>
   </bm-overlay>
 </template>
@@ -22,6 +22,22 @@ export default {
         this.$refs.customOverlay.reload();
       },
       deep: true
+    }
+  },
+  computed: {
+    name() {
+      // eslint-disable-next-line no-prototype-builtins
+      if (this.text.hasOwnProperty("zoneName")) {
+        return this.text.zoneName;
+      }
+      // eslint-disable-next-line no-prototype-builtins
+      if (this.text.hasOwnProperty("districtName")) {
+        return this.text.districtName;
+      }
+      return "MyName";
+    },
+    houseCnt() {
+      return this.text.houseCnt;
     }
   },
   methods: {

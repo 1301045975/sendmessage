@@ -7,40 +7,40 @@
       :center="center"
       :zoom="zoom"
       :scroll-wheel-zoom="true"
-      @ready="handler"
+      @ready="handlerMapReady"
       @zoomend="syncCenterAndZoom"
     >
       <bm-boundary
         v-if="showBoundary"
-        :name="zoneBoundary"
+        :name="areaBoundry"
         :strokeWeight="2"
         strokeColor="blue"
         fillColor="skyblue"
         :fillOpacity="0.4"
       ></bm-boundary>
-      <div v-if="showZone">
-        <zone-overlay
-          v-for="(item, index) in zoneGeoPoints"
-          :key="index"
-          :position="{ lng: item.lng, lat: item.lat }"
-          :text="item"
-          :class="zoneIndex === index ? 'active' : ''"
-          @mouseover.native="selectZone(item, index)"
-          @mouseleave.native="cancelZone(item, index)"
-          @click.native="clickZoneOrArea(item, index)"
-        ></zone-overlay>
-      </div>
-      <div v-if="showArea">
-        <zone-overlay
-          v-for="(item, index) in areaGeoPoints"
+      <div v-if="showDistrict && districts">
+        <area-overlay
+          v-for="(item, index) in districts"
           :key="index"
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
           :class="areaIndex === index ? 'active' : ''"
-          @mouseover.native="selectZone(item, index)"
-          @mouseleave.native="cancelZone(item, index)"
-          @click.native="clickZoneOrArea(item, index)"
-        ></zone-overlay>
+          @mouseover.native="selectArea(item, index)"
+          @mouseleave.native="cancelArea(item, index)"
+          @click.native="clickArea(item, index)"
+        ></area-overlay>
+      </div>
+      <div v-if="showZone && zones">
+        <area-overlay
+          v-for="(item, index) in zones"
+          :key="index"
+          :position="{ lng: item.lng, lat: item.lat }"
+          :text="item"
+          :class="areaIndex === index ? 'active' : ''"
+          @mouseover.native="selectArea(item, index)"
+          @mouseleave.native="cancelArea(item, index)"
+          @click.native="clickArea(item, index)"
+        ></area-overlay>
       </div>
       <div v-if="showEstate">
         <estate-overlay
@@ -49,8 +49,8 @@
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
           :class="areaIndex === index ? 'active' : ''"
-          @mouseover.native="selectZone(item, index)"
-          @mouseleave.native="cancelZone(item, index)"
+          @mouseover.native="selectArea(item, index)"
+          @mouseleave.native="cancelArea(item, index)"
         ></estate-overlay>
       </div>
       <div id="map-header-wrapper">
@@ -69,10 +69,12 @@ import HelloWorld from "@/components/HelloWorld.vue";
 import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import connect from "../../connect.js";
 import ZoneOverlay from "@/components/map/ZoneOverlay.vue";
+import AreaOverlay from "@/components/map/AreaOverlay.vue";
 import EstateOverlay from "@/components/map/EstateOverlay.vue";
 import BmBoundary from "vue-baidu-map/components/others/Boundary";
 import MapHeader from "@/components/map/MapHeader.vue";
 import MapFilter from "@/components//map/MapFilter.vue";
+import { getCity, getDistricts, getZones } from "@/api/map";
 
 export default {
   name: "Map",
@@ -82,67 +84,27 @@ export default {
     BmBoundary,
     EstateOverlay,
     MapHeader,
-    MapFilter
+    MapFilter,
+    AreaOverlay
   },
   data() {
     return {
-      center: { lng: 104.07, lat: 30.67 },
+      center: { lng: 116.4133836971231, lat: 39.910924547299568 },
       zoom: 12,
-      zoneIndex: "",
+      districtIndex: "",
+      estateIndex: "",
       areaIndex: "",
-      showZone: true,
+      showDistrict: true,
       showBoundary: false,
-      showArea: false,
+      showZone: false,
       showEstate: false,
+      areaBoundry: "",
       posCity: "成都市",
       input: "",
       height: "950px",
-      zoneGeoPoints: [
-        {
-          lng: 104.08956175659785,
-          lat: 30.661904490317256,
-          cityName: "成都市",
-          districtName: "锦江区",
-          qualifiedName: "成都市锦江区",
-          name: "锦江区",
-          level: "district",
-          houseCnt: 123
-        },
-        {
-          lng: 103.90544568808663,
-          lat: 30.79953765357336,
-          cityName: "成都市",
-          districtName: "郫都区",
-          qualifiedName: "成都市郫都区",
-          name: "郫都区",
-          level: "district",
-          houseCnt: 234
-        }
-      ],
-      areaGeoPoints: [
-        {
-          lng: 103.97764397694121,
-          lat: 30.76070519944251,
-          cityName: "成都市",
-          districtName: "郫都区",
-          areaName: "犀浦镇",
-          qualifiedName: "成都市郫都区犀浦镇",
-          name: "犀浦镇",
-          level: "area",
-          houseCnt: 123
-        },
-        {
-          lng: 103.93374186609141,
-          lat: 30.811712989903346,
-          cityName: "成都市",
-          districtName: "郫都区",
-          areaName: "红光镇",
-          qualifiedName: "成都市郫都区红光镇",
-          name: "红光镇",
-          level: "area",
-          houseCnt: 234
-        }
-      ],
+      city: null,
+      districts: null,
+      zones: null,
       estateGeoPoints: [
         {
           lng: 103.98323427406207,
@@ -178,14 +140,34 @@ export default {
   mounted() {
     this.height = window.innerWidth + "px";
     console.log(this.height);
+    // 获取District信息
+    getDistricts().then(res => {
+      this.districts = res.data;
+    }).catch(err => {
+      console.log(err);
+    });
+    // 获取Zone信息
+    getZones().then(res => {
+      this.zones = res.data;
+      // console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
   },
   methods: {
-    handler({ BMap, map }) {
+    handlerMapReady({ BMap, map }) {
+      // 组件加载完成后，获取城市信息
+      getCity().then(res => {
+        const data = res.data;
+        this.$set(this.center, "lng", data.lng);
+        this.$set(this.center, "lat", data.lat);
+        // console.log(res);
+      });
       // lng, lat 表示你要设置的经纬度
-      const lng = 104.08153351042464;
-      const lat = 30.655821878416409;
-      this.$set(this.center, "lng", lng);
-      this.$set(this.center, "lat", lat);
+      // const lng = 104.08153351042464;
+      // const lat = 30.655821878416409;
+      // this.$set(this.center, "lng", lng);
+      // this.$set(this.center, "lat", lat);
       // console.log(BMap); // just console.log(BMap)
       // console.log(map); // just console.log(map)
     },
@@ -195,42 +177,42 @@ export default {
         this.$set(this.center, "lat", data[1]);
       });
     },
-    selectZone(item, index) {
+    selectArea(item, index) {
       if (item.level === "district") {
-        this.zoneIndex = index;
-        this.zoneBoundary = `${this.posCity}${item.name}`; // 行政区名字，只供参考
+        this.area = index;
+        this.areaBoundry = `${item.cityName}${item.districtName}`; // 行政区名字，只供参考
         this.showBoundary = true;
       }
     },
-    cancelZone(item, index) {
+    cancelArea(item, index) {
       if (item.level === "district") {
-        this.zoneIndex = "";
-        this.zoneBoundary = "";
+        this.areaIndex = "";
+        this.areaBoundry = "";
         this.showBoundary = false;
       }
     },
     syncCenterAndZoom(e) {
-      // zone与area的分界线
-      const ZOOMBOUNDARY1 = 14;
-      // area与estate的分界线
-      const ZOOMBOUNDARY2 = 15;
+      // district与zone的分界线
+      const ZOOMBOUNDARY1 = 13;
+      // zone与estate的分界线
+      const ZOOMBOUNDARY2 = 14;
       this.zoom = e.target.getZoom();
-      this.showZone = this.zoom < ZOOMBOUNDARY1;
-      this.showArea = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY2;
+      this.showDistrict = this.zoom < ZOOMBOUNDARY1;
+      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY2;
       this.showEstate = this.zoom >= ZOOMBOUNDARY2;
-      if (!this.showZone) {
+      if (!this.showDistrict) {
         this.showBoundary = false;
       }
       // console.log(this.zoom);
+      // console.log(this.showDistrict);
       // console.log(this.showZone);
-      // console.log(this.showArea);
     },
-    clickZoneOrArea(item, index) {
+    clickArea(item, index) {
       this.zoom += 1;
       // console.log(item);
       this.$set(this.center, "lng", item.lng);
       this.$set(this.center, "lat", item.lat);
-      // console.log("clickZoneOrArea");
+      // console.log("clickArea");
     }
   }
 };
