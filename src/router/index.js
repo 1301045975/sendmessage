@@ -27,7 +27,10 @@ const routes = [
   {
     path: "/me",
     name: "Me",
-    component: () => import("../views/me/Index.vue")
+    component: () => import("../views/me/Index.vue"),
+    meta: {
+      needLogin: true
+    }
   },
   {
     path: "/personcenter",
