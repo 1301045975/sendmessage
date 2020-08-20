@@ -38,6 +38,11 @@ const routes = [
     component: () => import("../views/rent/Index.vue")
   },
   {
+    path: "/old",
+    name: "Old",
+    component: () => import("../views/old/Index.vue")
+  },
+  {
     path: "/personcenter",
     name: "PersonCenter",
     component: () => import("../views/shared/PersonCenter.vue")

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container>
+    <el-container style="background-color:#f5f5f5">
       <el-header>
         <!--<el-row type="flex" justify="center" >
         <el-col :span="16">-->
@@ -9,17 +9,17 @@
           class="el-menu-demo"
           mode="horizontal"
           @select="handleSelect"
-          style="padding-left: 20%;padding-right: 20%"
+          style="padding-left:20%;padding-right:20%;background-color:#f5f5f5"
         >
           <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/oldHouse">二手房</el-menu-item>
-          <el-menu-item index="/newHouse">新房</el-menu-item>
-          <el-menu-item index="/rentHouse">租房</el-menu-item>
+          <el-menu-item index="/old">二手房</el-menu-item>
+          <!-- <el-menu-item index="/newHouse">新房</el-menu-item> -->
+          <el-menu-item index="/rent">租房</el-menu-item>
           <el-menu-item index="/agent">经纪人</el-menu-item>
           <el-menu-item index="/publish">发布房源</el-menu-item>
           <el-menu-item index="/tool">工具</el-menu-item>
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
-          <el-menu-item index="/about">关于</el-menu-item>
+          <el-menu-item index="/map">地图找房</el-menu-item>
           <el-menu-item @click="toggleLoginDialog" style="float: right" v-show="!logoutFlag">登录/注册</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
           <el-menu-item @click="center" style="float: right" v-show="logoutFlag">个人中心</el-menu-item>
@@ -124,4 +124,9 @@ export default {
 </script>
 
 <style scoped>
+.content {
+  color: #888c8e;
+  line-height: 30px;
+  font-size: 12px;
+}
 </style>
