@@ -18,7 +18,7 @@
           <el-col :span="2" style="cursor: pointer">
             <span @click="send('/businessHouse')">地图找房</span>
           </el-col>
-          <el-col :span="4" :offset="4" style="cursor: pointer;color: #00ae66;float: right;">
+          <el-col :span="4" :offset="4" style="cursor: pointer;color: #00ae66;margin-left: 300px">
             <span @click="send('/businessHouse')" style="color: #00ae66;">客服热线234242343</span>
           </el-col>
         </el-row>
@@ -154,7 +154,7 @@
         <el-menu-item index="4">房屋总价</el-menu-item>
         <el-menu-item index="5">房屋单价</el-menu-item>
         <el-menu-item index="6">房屋面积</el-menu-item>
-        <el-menu-item index="7" style="margin-left: 150px">
+        <el-menu-item index="7" style="margin-left: 36px">
           <img src="../../assets/oldhouse/clean.png" height="20" width="20"/>
           <span>清空条件</span>
         </el-menu-item>
@@ -334,7 +334,8 @@
 
 <style scoped>
   .cheader {
-    width: 100%;
+    margin-left: -80px;
+    width: 120%;
     height: 220px;
     background: #f5f5f6;
   }

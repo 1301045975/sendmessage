@@ -49,9 +49,6 @@
         }
       },
       methods: {
-        doGetDicts() {
-
-        }
       }
     }
 </script>

@@ -31,9 +31,6 @@
       }
     },
     methods: {
-      doGetDicts() {
-
-      }
     }
   }
 </script>
