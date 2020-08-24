@@ -34,6 +34,10 @@ export default {
       if (this.text.hasOwnProperty("districtName")) {
         return this.text.districtName;
       }
+      // eslint-disable-next-line no-prototype-builtins
+      if (this.text.hasOwnProperty("regionName")) {
+        return this.text.regionName;
+      }
       return "MyName";
     },
     houseCnt() {
