@@ -1,7 +1,7 @@
 <template>
   <bm-overlay ref="customOverlay" class="zone" pane="labelPane" @draw="draw">
     <div>
-      <p>{{ text.name }}</p>
+      <p>{{ text.estateName }}</p>
       <p>{{ text.houseCnt }}套</p>
     </div>
   </bm-overlay>
