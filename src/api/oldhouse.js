@@ -58,5 +58,25 @@ export default {
                 cityCode: cityCode
             }
         })
+    },
+    getByPAreaCode(cityPinYin, pAreaCode){
+        return request({
+            url: `/area/getAreaByPCode`,
+            method: 'get',
+            params: {
+                cityPinYin,
+                pAreaCode,
+            }
+        })
+    },
+    getByPAreaId(cityPinYin, pAreaId){
+        return request({
+            url: `/area/getAreaByPId`,
+            method: 'get',
+            params: {
+                cityPinYin,
+                pAreaId,
+            }
+        })
     }
 }

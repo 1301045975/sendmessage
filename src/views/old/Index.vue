@@ -21,19 +21,20 @@
             </div>
         </div>
         <div style="width: 60%;margin: 0 auto;padding: 20px">
-            <el-row class="crow">
-                <label class="box-item4em">区域：</label>
+            
+            <!-- 区域 -->
+            <el-row class="crow" v-for="areas in areasArray" :key="'areasArray' + areas.level">
+                <label class="box-item4em">{{areas.level == 1 ? "区域：" : ""}}</label>
                 <div class="crow-right">
-                    <el-link
-                        v-for="(areaId, index) in areaIdAll"
-                        :key="index"
-                        @click="handleAreaIdClick(areaId.id)"
-                        :class="areaId.id == areaIdSelected ? 'box-item4em link-active' : 'box-item4em'"
-                    >{{areaId.display}}</el-link>
+                    <el-link v-for="(area, j) in areas.data"
+                     :key="'areas' + j"
+                     @click="handleAreaClick(areas.level, area.id)"
+                     :class="area.id == areaIdSelected ? 'box-item4em link-active' : 'box-item4em'"
+                     >{{area.name}}</el-link>
                 </div>
             </el-row>
-
-            <el-row class="crow" v-for="(name, i) in filterRowsName" :key="i">
+            <!-- 范围 -->
+            <el-row class="crow" v-for="(name, i) in filterRowsName" :key="'filterRowsName' + i">
                 <label class="box-item4em">{{name}}：</label>
                 <div class="crow-right">
                     <el-checkbox-group v-model="filterRowsChecked[i]">
@@ -41,11 +42,18 @@
                             class="box-item6em"
                             v-for="(range, j) in filterRowsRight[i]"
                             :label="range.label"
-                            :key="j"
+                            :key="'filterRowName' + j"
                         >{{range.display}}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </el-row>
+            <!-- 更多 -->
+            <el-row class="crow">
+                <label class="box-item4em">更多：</label>
+                <div class="crow-right">
+                </div>
+            </el-row>
+            <!-- 排序 -->
 
             <!-- <div class="crow">
                 <label>更多：</label>
@@ -114,8 +122,12 @@ export default {
         // ...mapGetters(["name", "uid"]);
     },
     created() {
-        // 获取过滤框的数据
+        // 获取区域数据
+        this.fetchAreaData(0, '510100');
+        // 获取筛选条件范围数据
         this.fetchCityConfig('510100');
+        // 更多数据
+        //
     },
     data() {
         return {
@@ -140,12 +152,15 @@ export default {
             },
             searchContent: "",
             currentPage: 1,
-            areaIdAll: [],
+            areasArray: [],
+            areaLvSelected: -1,
             areaIdSelected: -1,
-            areaIdLevel : 0,
             filterRowsName: ["售价", "面积", "房型"],
             filterRowsRight: [[], [], []],
             filterRowsChecked: [[], [], []],
+            moreFilterName: ["建造年代", "房屋类型", "楼层", "朝向", "装修"],
+            moreFilterValues: [[], [], [], [], []],
+            moreFilterSelected: [[], [], [], [], []],
         };
     },
     mounted() {
@@ -161,8 +176,42 @@ export default {
         fetchData() {
             //
         },
-        handleAreaIdClick(id) {
-            this.areaIdSelected = id;
+        // 记录点击区域的level和areaId
+        handleAreaClick(level, areaId) {
+            this.areaLvSelected = level;
+            this.areaIdSelected = areaId;
+            if(level > 0 && level < 3 && areaId > 0){
+                // 加载下一级
+                this.fetchAreaData(level, areaId);
+            }
+        },
+        // 如果level == 0，表示pCodeOrPId为父Code
+        // 如果level >= 1，表示pCodeOrPId为父Id
+        fetchAreaData(level, pCodeOrPId){
+            let requestFun = oldHouseApi.getByPAreaCode;
+            if(level > 0) requestFun = oldHouseApi.getByPAreaId;
+            requestFun('chengdu', pCodeOrPId).then((response) => {
+                let data = response.data;
+                if(response.code == 200){
+                    if(!data) return;
+                    let areas = data.map(item => {
+                        return {
+                            id: item.areId,
+                            name: item.areName,
+                        }
+                    });
+                    if(level == 0){
+                        areas.splice(0, 0, {
+                            id: -1,
+                            name: '全部',
+                        });
+                    }
+                    this.areasArray.splice(level, 10, {
+                        data: areas,
+                        level: level + 1,
+                    });
+                }
+            });
         },
         // 解析range字符串
         rangeParse(rangeStr, unitType){
@@ -193,18 +242,78 @@ export default {
             oldHouseApi.getByCityCode(cityCode).then((response) => {
                 if(response.code == 200 && response.data){
                     let data =  response.data;
-                    // 地域
-                    // 
                     // 三个范围
                     let dd = ['ctySaleRange', 'ctyHouseArea', 'ctyHouseType'];
                     let unitTypes = ["万", "m²", ""];
                     dd.forEach((item, index) => {
                         this.filterRowsRight.splice(index, 1, this.rangeParse(data[item], unitTypes[index]));
                     });
-                    // 更多
                 }
             });
-        }
+        },
+        // 初始化更多里的值
+        initialMoreFilterData(){
+            this.moreFilterValues = [
+                [{
+                    lable: '5年以内', value: '0-5',
+                }, {
+                    lable: '10年以内', value: '0-10',
+                }, {
+                    lable: '15年以内', value: '0-15',
+                }, {
+                    lable: '20年以内', value: '0-20',
+                },{
+                    lable: '大于20年', value: '20-99999999',
+                }],
+                [{
+                    lable: '板房', value: '板房',
+                }, {
+                    lable: '砖房', value: '砖房',
+                }, {
+                    lable: '裙楼', value: '裙楼',
+                }, {
+                    lable: '排房', value: '排房',
+                },{
+                    lable: '多层', value: '多层',
+                },{
+                    lable: '高层', value: '高层',
+                },{
+                    lable: '高层', value: '高层',
+                },{
+                    lable: '高层', value: '高层',
+                },{
+                    lable: '高层', value: '高层',
+                },{
+                    lable: '高层', value: '高层',
+                },{
+                    lable: '高层', value: '高层',
+                },{
+                    lable: '高层', value: '高层',
+                }],
+                [{
+                    lable: '5年以内', value: '0-5',
+                }, {
+                    lable: '10年以内', value: '0-10',
+                }, {
+                    lable: '15年以内', value: '0-15',
+                }, {
+                    lable: '20年以内', value: '0-20',
+                },{
+                    lable: '大于20年', value: '20-99999999',
+                }],
+                [{
+                    lable: '5年以内', value: '0-5',
+                }, {
+                    lable: '10年以内', value: '0-10',
+                }, {
+                    lable: '15年以内', value: '0-15',
+                }, {
+                    lable: '20年以内', value: '0-20',
+                },{
+                    lable: '大于20年', value: '20-99999999',
+                }],
+            ];
+        },
     }
 };
 </script>
