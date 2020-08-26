@@ -8,13 +8,6 @@ export default {
             method: 'get'
         })
     },
-    search(page, size, searchMap) {
-        return request({
-            url: `/${group_name}/${api_name}/search/${page}/${size}`,
-            method: 'post',
-            data: searchMap
-        })
-    },
     save(pojo) {
         return request({
             url: `/${group_name}/${api_name}`,
@@ -78,5 +71,12 @@ export default {
                 pAreaId,
             }
         })
-    }
+    },
+    search(cityPinYin, pageNum, pageSize, searchMap) {
+        return request({
+            url: `/property/search?cityPinYin=${cityPinYin}&pageNum=${pageNum}&pageSize=${pageSize}`,
+            method: 'post',
+            data: searchMap
+        })
+    },
 }
