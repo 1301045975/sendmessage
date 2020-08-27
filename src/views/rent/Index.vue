@@ -20,170 +20,85 @@
         </el-row>
       </div>
     </div>
-
-    <div style="width: 60%;margin: 0 auto;padding: 20px">
-      <el-row class="crow">
-        <el-col :span="1">
-          <div style="padding-top:4px">
-            <label>区域</label>
-          </div>
-        </el-col>
-        <el-col :span="23">
-          <el-row>
-            <div>
-              <el-button type="text">全部</el-button>
-              <el-button type="text">成华</el-button>
-              <el-button type="text">金牛</el-button>
-              <el-button type="text">锦江</el-button>
-              <el-button type="text">青羊</el-button>
-              <el-button type="text">郫都</el-button>
-              <el-button type="text">双流</el-button>
-              <el-button type="text">温江</el-button>
-              <el-button type="text">新都</el-button>
-              <el-button type="text">武侯</el-button>
-            </div>
-          </el-row>
-          <el-row v-show="false">
-            <el-button type="text">200-999</el-button>
-            <el-button type="text">200-250</el-button>
-            <el-button type="text">250-300</el-button>
-            <el-button type="text">300-400</el-button>
-            <el-button type="text">400-500</el-button>
-            <el-button type="text">文字按钮</el-button>
-            <el-button type="text">文字按钮</el-button>
-            <el-button type="text">文字按钮</el-button>
-          </el-row>
-        </el-col>
+    <div class="box-body">
+      <!-- 区域 -->
+      <el-row class="crow" v-for="areas in areasArray" :key="'areasArray' + areas.level">
+        <label class="box-item4em">{{areas.level == 1 ? "区域：" : ""}}</label>
+        <div class="crow-right">
+          <el-link
+            v-for="(area, j) in areas.data"
+            :key="'areas' + j"
+            @click="handleAreaClick(areas.level, area.id)"
+            :class="area.id == areaIdSelected ? 'box-item4em link-active' : 'box-item4em'"
+          >{{area.name}}</el-link>
+        </div>
       </el-row>
-      <el-row class="crow">
-        <el-col :span="1">
-          <div style="padding-top:5px">
-            <label>售价</label>
-          </div>
-        </el-col>
-        <el-col :span="23">
-          <el-button type="text">全部</el-button>
-          <el-button type="text">小于40万</el-button>
-          <el-button type="text">40-50万</el-button>
-          <el-button type="text">50-200万</el-button>
-          <el-button type="text">大于200万</el-button>
-        </el-col>
+      <!-- 范围 -->
+      <el-row class="crow" v-for="(name, i) in filterRowsName" :key="'filterRowsName' + i">
+        <label class="box-item4em">{{name.displayName}}：</label>
+        <div class="crow-right">
+          <el-checkbox-group v-model="filterRowsChecked[i]">
+            <el-checkbox
+              class="box-item6em"
+              v-for="(range, j) in filterRowsRight[i]"
+              :label="range.label"
+              :key="'filterRowName' + j"
+            >{{range.display}}</el-checkbox>
+          </el-checkbox-group>
+        </div>
       </el-row>
+      <!-- 更多 -->
       <el-row class="crow">
-        <el-col :span="1">
-          <div style="padding-top:4px">
-            <label>面积</label>
-          </div>
-        </el-col>
-        <el-col :span="23">
-          <el-button type="text">小于50</el-button>
-          <el-button type="text">50-100</el-button>
-          <el-button type="text">大于100</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="crow">
-        <el-col :span="1">
-          <div style="padding-top:4px">
-            <label>房型</label>
-          </div>
-        </el-col>
-        <el-col :span="23">
-          <el-button type="text">1室</el-button>
-          <el-button type="text">2室</el-button>
-          <el-button type="text">大于2室</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="crow">
-        <el-col :span="1">
-          <label>更多</label>
-        </el-col>
-        <el-col :span="23">
+        <label class="box-item4em">更多：</label>
+        <div class="crow-right">
           <el-select
-            v-model="value"
-            placeholder="请选择"
-            size="small"
-            style="width:100px;margin-right:10px;"
+            multiple
+            collapse-tags
+            class="box-item8em"
+            v-for="(more, i) in moreFilterValues"
+            v-model="moreFilterSelected[i]"
+            :key="'moreFilterValues' + i"
+            :placeholder="moreFilterName[i].displayName"
           >
             <el-option
-              v-for="item in options"
-              :key="item.value"
+              v-for="(item, j) in more"
+              :key="'more' + j"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-select
-            v-model="value"
-            placeholder="请选择"
-            size="small"
-            style="width:100px;margin-right:10px"
-          >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-          <el-select
-            v-model="value"
-            placeholder="请选择"
-            size="small"
-            style="width:100px;margin-right:10px"
-          >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-          <el-select
-            v-model="value"
-            placeholder="请选择"
-            size="small"
-            style="width:100px;margin-right:10px"
-          >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
+        </div>
       </el-row>
     </div>
-    <div style="width: 60%;margin: 0 auto;padding: 20px">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <el-menu-item index="1">默认排序</el-menu-item>
-        <el-menu-item index="3">最新发布</el-menu-item>
-        <el-menu-item index="4">房屋总价</el-menu-item>
-        <el-menu-item index="5">房屋单价</el-menu-item>
-        <el-menu-item index="6">房屋面积</el-menu-item>
+    <div class="box-body" v-loading="loading">
+      <!-- 排序 -->
+      <el-menu default-active="0" class="el-menu-demo" mode="horizontal" @select="handleOrderBy">
+        <el-menu-item
+          v-for="(item, i) in orderBy"
+          :key="'orderBy'+i"
+          :index="i+''"
+        >{{item.displayName}}</el-menu-item>
       </el-menu>
       <el-row>
-        <h2>共找到{{123}}套太原二手房</h2>
+        <h2>共找到{{totalRecords}}套成都二手房</h2>
       </el-row>
       <el-divider></el-divider>
-      <house-item></house-item>
-      <house-item></house-item>
-      <house-item></house-item>
-      <house-item></house-item>
-      <house-item></house-item>
-      <house-item></house-item>
+      <div v-if="!loading">
+        <house-item
+          v-for="(propertyInfo, i) in propertyInfoArray"
+          :key="'propertyInfoArray' + i"
+          :propertyInfo="propertyInfo"
+        ></house-item>
+      </div>
+
       <el-pagination
         @size-change="fetchData"
         @current-change="fetchData"
-        :current-page.sync="currentPage"
-        :page-sizes="[5,10,20]"
-        :page-size="10"
+        :current-page.sync="pageNum"
+        :page-size.sync="pageSize"
+        :page-sizes="[10,20,30]"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        :total="totalRecords"
       ></el-pagination>
     </div>
     <my-footer></my-footer>
@@ -194,12 +109,12 @@
 import cheader from "@/components/newheader";
 import oldHouseApi from "@/api/oldhouse";
 import informationApi from "@/api/information";
-import requestApi from "@/api/request";
 // import BMap from "BMap";
 import { mapGetters } from "vuex";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import HouseItem from "@/components/rent/HouseItem.vue";
+import { str2Date, dateDiff } from "@/utils/date";
 
 export default {
   name: "Rent",
@@ -209,39 +124,26 @@ export default {
     HouseItem
   },
   computed: {
-    ...mapGetters(["name", "uid"])
+    // ...mapGetters(["name", "uid"]);
+  },
+  created() {
+    // 获取区域数据
+    this.fetchAreaData(0, "510100");
+    // 获取筛选条件范围数据
+    this.fetchCityConfig("510100");
+    // 更多数据
+    this.initialMoreFilterData();
+    // 查询房源数据
+    this.searchHouse();
   },
   data() {
     return {
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ],
-      value: "",
       center: { lng: 0, lat: 0 },
       zoom: 3,
       pojo: {},
       agent: {},
       agents: [],
-      activeIndex: "/oldHouse/info",
+      // activeIndex: "/oldHouse/info",
       centerDialogVisible: false,
       messageAgent: {},
       messagePojo: {
@@ -255,33 +157,426 @@ export default {
       request: {
         house_id: ""
       },
-
-      loginRules: {
-        bname: [
-          { required: true, message: "请输入联系人姓名", trigger: "blur" }
-        ],
-        mobile: [
-          { required: true, message: "请输入手机号", trigger: "blur" },
-          {
-            min: 11,
-            max: 11,
-            message: "请输入长度为11位的手机号",
-            trigger: "blur"
-          }
-        ],
-        request_date: [
-          { required: true, message: "请输入看房时间", trigger: "blur" }
-        ]
-      }
+      searchContent: "",
+      // 分页
+      pageNum: 1,
+      pageSize: 10,
+      totalRecords: 0,
+      // 区域
+      areasArray: [],
+      areaLvSelected: -1,
+      areaIdSelected: -1,
+      // 范围
+      filterRowsName: [
+        { displayName: "售价", paramName: "saleRanges" },
+        { displayName: "面积", paramName: "houseAreaRanges" },
+        { displayName: "房型", paramName: "countFRanges" }
+      ],
+      filterRowsRight: [[], [], []],
+      filterRowsChecked: [[], [], []],
+      // 更多
+      moreFilterName: [
+        { displayName: "建造年代", paramName: "completeYearRanges" },
+        { displayName: "房屋类型", paramName: "houseTypes" },
+        { displayName: "楼层", paramName: "floors" },
+        { displayName: "朝向", paramName: "directions" },
+        { displayName: "装修", paramName: "decorations" }
+      ],
+      moreFilterValues: [[], [], [], [], []],
+      moreFilterSelected: [[], [], [], [], []],
+      // 排序
+      orderBy: [
+        { displayName: "默认排序", paramName: null },
+        { displayName: "最新发布", paramName: "sortByLatest" },
+        { displayName: "房屋总价", paramName: "sortBySoldPrice" },
+        { displayName: "房屋单价", paramName: "sortByUnitPrice" },
+        { displayName: "房屋面积", paramName: "sortByHouseArea" }
+      ],
+      orderByIndex: 0,
+      orderFlag: 0,
+      propertyInfoArray: [],
+      defaultImg: require("../../assets/img/noimg.jpg"),
+      loading: true
     };
   },
   mounted() {
-    console.log(this.$route.params.id);
+    //
+  },
+  methods: {
+    searchHouse() {
+      let cityPinYin = "chengdu";
+      let searchParam = {};
+      // 区域Id
+      if (this.areaIdSelected > 0) {
+        searchParam.areaId = this.areaIdSelected;
+        searchParam.areaLevel = this.areaLvSelected;
+      }
+      // 范围
+      this.filterRowsName.forEach((item, index) => {
+        if (this.filterRowsChecked[index].length > 0)
+          searchParam[item.paramName] = this.filterRowsChecked[index];
+      });
+      // 更多
+      this.moreFilterName.forEach((item, index) => {
+        if (this.moreFilterSelected[index].length > 0)
+          searchParam[item.paramName] = this.moreFilterSelected[index];
+      });
+      // 排序
+      if (this.orderBy[this.orderByIndex].paramName) {
+        this.orderFlag += 1;
+        // console.log(this.orderFlag);
+        searchParam[this.orderBy[this.orderByIndex].paramName] = this.orderFlag % 2;
+      }
+      // 一些特殊处理
+      if (searchParam["completeYearRanges"]) {
+        searchParam["completeYearRanges"] = searchParam[
+          "completeYearRanges"
+        ].map((item, index) => {
+          let range = this.extractNum(item);
+          let crrYear = new Date().getFullYear();
+          return {
+            minValue: Math.max(0, crrYear - range.maxValue),
+            maxValue: crrYear - range.minValue
+          };
+        });
+      }
+      oldHouseApi
+        .search(cityPinYin, this.pageNum, this.pageSize, searchParam)
+        .then(response => {
+          if (response.code == 200) {
+            let data = response.data;
+            // 设置数据
+            this.totalRecords = data.total;
+            // 先清空
+            this.propertyInfoArray.splice(0, this.propertyInfoArray.length);
+            if (data) {
+              data.list.forEach((item, i) => {
+                let propertyInfo = {};
+                // 默认封面图片
+                propertyInfo.coverImg = item.proCoverUrl
+                  ? item.proCoverUrl
+                  : this.defaultImg;
+                // 详细页面链接
+                propertyInfo.detailUrl = "#";
+                // 标题
+                propertyInfo.title = item.proTitle;
+                // 位置
+                propertyInfo.location = item.proDistrict + "-" + item.proArea;
+                // x室y厅
+                propertyInfo.countFT = item.proTitle.split("，")[0];
+                // 面积
+                propertyInfo.houseArea = item.proSquare + "m²";
+                // 朝向
+                propertyInfo.direction = item.proDirection;
+                // 装修
+                propertyInfo.decoration = item.proDecoration;
+                // 楼层
+                propertyInfo.floor =
+                  item.proFloor + "(共" + item.proFloorAll + "层)";
+                propertyInfo.completeYear = item.proCompleteYear + "建";
+                propertyInfo.houseType = item.proType;
+                propertyInfo.numFav = Math.round(Math.random()*1000) + "关注";;
+                propertyInfo.lastUpdate =
+                  this.calculateLastUpdate(str2Date(item.proCreateDate)) +
+                  "前发布";
+                propertyInfo.isSupportVR = true;
+                propertyInfo.isAllowView = true;
+                propertyInfo.isOverFiveYears = false;
+                propertyInfo.allPrice = item.proPrice + item.proPriceType;
+                propertyInfo.unitPrice =
+                  "单价：" + item.proUnitPrice + item.proUnitPriceType;
+                // console.log(str2Date(item.proCreateDate));
+                this.propertyInfoArray.push(propertyInfo);
+              });
+            }
+            this.loading = false;
+            // console.log(this.propertyInfoArray);
+          }
+        });
+    },
+    handleOrderBy(key, keyPath) {
+      // console.log(key);
+      this.loading = true;
+      this.orderByIndex = parseInt(key);
+      this.searchHouse();
+    },
+    fetchData() {
+      //
+    },
+    // 记录点击区域的level和areaId
+    handleAreaClick(level, areaId) {
+      this.areaLvSelected = level;
+      this.areaIdSelected = areaId;
+      if (level > 0 && level < 3 && areaId > 0) {
+        // 加载下一级
+        this.fetchAreaData(level, areaId);
+      }
+    },
+    // 如果level == 0，表示pCodeOrPId为父Code
+    // 如果level >= 1，表示pCodeOrPId为父Id
+    fetchAreaData(level, pCodeOrPId) {
+      let requestFun = oldHouseApi.getByPAreaCode;
+      if (level > 0) requestFun = oldHouseApi.getByPAreaId;
+      requestFun("chengdu", pCodeOrPId).then(response => {
+        let data = response.data;
+        if (response.code == 200) {
+          if (!data) return;
+          let areas = data.map(item => {
+            return {
+              id: item.areId,
+              name: item.areName
+            };
+          });
+          if (level == 0) {
+            areas.splice(0, 0, {
+              id: -1,
+              name: "全部"
+            });
+          }
+          this.areasArray.splice(level, 10, {
+            data: areas,
+            level: level + 1
+          });
+        }
+      });
+    },
+    extractNum(rangeItem) {
+      let item = rangeItem;
+      let reNum = /\d+/g;
+      let res = item.match(reNum);
+      let minValue = 0,
+        maxValue = 99999999;
+      if (res) {
+        res = res.map(val => parseInt(val));
+        if (res.length > 1) (minValue = res[0]), (maxValue = res[1]);
+        else if (item.startsWith("小")) maxValue = res[0];
+        else if (item.startsWith("大")) minValue = res[0];
+        else minValue = maxValue = res[0];
+        return {
+          maxValue,
+          minValue
+        };
+      }
+      return null;
+    },
+    // 解析range字符串
+    rangeParse(rangeStr, unitType) {
+      unitType = unitType ? unitType : "";
+      let ranges = rangeStr.split(",");
+      let ret = new Array(ranges.length);
+      ranges.forEach((item, i) => {
+        ret[i] = {};
+        ret[i].display = item + unitType;
+        let rangeItem = this.extractNum(item);
+        if (rangeItem) ret[i].label = rangeItem;
+      });
+      return ret;
+    },
+    // 获取城市配置信息
+    fetchCityConfig(cityCode) {
+      oldHouseApi.getByCityCode(cityCode).then(response => {
+        if (response.code == 200 && response.data) {
+          let data = response.data;
+          // 三个范围
+          let dd = ["ctySaleRange", "ctyHouseArea", "ctyHouseType"];
+          let unitTypes = ["万", "m²", ""];
+          dd.forEach((item, index) => {
+            this.filterRowsRight.splice(
+              index,
+              1,
+              this.rangeParse(data[item], unitTypes[index])
+            );
+          });
+        }
+      });
+    },
+    // 初始化更多里的值
+    initialMoreFilterData() {
+      this.moreFilterValues = [
+        [
+          {
+            label: "5年以内",
+            value: "0-5"
+          },
+          {
+            label: "10年以内",
+            value: "0-10"
+          },
+          {
+            label: "15年以内",
+            value: "0-15"
+          },
+          {
+            label: "20年以内",
+            value: "0-20"
+          },
+          {
+            label: "大于20年",
+            value: "20-99999999"
+          }
+        ],
+        [
+          {
+            label: "板房",
+            value: "板房"
+          },
+          {
+            label: "砖房",
+            value: "砖房"
+          },
+          {
+            label: "裙楼",
+            value: "裙楼"
+          },
+          {
+            label: "排房",
+            value: "排房"
+          },
+          {
+            label: "多层",
+            value: "多层"
+          },
+          {
+            label: "高层",
+            value: "高层"
+          },
+          {
+            label: "小高层",
+            value: "小高层"
+          },
+          {
+            label: "四合院",
+            value: "四合院"
+          },
+          {
+            label: "多层复式",
+            value: "多层复式"
+          },
+          {
+            label: "高层复式",
+            value: "高层复式"
+          },
+          {
+            label: "多层跃式",
+            value: "多层跃式"
+          },
+          {
+            label: "高层跃式",
+            value: "高层跃式"
+          },
+          {
+            label: "独立别墅",
+            value: "独立别墅"
+          },
+          {
+            label: "联体别墅",
+            value: "联体别墅"
+          },
+          {
+            label: "双拼别墅",
+            value: "双拼别墅"
+          }
+        ],
+        [
+          {
+            label: "低区",
+            value: "低区"
+          },
+          {
+            label: "中区",
+            value: "中区"
+          },
+          {
+            label: "高区",
+            value: "高区"
+          }
+        ],
+        [
+          {
+            label: "朝南",
+            value: "南"
+          },
+          {
+            label: "朝北",
+            value: "北"
+          },
+          {
+            label: "朝中",
+            value: "中"
+          },
+          {
+            label: "朝东",
+            value: "东"
+          },
+          {
+            label: "东西",
+            value: "东西"
+          },
+          {
+            label: "南北",
+            value: "南北"
+          },
+          {
+            label: "东南",
+            value: "东南"
+          },
+          {
+            label: "东北",
+            value: "东北"
+          },
+          {
+            label: "西南",
+            value: "西南"
+          },
+          {
+            label: "西北",
+            value: "西北"
+          }
+        ],
+        [
+          {
+            label: "精装",
+            value: "精装"
+          },
+          {
+            label: "中装",
+            value: "中装"
+          },
+          {
+            label: "简装",
+            value: "简装"
+          },
+          {
+            label: "清水",
+            value: "清水"
+          }
+        ]
+      ];
+    },
+    // 计算发布时间
+    calculateLastUpdate(date) {
+      let dayNum = dateDiff(date, new Date());
+      if (dayNum <= 30) {
+        return dayNum + "天";
+      } else if (dayNum <= 356) {
+        return parseInt(dayNum / 30) + "个月";
+      } else {
+        return parseInt(dayNum / 365) + "年";
+      }
+    }
   }
 };
 </script>
 
 <style scoped>
+.link-active {
+  color: blue;
+}
+
+.margin6em {
+  margin-right: 2em;
+}
+
 .cheader {
   width: 100%;
   height: 100px;
@@ -300,10 +595,39 @@ span {
 }
 .crow {
   line-height: 30px;
+  display: flex;
+  flex-direction: row;
 }
 
+.crow-right {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
 .cbtn {
   border: none;
   border-radius: 0px;
+}
+
+.box-mg-right2em {
+  margin-right: 2em;
+}
+
+.box-item6em {
+  width: 6em;
+  margin-right: 2em;
+}
+.box-item8em {
+  width: 10em;
+  margin-right: 2em;
+}
+.box-item4em {
+  width: 4em;
+  margin-right: 0.8em;
+}
+.box-body {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
 }
 </style>
