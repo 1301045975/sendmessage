@@ -22,4 +22,19 @@ export function getZones() {
   })
 };
 
+export function getRegions() {
+  return request({
+    url: '/map/getRegions',
+    method: 'get',
+  })
+};
+
+export function getEstatesByRegionId(regionId) {
+  return request({
+    url: '/map/getEstatesByRegionId',
+    method: 'get',
+    params: { regionId }
+  })
+}
+
 

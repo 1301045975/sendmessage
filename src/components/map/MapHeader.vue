@@ -2,9 +2,11 @@
   <div class="main-container">
     <el-row :gutter="0">
       <el-col :span="6">
-        <el-popover placement="top-start" title="" width="400" trigger="click" content="热门城市">
+        <el-popover placement="top-start" title width="400" trigger="click" content="热门城市">
           <div>
-            <label for=""><strong>热门城市</strong></label>
+            <label for>
+              <strong>热门城市</strong>
+            </label>
             <span style="display:block; margin:10px 0">
               <el-button type="text" slot="reference" style="margin: 10px 20px">北京</el-button>
               <el-button type="text" slot="reference" style="margin: 10px 20px">上海</el-button>
@@ -14,18 +16,14 @@
             </span>
           </div>
           <el-button type="text" slot="reference">
-            <i class="el-icon-location-outline"></i>成都
+            <i class="el-icon-location-outline"></i>
+            {{ curCity }}
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover
-          placement="bottom"
-          width="150"
-          trigger="click"
-          content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
-        >
+        <el-popover placement="bottom" width="150" trigger="click" content>
           <div>
             <el-radio v-model="radioType" label="二手房">二手房</el-radio>
             <br />
@@ -48,6 +46,8 @@
 </template>
 
 <script>
+import oldHouseApi from "@/api/oldhouse";
+
 export default {
   name: "MapHeader",
   components: {},
@@ -58,31 +58,27 @@ export default {
       visible: false,
       input: "",
       radioType: "二手房",
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ]
+      curCity: "成都"
     };
   },
-  methods: {}
+  created() {
+    this.getCurCity('510100');
+  },
+  methods: {
+    getCurCity(cityCode) {
+      oldHouseApi
+        .getByCityCode(cityCode)
+        .then(response => {
+          if (response.code == 200 && response.data) {
+            let data = response.data;
+            this.curCity = data.ctyName;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 

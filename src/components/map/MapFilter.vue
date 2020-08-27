@@ -2,23 +2,25 @@
   <div class="main-container">
     <el-row :gutter="0">
       <el-col :span="6">
-        <el-popover placement="top-start" title="" width="500" trigger="hover" content="这是价格过滤器">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这是价格过滤器">
           <div>
-            <label for=""><strong>价格（万）</strong></label>
-            <div>
-              <el-checkbox-group v-model="checkListPrice">
+            <label for>
+              <strong>价格（万）</strong>
+            </label>
+            <div style="padding-top:20px">
+              <!-- <el-checkbox-group v-model="checkListPrice">
                 <span style="display:inline-block; margin:20px 20px">
-                  <el-checkbox label="0-40" style="width:80px;">40以下</el-checkbox>
-                  <el-checkbox label="40-60" style="width:80px;">40-60</el-checkbox>
-                  <el-checkbox label="60-80" style="width:80px;">60-80</el-checkbox>
-                  <el-checkbox label="80-100" style="width:80px;">80-100</el-checkbox>
+                  <el-checkbox label="0-40" style="width:80px;margin-bottom:20px">40以下</el-checkbox>
                 </span>
-                <span style="display:inline-block; margin:10px 20px">
-                  <el-checkbox label="100-150" style="width:80px;">100-150</el-checkbox>
-                  <el-checkbox label="150-200" style="width:80px;">150-200</el-checkbox>
-                  <el-checkbox label="200-300" style="width:80px;">200-300</el-checkbox>
-                  <el-checkbox label="300-999" style="width:80px;">300以上</el-checkbox>
-                </span>
+              </el-checkbox-group>-->
+              <el-checkbox-group v-model="filterRowsChecked[0]">
+                <el-checkbox
+                  class="box-item6em"
+                  style="width:80px;margin-bottom:20px"
+                  v-for="(range, j) in filterRowsRight[0]"
+                  :label="range.label"
+                  :key="'filterRowName' + j"
+                >{{range.display}}</el-checkbox>
               </el-checkbox-group>
             </div>
             <div style="margin-top:10px">
@@ -63,11 +65,13 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title="" width="500" trigger="hover" content="这是房型过滤器。">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这是房型过滤器。">
           <div>
-            <label for=""><strong>房型</strong></label>
-            <div>
-              <el-checkbox-group v-model="checkListHouseType">
+            <label for>
+              <strong>房型</strong>
+            </label>
+            <div style="margin-top:20px">
+              <!-- <el-checkbox-group v-model="checkListHouseType">
                 <span style="display:block; margin:20px 20px">
                   <el-checkbox label="oneRoom" style="margin-right:60px">一室</el-checkbox>
                   <el-checkbox label="twoRoom" style="margin-right:60px">二室</el-checkbox>
@@ -77,6 +81,15 @@
                 <span style="display:block; margin:20px 20px">
                   <el-checkbox label="moreRoom">四室以上</el-checkbox>
                 </span>
+              </el-checkbox-group>-->
+              <el-checkbox-group v-model="filterRowsChecked[1]">
+                <el-checkbox
+                  class="box-item6em"
+                  style="width:80px;margin-bottom:20px"
+                  v-for="(range, j) in filterRowsRight[1]"
+                  :label="range.label"
+                  :key="'filterRowName' + j"
+                >{{range.display}}</el-checkbox>
               </el-checkbox-group>
             </div>
             <div>
@@ -100,11 +113,13 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title="" width="500" trigger="hover" content="这是面积过滤器。">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这是面积过滤器。">
           <div>
-            <label for=""><strong>面积</strong></label>
-            <div>
-              <el-checkbox-group v-model="checkListArea">
+            <label for>
+              <strong>面积</strong>
+            </label>
+            <div style="margin-top:20px">
+              <!-- <el-checkbox-group v-model="checkListArea">
                 <span style="display:block; margin:20px 20px">
                   <el-checkbox label="0-50" style="width:80px;">50以下</el-checkbox>
                   <el-checkbox label="50-70" style="width:80px;">50-70</el-checkbox>
@@ -117,6 +132,15 @@
                   <el-checkbox label="150-200" style="width:80px;">150-200</el-checkbox>
                   <el-checkbox label="200-999" style="width:80px;">200以上</el-checkbox>
                 </span>
+              </el-checkbox-group>-->
+              <el-checkbox-group v-model="filterRowsChecked[2]">
+                <el-checkbox
+                  class="box-item6em"
+                  style="width:80px;margin-bottom:20px"
+                  v-for="(range, j) in filterRowsRight[2]"
+                  :label="range.label"
+                  :key="'filterRowName' + j"
+                >{{range.display}}</el-checkbox>
               </el-checkbox-group>
             </div>
             <div>
@@ -140,16 +164,12 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover
-          placement="top-start"
-          title=""
-          width="500"
-          trigger="hover"
-          content="这里是更多过滤器。"
-        >
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这里是更多过滤器。">
           <div style="height:400px;">
             <el-scrollbar style="height:100%">
-              <label for><strong>房源特色</strong></label>
+              <label for>
+                <strong>房源特色</strong>
+              </label>
               <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkListHouseFeature">
                   <span style="display:inline-block; margin:10px 20px">
@@ -166,7 +186,9 @@
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for><strong>朝向</strong></label>
+              <label for>
+                <strong>朝向</strong>
+              </label>
               <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkListHouseDirection">
                   <span style="display:inline-block; margin:10px 20px">
@@ -180,7 +202,9 @@
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for><strong>楼层</strong></label>
+              <label for>
+                <strong>楼层</strong>
+              </label>
               <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkListHouseFloor">
                   <span style="display:inline-block; margin:10px 20px">
@@ -190,7 +214,9 @@
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for><strong>楼龄</strong></label>
+              <label for>
+                <strong>楼龄</strong>
+              </label>
               <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkList">
                   <span style="display:inline-block; margin:10px 20px">
@@ -204,7 +230,9 @@
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for><strong>用途</strong></label>
+              <label for>
+                <strong>用途</strong>
+              </label>
               <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkListHousePurpose">
                   <span style="display:inline-block; margin:10px 20px">
@@ -219,7 +247,9 @@
                   </span>
                 </el-checkbox-group>
               </div>
-              <label for><strong>电梯</strong></label>
+              <label for>
+                <strong>电梯</strong>
+              </label>
               <div style="margin-bottom:10px;padding:10px 0">
                 <el-checkbox-group v-model="checkListHouseElevator">
                   <span style="display:inline-block; margin:10px 20px">
@@ -230,18 +260,18 @@
               </div>
             </el-scrollbar>
             <div style="margin:20px">
-                <el-row :gutter="20" style="margin-left:10px">
-                  <el-col :span="4">
-                    <el-button size="medium">重置</el-button>
-                  </el-col>
-                  <el-col :span="4" :offset="8">
-                    <el-button size="medium">取消</el-button>
-                  </el-col>
-                  <el-col :span="4">
-                    <el-button size="medium" type="primary">确定</el-button>
-                  </el-col>
-                </el-row>
-              </div>
+              <el-row :gutter="20" style="margin-left:10px">
+                <el-col :span="4">
+                  <el-button size="medium">重置</el-button>
+                </el-col>
+                <el-col :span="4" :offset="8">
+                  <el-button size="medium">取消</el-button>
+                </el-col>
+                <el-col :span="4">
+                  <el-button size="medium" type="primary">确定</el-button>
+                </el-col>
+              </el-row>
+            </div>
           </div>
           <el-button type="text" slot="reference">
             更多
@@ -254,11 +284,16 @@
 </template>
 
 <script>
+import oldHouseApi from "@/api/oldhouse";
+
 export default {
   name: "MapFilter",
   components: {},
   props: ["text", "position", "active"],
-  watch: {},
+  created() {
+    // 获取筛选条件范围数据
+    this.fetchCityConfig("510100");
+  },
   data() {
     return {
       visible: false,
@@ -273,37 +308,60 @@ export default {
       checkListHouseAge: [],
       checkListHousePurpose: [],
       checkListHouseElevator: [],
-      // checkList: ["复选框 A", "复选框E"],
-      // checkList: ["复选框 A", "复选框E"],
+      filterRowsName: ["售价", "面积", "房型"],
+      filterRowsRight: [[], [], []],
+      filterRowsChecked: [[], [], []],
       formPrice: {
         lowPrice: "",
         highPrice: ""
-      },
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ]
+      }
     };
   },
-  methods: {}
+  methods: {
+    // 解析range字符串
+    rangeParse(rangeStr, unitType) {
+      unitType = unitType ? unitType : "";
+      let ranges = rangeStr.split(",");
+      let ret = new Array(ranges.length);
+      ranges.forEach((item, i) => {
+        ret[i] = {};
+        ret[i].display = item + unitType;
+        let reNum = /\d+/g;
+        let res = item.match(reNum);
+        let minValue = 0,
+          maxValue = 99999999;
+        if (res) {
+          res = res.map(val => parseInt(val));
+          if (res.length > 1) (minValue = res[0]), (maxValue = res[1]);
+          else if (item.startsWith("小")) maxValue = res[0];
+          else minValue = res[0];
+        }
+        ret[i].label = {
+          minValue: minValue,
+          maxValue: maxValue
+        };
+      });
+      return ret;
+    },
+    // 获取城市配置信息
+    fetchCityConfig(cityCode) {
+      oldHouseApi.getByCityCode(cityCode).then(response => {
+        if (response.code == 200 && response.data) {
+          let data = response.data;
+          // 三个范围
+          let dd = ["ctySaleRange", "ctyHouseArea", "ctyHouseType"];
+          let unitTypes = ["万", "m²", ""];
+          dd.forEach((item, index) => {
+            this.filterRowsRight.splice(
+              index,
+              1,
+              this.rangeParse(data[item], unitTypes[index])
+            );
+          });
+        }
+      });
+    }
+  }
 };
 </script>
 

@@ -42,9 +42,21 @@
           @click.native="clickArea(item, index)"
         ></area-overlay>
       </div>
-      <div v-if="showEstate">
+      <div v-if="showRegion && regions">
+        <area-overlay
+          v-for="(item, index) in regions"
+          :key="index"
+          :position="{ lng: item.lng, lat: item.lat }"
+          :text="item"
+          :class="areaIndex === index ? 'active' : ''"
+          @mouseover.native="selectArea(item, index)"
+          @mouseleave.native="cancelArea(item, index)"
+          @click.native="clickRegion(item, index)"
+        ></area-overlay>
+      </div>
+      <div v-if="showEstate && estates">
         <estate-overlay
-          v-for="(item, index) in estateGeoPoints"
+          v-for="(item, index) in estates"
           :key="index"
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
@@ -74,7 +86,7 @@ import EstateOverlay from "@/components/map/EstateOverlay.vue";
 import BmBoundary from "vue-baidu-map/components/others/Boundary";
 import MapHeader from "@/components/map/MapHeader.vue";
 import MapFilter from "@/components//map/MapFilter.vue";
-import { getCity, getDistricts, getZones } from "@/api/map";
+import { getCity, getDistricts, getZones, getRegions, getEstatesByRegionId } from "@/api/map";
 
 export default {
   name: "Map",
@@ -97,6 +109,7 @@ export default {
       showDistrict: true,
       showBoundary: false,
       showZone: false,
+      showRegion: false,
       showEstate: false,
       areaBoundry: "",
       posCity: "成都市",
@@ -105,32 +118,8 @@ export default {
       city: null,
       districts: null,
       zones: null,
-      estateGeoPoints: [
-        {
-          lng: 103.98323427406207,
-          lat: 30.7756333737778,
-          cityName: "成都市",
-          districtName: "郫都区",
-          areaName: "犀浦镇",
-          qualifiedName: "成都市郫都区犀浦镇",
-          estateName: "季柳园",
-          name: "季柳园",
-          level: "area",
-          houseCnt: 123
-        },
-        {
-          lng: 103.98347466061654,
-          lat: 30.76366106299384,
-          cityName: "成都市",
-          districtName: "郫都区",
-          areaName: "犀浦镇",
-          qualifiedName: "成都市郫都区犀浦镇",
-          estateName: "双铁广场",
-          name: "双铁广场",
-          level: "area",
-          houseCnt: 234
-        }
-      ]
+      regions: null,
+      estates: null
     };
   },
   created() {
@@ -141,18 +130,31 @@ export default {
     this.height = window.innerWidth + "px";
     console.log(this.height);
     // 获取District信息
-    getDistricts().then(res => {
-      this.districts = res.data;
-    }).catch(err => {
-      console.log(err);
-    });
+    getDistricts()
+      .then(res => {
+        this.districts = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
     // 获取Zone信息
-    getZones().then(res => {
-      this.zones = res.data;
-      // console.log(res);
-    }).catch(err => {
-      console.log(err);
-    });
+    getZones()
+      .then(res => {
+        this.zones = res.data;
+        // console.log(this.zones);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // 获取Region信息
+    getRegions()
+      .then(res => {
+        this.regions = res.data;
+        // console.log(this.regions);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     handlerMapReady({ BMap, map }) {
@@ -194,12 +196,15 @@ export default {
     syncCenterAndZoom(e) {
       // district与zone的分界线
       const ZOOMBOUNDARY1 = 13;
-      // zone与estate的分界线
+      // zone与boundry的分界线
       const ZOOMBOUNDARY2 = 14;
+      // boundry与estate的分界线
+      const ZOOMBOUNDARY3 = 15;
       this.zoom = e.target.getZoom();
       this.showDistrict = this.zoom < ZOOMBOUNDARY1;
       this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY2;
-      this.showEstate = this.zoom >= ZOOMBOUNDARY2;
+      this.showRegion = this.zoom >= ZOOMBOUNDARY2 && this.zoom < ZOOMBOUNDARY3;
+      this.showEstate = this.zoom >= ZOOMBOUNDARY3;
       if (!this.showDistrict) {
         this.showBoundary = false;
       }
@@ -213,6 +218,21 @@ export default {
       this.$set(this.center, "lng", item.lng);
       this.$set(this.center, "lat", item.lat);
       // console.log("clickArea");
+    },
+    clickRegion(item, index) {
+      this.zoom += 1;
+      this.$set(this.center, "lng", item.lng);
+      this.$set(this.center, "lat", item.lat);
+      console.log(item);
+      // 获取Region信息
+      getEstatesByRegionId(item.areaId)
+        .then(res => {
+          this.estates = res.data;
+          // console.log(this.regions);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
