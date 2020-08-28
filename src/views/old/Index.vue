@@ -84,11 +84,11 @@
       </el-row>
       <el-divider></el-divider>
       <div v-if="!loading">
-        <house-item
+        <old-house-item
           v-for="(propertyInfo, i) in propertyInfoArray"
           :key="'propertyInfoArray' + i"
           :propertyInfo="propertyInfo"
-        ></house-item>
+        ></old-house-item>
       </div>
 
       <el-pagination
@@ -114,14 +114,16 @@ import { mapGetters } from "vuex";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import HouseItem from "@/components/rent/HouseItem.vue";
-import { str2Date, dateDiff } from "@/utils/date";
+import OldHouseItem from "@/components/old/OldHouseItem.vue";
+import { str2Date, dateDiff, calculateLastUpdate } from "@/utils/date";
 
 export default {
   name: "Old",
   components: {
     MyHeader,
     MyFooter,
-    HouseItem
+    HouseItem,
+    OldHouseItem
   },
   computed: {
     // ...mapGetters(["name", "uid"]);
@@ -224,7 +226,8 @@ export default {
       // 排序
       if (this.orderBy[this.orderByIndex].paramName) {
         this.orderFlag += 1;
-        searchParam[this.orderBy[this.orderByIndex].paramName] = this.orderFlag % 2;
+        searchParam[this.orderBy[this.orderByIndex].paramName] =
+          this.orderFlag % 2;
       }
       // 一些特殊处理
       if (searchParam["completeYearRanges"]) {
@@ -274,10 +277,10 @@ export default {
                   item.proFloor + "(共" + item.proFloorAll + "层)";
                 propertyInfo.completeYear = item.proCompleteYear + "建";
                 propertyInfo.houseType = item.proType;
-                propertyInfo.numFav = Math.round(Math.random()*1000) + "关注";
-                propertyInfo.lastUpdate =
-                  this.calculateLastUpdate(str2Date(item.proCreateDate)) +
-                  "前发布";
+                propertyInfo.numFav = Math.round(Math.random() * 1000) + "关注";
+                propertyInfo.lastUpdate = calculateLastUpdate(
+                  str2Date(item.proModDate)
+                );
                 propertyInfo.isSupportVR = true;
                 propertyInfo.isAllowView = true;
                 propertyInfo.isOverFiveYears = false;
@@ -551,17 +554,6 @@ export default {
         ]
       ];
     },
-    // 计算发布时间
-    calculateLastUpdate(date) {
-      let dayNum = dateDiff(date, new Date());
-      if (dayNum <= 30) {
-        return dayNum + "天";
-      } else if (dayNum <= 356) {
-        return parseInt(dayNum / 30) + "个月";
-      } else {
-        return parseInt(dayNum / 365) + "年";
-      }
-    }
   }
 };
 </script>

@@ -42,5 +42,34 @@ export function str2Date(dateStr, separator) {
 }
 
 export function dateDiff(date1, date2) {
-  return parseInt(Math.abs(date1.getTime() - date2.getTime()) / (1*24*60*60*1000));
+  // 相差秒数的绝对值
+  return parseInt(Math.abs(date1.getTime() - date2.getTime()) / 1000);
+}
+
+
+// 计算发布时间
+export function calculateLastUpdate(date) {
+  // 
+  // 由于时区问题，暂时精确到天
+  // 
+  // let secondNum = dateDiff(date, new Date());
+  // if (secondNum < 60) {
+  //   return secondNum + "秒";
+  // } else if (secondNum < 60 * 60) {
+  //   return parseInt(secondNum / 60) + "分钟";
+  // } else if (secondNum < 60 * 60 * 24) {
+  //   return parseInt(secondNum / (60 * 60)) + "小时";
+  // }
+  let secondNum = dateDiff(date, new Date());
+  let dayNum = parseInt(secondNum / (24 * 60 * 60));
+  if (dayNum < 1) {
+    return "刚刚发布"
+  }
+  if (dayNum <= 30) {
+    return dayNum + "天发布";
+  } else if (dayNum <= 356) {
+    return parseInt(dayNum / 30) + "个月前发布";
+  } else {
+    return parseInt(dayNum / 365) + "年前发布";
+  }
 }

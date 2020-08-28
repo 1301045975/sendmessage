@@ -7,7 +7,7 @@
           <el-col :span="16" :offset="4">
             <el-tabs tab-position="left">
               <el-tab-pane label="编辑资料">
-                <h2>功能正在开发中，敬请期待...</h2>
+                <my-profile></my-profile>
               </el-tab-pane>
               <el-tab-pane label="我的委托">
                 <h2>功能正在开发中，敬请期待...</h2>
@@ -35,7 +35,7 @@
         </el-row>
       </el-main>
     </el-container>
-     <my-footer></my-footer>
+    <my-footer></my-footer>
   </div>
 </template>
 
@@ -43,13 +43,15 @@
 import CityHouseConfig from "@/components/me/CityHouseConfig.vue";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
+import MyProfile from "@/components/me/MyProfile.vue";
 
 export default {
   name: "Me",
   components: {
     CityHouseConfig,
     MyHeader,
-    MyFooter
+    MyFooter,
+    MyProfile
   }
 };
 </script>
