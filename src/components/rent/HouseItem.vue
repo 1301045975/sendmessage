@@ -35,7 +35,7 @@
                         </el-row>
                         <el-row class="crow">
                             <i class="el-icon-star-off"></i>&nbsp;
-                            <span>{{property.numFav}}</span> /
+                            <span>{{property.numFav}}</span> |
                             <span>{{property.lastUpdate}}</span>
                         </el-row>
                         <el-row class="crow">
