@@ -84,11 +84,11 @@
       </el-row>
       <el-divider></el-divider>
       <div v-if="!loading">
-        <house-item
+        <rent-house-item
           v-for="(propertyInfo, i) in propertyInfoArray"
           :key="'propertyInfoArray' + i"
           :propertyInfo="propertyInfo"
-        ></house-item>
+        ></rent-house-item>
       </div>
 
       <el-pagination
@@ -114,14 +114,16 @@ import { mapGetters } from "vuex";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import HouseItem from "@/components/rent/HouseItem.vue";
-import { str2Date, dateDiff } from "@/utils/date";
+import RentHouseItem from "@/components/rent/RentHouseItem.vue";
+import { str2Date, dateDiff, calculateLastUpdate } from "@/utils/date";
 
 export default {
   name: "Rent",
   components: {
     MyHeader,
     MyFooter,
-    HouseItem
+    HouseItem,
+    RentHouseItem
   },
   computed: {
     // ...mapGetters(["name", "uid"]);
@@ -277,14 +279,12 @@ export default {
                 propertyInfo.houseType = item.proType;
                 propertyInfo.numFav = Math.round(Math.random()*1000) + "关注";;
                 propertyInfo.lastUpdate =
-                  this.calculateLastUpdate(str2Date(item.proCreateDate)) +
-                  "前发布";
+                  calculateLastUpdate(str2Date(item.proModDate));
                 propertyInfo.isSupportVR = true;
                 propertyInfo.isAllowView = true;
                 propertyInfo.isOverFiveYears = false;
-                propertyInfo.allPrice = item.proPrice + item.proPriceType;
-                propertyInfo.unitPrice =
-                  "单价：" + item.proUnitPrice + item.proUnitPriceType;
+                propertyInfo.allPrice = item.proRentPrice;
+                propertyInfo.unitPrice = item.proRentPriceType;
                 // console.log(str2Date(item.proCreateDate));
                 this.propertyInfoArray.push(propertyInfo);
               });
@@ -553,17 +553,6 @@ export default {
         ]
       ];
     },
-    // 计算发布时间
-    calculateLastUpdate(date) {
-      let dayNum = dateDiff(date, new Date());
-      if (dayNum <= 30) {
-        return dayNum + "天";
-      } else if (dayNum <= 356) {
-        return parseInt(dayNum / 30) + "个月";
-      } else {
-        return parseInt(dayNum / 365) + "年";
-      }
-    }
   }
 };
 </script>
