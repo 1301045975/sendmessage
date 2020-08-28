@@ -22,7 +22,10 @@
           <el-menu-item index="/map">地图找房</el-menu-item>
           <el-menu-item @click="toggleLoginDialog" style="float: right" v-show="!logoutFlag">登录/注册</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
-          <el-menu-item @click="center" style="float: right" v-show="logoutFlag">个人中心</el-menu-item>
+          <el-menu-item @click="center" style="float: right;" v-show="logoutFlag">
+            <el-image v-if="userAvatar" style="width: 40px; height: 40px" :src="userAvatar" fit="fill"></el-image>
+            <span style="margin-left:10px">{{userName}}</span>
+          </el-menu-item>
           <!--<el-submenu index="person" style="float: right" v-show="logoutFlag">
                   <template slot="title">个人中心</template>
                   <el-menu-item @click="center">我的关注</el-menu-item>
@@ -55,7 +58,14 @@ export default {
     loginDialog
   },
   computed: {
-    ...mapGetters(["name"])
+    ...mapGetters(["name", "imgurl", "mobile"]),
+    userAvatar() {
+      return process.env.VUE_APP_BASE_API_PORTAL + this.imgurl;
+    },
+    userName() {
+      console.log(this.name);
+      return this.name ? this.name : this.mobile;
+    }
   },
   data() {
     return {

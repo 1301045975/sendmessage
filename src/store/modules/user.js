@@ -7,6 +7,7 @@ const user = {
     name: '',
     mobile: '',
     avatar: '',
+    imgurl: '',
     roles: []
   },
 

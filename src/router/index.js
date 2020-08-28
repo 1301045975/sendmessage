@@ -4,6 +4,13 @@ import Home from "../views/home/Index.vue";
 
 Vue.use(VueRouter);
 
+// router文件夹-->index.js文件
+//cv以下代码解决路由地址重复的报错问题(一劳永逸)
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+}
+
 const routes = [
   {
     path: "/",
