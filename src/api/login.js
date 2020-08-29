@@ -43,3 +43,13 @@ export function logout() {
     method: 'get'
   })
 }
+
+export function resetPwd(userInfo) {
+  let userInfoEn = Object.assign({}, userInfo);
+  userInfoEn.password = pwdEncoder.encode(userInfoEn.password);
+  return request({
+    url: '/user/resetPwd',
+    method: 'post',
+    data: userInfoEn
+  });
+}

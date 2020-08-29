@@ -36,3 +36,9 @@ export function validate11PhoneNum(str){
   const reg = /^[1][3,4,5,7,8][0-9]{9}$/;
   return reg.test(str);
 }
+
+/* 合法的密码：必须包含数字和字母，字符在6-30个 */
+export function validatePassword(str) {
+  const reg = /^(?=.*[0-9])(?=.*[A-Za-z]).{6,30}$/;
+  return reg.test(str);
+}
