@@ -106,7 +106,6 @@
 </template>
 
 <script type="text/javascript">
-import cheader from "@/components/newheader";
 import oldHouseApi from "@/api/oldhouse";
 import informationApi from "@/api/information";
 // import BMap from "BMap";
