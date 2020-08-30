@@ -21,5 +21,13 @@ export function updatePwd(formData) {
   })
 };
 
+export function getFavProperty(formData) {
+  return request({
+    url: '/user/getFavProperty',
+    method: 'get',
+    params: formData
+  })
+};
+
 
 
