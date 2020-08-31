@@ -15,6 +15,9 @@
               <el-tab-pane label="收藏房源">
                 <fav-property></fav-property>
               </el-tab-pane>
+              <el-tab-pane label="收藏楼盘">
+                <fav-estate></fav-estate>
+              </el-tab-pane>
               <el-tab-pane label="已看房源">
                 <h2>功能正在开发中，敬请期待...</h2>
               </el-tab-pane>
@@ -45,6 +48,7 @@ import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import MyProfile from "@/components/me/MyProfile.vue";
 import FavProperty from "@/components/me/FavProperty.vue";
+import FavEstate from "@/components/me/FavEstate.vue";
 
 export default {
   name: "Me",
@@ -53,7 +57,8 @@ export default {
     MyHeader,
     MyFooter,
     MyProfile,
-    FavProperty
+    FavProperty,
+    FavEstate
   }
 };
 </script>

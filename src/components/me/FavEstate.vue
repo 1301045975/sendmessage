@@ -2,12 +2,12 @@
   <div>
     <!-- 表格 -->
     <el-table :data="tableData" :height="containerHeight*0.8" border style="width: 100%">
-      <el-table-column prop="ufpId" label="ufpId" width="180"></el-table-column>
-      <el-table-column prop="ufpProId" label="ufpProId" width="180"></el-table-column>
-      <el-table-column prop="ufpUsrId" label="ufpUsrId"></el-table-column>
-      <el-table-column prop="ufpCtyCode" label="ufpCtyCode"></el-table-column>
-      <el-table-column label="ufpCreateDate">
-        <template slot-scope="scope">{{scope.row.ufpCreateDate | formatTime}}</template>
+      <el-table-column prop="ufeId" label="ufeId" width="180"></el-table-column>
+      <el-table-column prop="ufeEstId" label="ufeEstId" width="180"></el-table-column>
+      <el-table-column prop="ufeUsrId" label="ufeUsrId"></el-table-column>
+      <el-table-column prop="ufeCtyCode" label="ufeCtyCode"></el-table-column>
+      <el-table-column label="ufeCreateDate">
+        <template slot-scope="scope">{{scope.row.ufeCreateDate | formatTime}}</template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -39,10 +39,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { formatDate } from "@/utils/date";
-import { getFavProperty, deleteFavProperty } from "@/api/me";
+import { getFavEstate, deleteFavEstate } from "@/api/me";
 
 export default {
-  name: "FavProperty",
+  name: "FavEstate",
   mounted() {
     // mounted阶段无法vuex中拿到其中存储的值
     // console.log(this.mobile);
@@ -91,17 +91,16 @@ export default {
         pageSize: this.pageSize
       };
       // console.log(formData);
-      getFavProperty(formData)
+      getFavEstate(formData)
         .then(res => {
           if (res.code == 200) {
             let data = res.data;
             this.totalRows = data.total;
-            // s.substring(0, 25) + '8' + s.substring(26)
             // data.list.forEach((item, index) => {
-            //   item.ufpCreateDate = item.ufpCreateDate.substring(0, 25) + '8' + item.ufpCreateDate.substring(26)
+            //   item.ufeCreateDate = item.ufeCreateDate.substring(0, 25) + '8' + item.ufeCreateDate.substring(26);
+            //   console.log(item.ufeCreateDate);
+            //   console.log(formatDate(new Date(item.ufeCreateDate), "yyyy-MM-dd hh:mm:ss"));
             // })
-            // let date = new Date(data.list[0].ufpCreateDate);
-            // console.log(date);
             this.tableData = data.list;
           } else {
             this.$message.error("数据获取失败");
@@ -116,10 +115,10 @@ export default {
       // console.log(row);
       // console.log(row.ufpId);
       let formData = {
-        favPropId: row.ufpId
+        favEstateId: row.ufeId
       };
       // console.log(formData);
-      deleteFavProperty(formData)
+      deleteFavEstate(formData)
         .then(res => {
           if (res.code == 200) {
             this.$message.success("删除成功");

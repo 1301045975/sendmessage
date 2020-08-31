@@ -29,5 +29,29 @@ export function getFavProperty(formData) {
   })
 };
 
+export function deleteFavProperty(formData) {
+  return request({
+    url: '/user/deleteFavProperty',
+    method: 'get',
+    params: formData
+  })
+};
+
+export function getFavEstate(formData) {
+  return request({
+    url: '/user/getFavEstate',
+    method: 'get',
+    params: formData
+  })
+};
+
+export function deleteFavEstate(formData) {
+  return request({
+    url: '/user/deleteFavEstate',
+    method: 'get',
+    params: formData
+  })
+};
+
 
 
