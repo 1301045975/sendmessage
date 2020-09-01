@@ -158,6 +158,7 @@ export default {
       request: {
         house_id: ""
       },
+      // 搜索关键词
       searchContent: "",
       // 分页
       pageNum: 1,
@@ -205,8 +206,13 @@ export default {
   },
   methods: {
     searchHouse() {
+      this.loading = true;
       let cityPinYin = "chengdu";
       let searchParam = {};
+      // 关键词
+      if (this.searchContent) {
+        searchParam.keyWords = this.searchContent;
+      }
       // 区域Id
       if (this.areaIdSelected > 0) {
         searchParam.areaId = this.areaIdSelected;

@@ -205,8 +205,13 @@ export default {
   },
   methods: {
     searchHouse() {
+      this.loading = true;
       let cityPinYin = "chengdu";
       let searchParam = {};
+      // 关键词
+      if (this.searchContent) {
+        searchParam.keyWords = this.searchContent;
+      }
       // 区域Id
       if (this.areaIdSelected > 0) {
         searchParam.areaId = this.areaIdSelected;
@@ -552,7 +557,7 @@ export default {
           }
         ]
       ];
-    },
+    }
   }
 };
 </script>
