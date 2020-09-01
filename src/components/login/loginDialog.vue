@@ -108,7 +108,7 @@
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>
-        <el-form-item label prop="password2">
+        <el-form-item label prop="password3">
           <el-input
             type="password"
             v-model="foo.password3"
@@ -196,6 +196,14 @@ export default {
       }
     };
 
+    const isPasswordSame2 = (rule, _, callback) => {
+      if (!this.loginShow && this.foo.password3 != this.forgetForm.password) {
+        callback(new Error("两次密码不一样"));
+      } else {
+        callback();
+      }
+    };
+
     const isValidAuthCode = (rule, value, callback) => {
       if (value.length < 4) {
         callback(new Error("验证码长度不会小于4"));
@@ -239,6 +247,13 @@ export default {
             required: true,
             trigger: "blur",
             validator: isPasswordSame
+          }
+        ],
+        password3: [
+          {
+            required: true,
+            trigger: "blur",
+            validator: isPasswordSame2
           }
         ],
         authCode: [
@@ -449,7 +464,6 @@ export default {
           })
           .catch(err => {});
       }
-      
     },
     // 通知父组件已经登陆
     noticeParentComp() {
