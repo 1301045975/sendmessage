@@ -88,6 +88,7 @@
           v-for="(propertyInfo, i) in propertyInfoArray"
           :key="'propertyInfoArray' + i"
           :propertyInfo="propertyInfo"
+          @click.native="toDetail(propertyInfo.id)"
         ></old-house-item>
       </div>
 
@@ -204,6 +205,14 @@ export default {
     //
   },
   methods: {
+    toDetail(proId) {
+      this.$router.push({
+        path: '/old/detail',
+        query: {
+          proId: proId
+        }
+      })
+    },
     searchHouse() {
       this.loading = true;
       let cityPinYin = "chengdu";
@@ -259,6 +268,7 @@ export default {
               data.list.forEach((item, i) => {
                 let propertyInfo = {};
                 // 默认封面图片
+                propertyInfo.id = item.proId;
                 propertyInfo.coverImg = item.proCoverUrl
                   ? item.proCoverUrl
                   : this.defaultImg;

@@ -210,8 +210,8 @@
                     <el-row>
                         <h2>地址和交通</h2>
                         <el-row>
-                            <baidu-map>
-                            </baidu-map>
+<!--                            <baidu-map>-->
+<!--                            </baidu-map>-->
                         </el-row>
                     </el-row>
                 </el-row>
@@ -235,12 +235,12 @@
             }
         },
         methods :{
-            handler ({BMap, map}) {
-                console.log(BMap, map)
-                this.center.lng = 116.404
-                this.center.lat = 39.915
-                this.zoom = 15
-            }
+            // handler ({BMap, map}) {
+            //     console.log(BMap, map)
+            //     this.center.lng = 116.404
+            //     this.center.lat = 39.915
+            //     this.zoom = 15
+            // }
         },
         components:{
             MyHeader,

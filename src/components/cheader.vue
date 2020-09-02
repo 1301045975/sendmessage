@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import BMap from 'BMap'
+    // import BMap from 'BMap'
     export default {
         name: "oldheader",
         data() {
@@ -43,7 +43,7 @@
             };
         },
         mounted () {
-          this.ready();
+          // this.ready();
           this.activeIndex =  this.$route.path;
         },
         methods: {
@@ -51,14 +51,14 @@
                 this.activeIndex = key;
                 this.$router.push({path: key})
             },
-            ready() {
-                var geolocation = new BMap.Geolocation()
-                geolocation.getCurrentPosition((r) => {
-                    console.log(r.address.city)
-                    this.city = r.address.city;
-
-                }, {enableHighAccuracy: true})
-            }
+            // ready() {
+            //     var geolocation = new BMap.Geolocation()
+            //     geolocation.getCurrentPosition((r) => {
+            //         console.log(r.address.city)
+            //         this.city = r.address.city;
+            //
+            //     }, {enableHighAccuracy: true})
+            // }
         }
     }
 </script>

@@ -101,6 +101,7 @@
         :total="totalRecords"
       ></el-pagination>
     </div>
+
     <my-footer></my-footer>
   </div>
 </template>

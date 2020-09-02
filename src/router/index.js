@@ -47,7 +47,7 @@ const routes = [
   {
     path: "/old",
     name: "Old",
-    component: () => import("../views/old/Index.vue")
+    component: () => import("../views/old/Index.vue"),
   },
   {
     path: "/old/detail",
@@ -63,7 +63,7 @@ const routes = [
     path: "/oldHouse",
     name: "OldHouse",
     component: () => import("../views/oldHouse/Index.vue")
-  }
+  },
 
 ];
 

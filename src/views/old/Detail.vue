@@ -42,7 +42,7 @@
                         </swiper-footer-slide>
                         <div slot="nextBtn" class="next-btn" @click="handleNextSlide">&gt;</div>
                     </swiper-footer>
-                    <h2>基本信息</h2>
+                    <h2>房源信息</h2>
                     <el-divider></el-divider>
                     <h2>房源特色</h2>
                     <el-divider></el-divider>
@@ -50,6 +50,10 @@
                     <el-divider></el-divider>
                     <h2>官方认证</h2>
                     <el-divider></el-divider>
+                    <h2>周边配套</h2>
+                    <el-divider>
+<!--                        <around/>-->
+                    </el-divider>
                 </el-col>
                 <el-col :span="8">
                     <div>
@@ -67,6 +71,8 @@
 <script>
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
+import Around from "@/components/Around";
+
 import {
     Swiper,
     Slide,
@@ -82,7 +88,8 @@ export default {
         Swiper,
         Slide,
         SwiperFooter,
-        SwiperFooterSlide
+        SwiperFooterSlide,
+        Around
     },
     data() {
         return {

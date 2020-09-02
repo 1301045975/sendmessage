@@ -193,7 +193,6 @@
 
       },
       checkCityHouseConfig: function (jsonData, callback) {
-
       },
       handleRowChanged: function (crrRow, oldRow) {
       },
