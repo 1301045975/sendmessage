@@ -98,7 +98,7 @@
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="[10,20,30]"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="total, prev, pager, next, jumper"
         :total="totalRecords"
       ></el-pagination>
     </div>
@@ -161,7 +161,7 @@ export default {
       searchContent: "",
       // 分页
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 20,
       totalRecords: 0,
       // 区域
       areasArray: [],
