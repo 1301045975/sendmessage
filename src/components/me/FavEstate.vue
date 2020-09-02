@@ -46,15 +46,26 @@ export default {
   mounted() {
     // mounted阶段无法vuex中拿到其中存储的值
     // console.log(this.mobile);
-    this.getTableData();
+    // 由其他页面非首次进入时，watch函数不会执行，需要在这里从后台请求数据
+    if (typeof this.mobile == "undefined" || this.mobile == "") {
+      // console.log("mounted estate");
+    } else {
+      // console.log("mounted estate get data");
+      this.getTableData();
+    }
   },
   update() {
     console.log(this.mobile);
   },
   watch: {
     // mobile发生变化是，此函数会执行
-    mobile(oldValue, newValue) {
-      this.getTableData();
+    mobile(newValue, oldValue) {
+      // console.log(oldValue);
+      if (typeof newValue == "undefined" || newValue == "") {
+        // console.log("watch estate");
+      } else {
+        this.getTableData();
+      }
     }
   },
   data() {

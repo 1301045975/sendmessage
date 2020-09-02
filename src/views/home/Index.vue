@@ -14,7 +14,7 @@
             </span>
           </el-col>
           <el-col :span="1" :offset="2" style="cursor: pointer">
-            <span @click="send('/old')">二手房</span>
+            <span @click="send('/sale')">二手房</span>
           </el-col>
           <el-col :span="1" style="cursor: pointer">
             <span @click="send('/rent')">租房</span>
@@ -89,13 +89,13 @@
           <el-col :span="12" style="text-align: center;">
             <el-row>
               <el-image
-                @click="send('/old')"
+                @click="send('/sale')"
                 :src="require('../../assets/OldHouse.png')"
                 style="width:80px;height:80px"
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/old')" style="cursor:pointer">找二手房</span>
+              <span @click="send('/sale')" style="cursor:pointer">找二手房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">海量真实房源，数量不重复，点击开启看房旅程</el-row>
           </el-col>
