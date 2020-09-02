@@ -64,7 +64,11 @@ const routes = [
     name: "OldHouse",
     component: () => import("../views/oldHouse/Index.vue")
   },
-
+  {
+    path: "/around",
+    name: "Around",
+    component: () => import("../components/Around.vue")
+  },
 ];
 
 const router = new VueRouter({

@@ -35,6 +35,6 @@ export function getEstatesByRegionId(regionId) {
     method: 'get',
     params: { regionId }
   })
-}
+};
 
 
