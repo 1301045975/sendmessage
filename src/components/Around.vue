@@ -1,199 +1,214 @@
 <template>
-    <!--周边配套-->
-    <div class="around" id="around">
-        <h2 class="aroundTitle">周边配套</h2>
-
-        <!--地图-->
-        <div class="map-tab" id="map-tab">
-
-            <div class="map-content" :name="addrName">
-
-                <div class="detail-map">
-
-                    <div class="aroundContainer">
-                        <div class="map-box-left" id="map-box-left"></div>
-                        <div class="tabBox">
-                            <ul class="aroundType">
-                                <li class="LOGCLICK selectTag" data-log_evtid="10242" data-bl="traffic" @click="levelOneClick()"
-                                    data-key="地铁站,公交站" data-index="subway,bus" data-length="10,10" id="traffic_panel">交通
-                                </li>
-                                <li class="LOGCLICK " data-log_evtid="10242" data-bl="education" data-key="幼儿园,小学,中学,大学"
-                                    data-index="kindergarten,primary-school,middle-school,University"
-                                    data-length="10,10,10,10">教育
-                                </li>
-                                <li class="LOGCLICK" data-log_evtid="10242" data-bl="medical" data-key="医院,药店"
-                                    data-index="hospital,pharmacy" data-length="10,10">医疗
-                                </li>
-                                <li class="LOGCLICK" data-log_evtid="10242" data-bl="shopping" data-key="商场,超市,市场"
-                                    data-index="mall,supermarket,market" data-length="10,10,10">购物
-                                </li>
-                                <li class="LOGCLICK" data-log_evtid="10242" data-bl="life" data-key="银行,ATM,餐厅,咖啡馆"
-                                    data-index="bank,atm,restaurant,coffee" data-length="10,10,10,10">金融
-                                </li>
-                                <li class="LOGCLICK" data-log_evtid="10242" data-bl="entertainment"
-                                    data-key="公园,电影院,健身房,体育馆" data-index="park,cinema,gym,sport"
-                                    data-length="10,10,10,10">休闲
-                                </li>
-                            </ul>
-                            <div class="itemTagBox" id="traffic">
-                                <div class="tagStyle LOGCLICK select" data-bl="subway" data-log_evtid="10242"
-                                     data-index="subway" data-length="10">地铁站
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="bus" data-log_evtid="10242" data-index="bus"
-                                     data-length="10">公交站
-                                </div>
-                            </div>
-                            <div class="itemTagBox" id="education" style="display:none">
-                                <div class="tagStyle LOGCLICK select" data-bl="kindergarten" data-log_evtid="10242"
-                                     data-index="kindergarten" data-length="10">幼儿园
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="primary-school" data-log_evtid="10242"
-                                     data-index="primary-school" data-length="10">小学
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="middle-school" data-log_evtid="10242"
-                                     data-index="middle-school" data-length="10">中学
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="University" data-log_evtid="10242"
-                                     data-index="University" data-length="10">大学
-                                </div>
-                            </div>
-                            <div class="itemTagBox" id="medical" style="display:none">
-                                <div class="tagStyle LOGCLICK select" data-bl="hospital" data-log_evtid="10242"
-                                     data-index="hospital" data-length="10">医院
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="pharmacy" data-log_evtid="10242"
-                                     data-index="pharmacy" data-length="10">药店
-                                </div>
-                            </div>
-                            <div class="itemTagBox" id="shopping" style="display:none">
-                                <div class="tagStyle LOGCLICK select" data-bl="mall" data-log_evtid="10242"
-                                     data-index="mall" data-length="10">商场
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="supermarket" data-log_evtid="10242"
-                                     data-index="supermarket" data-length="10">超市
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="market" data-log_evtid="10242"
-                                     data-index="market" data-length="10">市场
-                                </div>
-                            </div>
-                            <div class="itemTagBox" id="life" style="display:none">
-                                <div class="tagStyle LOGCLICK select" data-bl="bank" data-log_evtid="10242"
-                                     data-index="bank" data-length="10">银行
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="atm" data-log_evtid="10242" data-index="atm"
-                                     data-length="10">ATM
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="restaurant" data-log_evtid="10242"
-                                     data-index="restaurant" data-length="10">餐厅
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="coffee" data-log_evtid="10242"
-                                     data-index="coffee" data-length="10">咖啡馆
-                                </div>
-                            </div>
-                            <div class="itemTagBox" id="entertainment" style="display:none">
-                                <div class="tagStyle LOGCLICK select" data-bl="cinema" data-log_evtid="10242"
-                                     data-index="cinema" data-length="10">电影院
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="gym" data-log_evtid="10242" data-index="gym"
-                                     data-length="10">健身房
-                                </div>
-                                <div class="tagStyle LOGCLICK" data-bl="sport" data-log_evtid="10242" data-index="sport"
-                                     data-length="10">体育馆
-                                </div>
-                                <div class="tagStyle LOGCLICK select" data-bl="park" data-log_evtid="10242"
-                                     data-index="park" data-length="10">公园
-                                </div>
-                            </div>
-
-                            <div class="aroundList" id="mapListContainer">
-                                <ul class="itemBox">
-
-                                </ul>
-                            </div>
-                            <div class="loading" style="display: none;">
-                                <img src="https://s1.ljcdn.com/feroot/pc/asset/ershoufang/sellDetail/img/loading.gif?_v=20180126155619"
-                                     class="loadingImg">
-                                <span class="loadingText">努力加载中...</span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="aroundContainer" :name="addrName">
+        <div class="tabBox">
+            <ul class="aroundType">
+                <li :class="{'LOGCLICK': true, selectTag: 'traffic' === currentLabel}" data-log_evtid="10242"
+                    data-bl="traffic" @click="levelOneClick('traffic')"
+                    data-key="地铁站,公交站" data-index="subway,bus" data-length="10,10" id="traffic_panel">交通
+                </li>
+                <li :class="{'LOGCLICK': true, selectTag: 'education' === currentLabel}" data-log_evtid="10242"
+                    data-bl="education" data-key="幼儿园,小学,中学,大学" @click="levelOneClick('education')"
+                    data-index="kindergarten,primary-school,middle-school,University"
+                    data-length="10,10,10,10">教育
+                </li>
+                <li :class="{'LOGCLICK': true, selectTag: 'medical' === currentLabel}" data-log_evtid="10242"
+                    data-bl="medical" data-key="医院,药店" @click="levelOneClick('medical')"
+                    data-index="hospital,pharmacy" data-length="10,10">医疗
+                </li>
+                <li :class="{'LOGCLICK': true, selectTag: 'shopping' === currentLabel}" data-log_evtid="10242"
+                    data-bl="shopping" data-key="商场,超市,市场" @click="levelOneClick('shopping')"
+                    data-index="mall,supermarket,market" data-length="10,10,10">购物
+                </li>
+                <li :class="{'LOGCLICK': true, selectTag: 'life' === currentLabel}" data-log_evtid="10242"
+                    data-bl="life" data-key="银行,ATM,餐厅,咖啡馆" @click="levelOneClick('life')"
+                    data-index="bank,atm,restaurant,coffee" data-length="10,10,10,10">金融
+                </li>
+                <li :class="{'LOGCLICK': true, selectTag: 'entertainment' === currentLabel}" data-log_evtid="10242"
+                    data-bl="entertainment" @click="levelOneClick('entertainment')"
+                    data-key="公园,电影院,健身房,体育馆" data-index="park,cinema,gym,sport"
+                    data-length="10,10,10,10">休闲
+                </li>
+            </ul>
+            <div :class="{'itemTagBox': true, levelTwoStyle: 'traffic' !== currentLabel}" id="traffic">
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'subway' === currentTwoLabel}"
+                     data-bl="subway" data-log_evtid="10242"
+                     data-index="subway" data-length="10" @click="twoLevelClick('subway')">地铁站
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'bus' === currentTwoLabel}" data-bl="bus"
+                     data-log_evtid="10242" data-index="bus"
+                     data-length="10" @click="twoLevelClick('bus')">公交站
                 </div>
             </div>
+            <div :class="{'itemTagBox': true, levelTwoStyle: 'education' !== currentLabel}" id="education">
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'kindergarten' === currentTwoLabel}"
+                     data-bl="kindergarten" data-log_evtid="10242"
+                     data-index="kindergarten" data-length="10" @click="twoLevelClick('kindergarten')">幼儿园
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'primary-school' === currentTwoLabel}"
+                     data-bl="primary-school" data-log_evtid="10242"
+                     data-index="primary-school" data-length="10" @click="twoLevelClick('primary-school')">小学
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'middle-school' === currentTwoLabel}"
+                     data-bl="middle-school" data-log_evtid="10242"
+                     data-index="middle-school" data-length="10" @click="twoLevelClick('middle-school')">中学
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'University' === currentTwoLabel}"
+                     data-bl="University" data-log_evtid="10242"
+                     data-index="University" data-length="10" @click="twoLevelClick('University')">大学
+                </div>
+            </div>
+            <div :class="{'itemTagBox': true, levelTwoStyle: 'medical' !== currentLabel}" id="medical">
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'hospital' === currentTwoLabel}"
+                     data-bl="hospital" data-log_evtid="10242"
+                     data-index="hospital" data-length="10" @click="twoLevelClick('hospital')">医院
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'pharmacy' === currentTwoLabel}"
+                     data-bl="pharmacy" data-log_evtid="10242"
+                     data-index="pharmacy" data-length="10" @click="twoLevelClick('pharmacy')">药店
+                </div>
+            </div>
+            <div :class="{'itemTagBox': true, levelTwoStyle: 'shopping' !== currentLabel}" id="shopping">
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'mall' === currentTwoLabel}" data-bl="mall"
+                     data-log_evtid="10242"
+                     data-index="mall" data-length="10" @click="twoLevelClick('mall')">商场
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'supermarket' === currentTwoLabel}"
+                     data-bl="supermarket" data-log_evtid="10242"
+                     data-index="supermarket" data-length="10" @click="twoLevelClick('supermarket')">超市
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'market' === currentTwoLabel}"
+                     data-bl="market" data-log_evtid="10242"
+                     data-index="market" data-length="10" @click="twoLevelClick('market')">市场
+                </div>
+            </div>
+            <div :class="{'itemTagBox': true, levelTwoStyle: 'life' !== currentLabel}" id="life">
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'bank' === currentTwoLabel}" data-bl="bank"
+                     data-log_evtid="10242"
+                     data-index="bank" data-length="10" @click="twoLevelClick('bank')">银行
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'atm' === currentTwoLabel}" data-bl="atm"
+                     data-log_evtid="10242" data-index="atm"
+                     data-length="10" @click="twoLevelClick('atm')">ATM
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'restaurant' === currentTwoLabel}"
+                     data-bl="restaurant" data-log_evtid="10242"
+                     data-index="restaurant" data-length="10" @click="twoLevelClick('restaurant')">餐厅
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'coffee' === currentTwoLabel}"
+                     data-bl="coffee" data-log_evtid="10242"
+                     data-index="coffee" data-length="10" @click="twoLevelClick('coffee')">咖啡馆
+                </div>
+            </div>
+            <div :class="{'itemTagBox': true, levelTwoStyle: 'entertainment' !== currentLabel}" id="entertainment">
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'cinema' === currentTwoLabel}"
+                     data-bl="cinema" data-log_evtid="10242"
+                     data-index="cinema" data-length="10" @click="twoLevelClick('cinema')">电影院
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'gym' === currentTwoLabel}" data-bl="gym"
+                     data-log_evtid="10242" data-index="gym"
+                     data-length="10" @click="twoLevelClick('gym')">健身房
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'sport' === currentTwoLabel}" data-bl="sport"
+                     data-log_evtid="10242" data-index="sport"
+                     data-length="10" @click="twoLevelClick('sport')">体育馆
+                </div>
+                <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'park' === currentTwoLabel}" data-bl="park"
+                     data-log_evtid="10242"
+                     data-index="park" data-length="10" @click="twoLevelClick('park')">公园
+                </div>
+            </div>
+
+            <div class="aroundList" id="mapListContainer">
+                <ul class="itemBox">
+                    <li v-for="(item, i) in serviceArray" :key="i">
+                        <div class="contentBox">
+                            <div class="itemContent">
+                                <span class="icon-park"></span>
+                                <span class="itemText itemTitle">{{item.name}}</span>
+                                <span class="icon-distance"></span>
+                                <span class="itemText itemdistance">{{item.detail_info.distance}}米</span></div>
+                            <div class="itemInfo">{{item.address}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="loading" style="display: none;">
+                <img src="https://s1.ljcdn.com/feroot/pc/asset/ershoufang/sellDetail/img/loading.gif?_v=20180126155619"
+                     class="loadingImg">
+                <span class="loadingText">努力加载中...</span>
+            </div>
         </div>
+        <!--地图-->
+        <baidu-map
+                id="bm-view"
+                class="bm-view"
+                :center="center"
+                :zoom="zoom"
+                ak="0dGpK7C09lZMjwx6QVhU6hzTRZBkGVAI"
+                :scroll-wheel-zoom="true"
+                @ready="handlerMapReady"
+                @zoomend="syncCenterAndZoom"
+        >
+            <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT"></bm-navigation>
+            <bm-scale anchor="BMAP_ANCHOR_BOTTOM_LEFT"></bm-scale>
+        </baidu-map>
         <!--地图end-->
     </div>
+
 </template>
 
 <script>
-    import axios from 'axios'
+    import BaiduMap from "vue-baidu-map/components/map/Map.vue";
+    import BmNavigation from 'vue-baidu-map/components/controls/Navigation'
+    import BmScale from 'vue-baidu-map/components/controls/Scale'
+
+
     export default {
         name: "Around",
+        components: {
+            BaiduMap,
+            BmNavigation,
+            BmScale,
+        },
         data() {
             return {
-                city: "成都市西南交大",
-                addrName: '交大八期',
-                map: "",
-                latitude: "",
-                longitute: "",
-                MapTitleId: '',     //地图面板ID
-                keyword: "交通",        //一级面板查询字
-                subKeyword: "地铁站",   //二级面板查询字
-                iconURL: "",
-                pointArray: [],        //周边点经纬度Point对象数组
-                ServiceArray: [],      //周边点详细信息
-                //var DistanceArr = new Array();       //周边点到中心点距离
+                addrName: "交大智能八期",
+                center: {
+                    lng: '',
+                    lat: '',
+                },
+                zoom: 16,
+                currentLabel: 'traffic',
+                currentTwoLabel: 'subway',
+                currentText: '交通',
+                currentTwoText: '地铁',
+                serviceArray: [],
+                pointArray: []
             }
         },
         methods: {
-            //初始化地图
-            initMap() {
-                this.setMapEvent();//设置地图事件
-                this.addMapControl();//向地图添加控件
-                this.addMapOverlay();//向地图添加覆盖物
+            levelOneClick(label) {
+                this.currentLabel = label
             },
-            //地图面板点击事件 第一级
-            levelOneClick() {
-
+            twoLevelClick(label) {
+                this.currentTwoLabel = label
             },
-            levelTwoClick() {
-
-            },
-            //根据一二级关键字请求百度API
-            searchData() {
-                axios.get({
-                    url: 'http://api.map.baidu.com/geocoder/v2/',
-                    data: {
-                        address: this.addrName,
-                        ak: "9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO"
-                    }
-                }).then((res) => {
-                    console.log(res)
-                }).catch((err) => {
+            handlerMapReady({BMap, map}) {
+                this.$jsonp('http://api.map.baidu.com/geocoder/v2/?address=' + this.addrName + "&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
+                    .then(res => {
+                        const location = res.result.location;
+                        // this.$set(this.center, 'addrLat', location.lat.toString());
+                        // this.$set(this.center, 'addrLng', location.lng.toString());
+                        this.center.lat = location.lat.toString();
+                        this.center.lng = location.lng.toString();
+                        console.log(this.center.lat, this.center.lng)
+                        this.addPoint()
+                    }).catch(err => {
                     console.log(err)
-                })
-            },
-            //添加周边点
-            addpoint(longitute, latitude, keyword) {
-
-            },
-            setMapEvent() {
-                // map.enableScrollWheelZoom();
-                // map.enableKeyboard();
-                // map.enableDragging();
-                // map.enableDoubleClickZoom()
-            },
-            addClickHandler(target, window) {
-                target.addEventListener("click", function () {
-                    target.openInfoWindow(window);
                 });
             },
-            //向地图添加控件
-            addMapControl() {
-                // var scaleControl = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
-                // scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
-                // map.addControl(scaleControl);
-                // var navControl = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT, type: 0});
-                // map.addControl(navControl);
+            syncCenterAndZoom() {
+
             },
             // 复杂的自定义覆盖物
             ComplexCustomOverlay(point, text, mouseoverText) {
@@ -201,28 +216,55 @@
                 this._text = text;
                 this._overText = mouseoverText;
             },
-            //向地图添加覆盖物
-            addMapOverlay() {
-
+            //获取目标地址经纬度
+            getAddrLatAndLng() {
+                this.$jsonp('http://api.map.baidu.com/geocoder/v2/?address=' + this.addrName + "&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
+                    .then(res => {
+                        const location = res.result.location;
+                        this.center.lat = location.lat.toString();
+                        this.center.lng = location.lng.toString();
+                    }).catch(err => {
+                    console.log(err)
+                });
+            },
+            //添加周边点
+            addPoint() {
+                this.$jsonp("http://api.map.baidu.com/place/v2/search?query=" + this.currentText + this.currentTwoText +
+                    "&location=" + this.center.lat + "," + this.center.lng +
+                    "&radius=2000&scope=2&filter=sort_name:distance|sort_rule:1&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
+                    .then(res => {
+                        this.serviceArray = res.results;
+                        console.log(this.serviceArray)
+                    }).catch(err => {
+                    console.log(err)
+                })
             }
+
         },
         created() {
-
+            this.handlerMapReady()
         }
+
     }
 </script>
 
 <style scoped>
+    .bm-view {
+        height: 500px;
+        width: 1150px;
+    }
+
     .aroundContainer {
         width: 1150px;
         margin: 0 auto;
         height: 510px;
-        margin-top: 18px;
-        position: relative;
+        /*margin-top: 18px;*/
+        position: absolute;
         overflow: hidden;
     }
 
     .tabBox {
+        z-index: 999;
         position: absolute;
         top: 24px;
         bottom: 24px;
@@ -233,6 +275,8 @@
     }
 
     .tabBox .aroundType {
+        margin: 0;
+        padding: 0;
         width: 100%;
         height: 40px !important;
         font-size: 0;
@@ -319,12 +363,19 @@
         overflow-y: auto;
     }
 
+    .tabBox .itemBox {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
     .tabBox .itemBox li {
         padding: 10px 0;
         cursor: pointer;
+
     }
 
-    .contentBox, .makerDetailStyle {
+    .contentBox {
         border-left: 2px solid #fff;
         padding: 0 23px;
     }
@@ -380,4 +431,9 @@
         word-wrap: break-word;
         white-space: normal;
     }
+
+    .levelTwoStyle {
+        display: none;
+    }
+
 </style>
