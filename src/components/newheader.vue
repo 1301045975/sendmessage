@@ -17,7 +17,7 @@
           <el-menu-item index="/rentHouse">租房</el-menu-item>
           <el-menu-item index="/agent">经纪人</el-menu-item>
           <el-menu-item index="/publish">发布房源</el-menu-item>
-          <el-menu-item index="/tool">工具</el-menu-item>
+          <el-menu-item index="/Detail_Page">工具</el-menu-item>
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
 
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>

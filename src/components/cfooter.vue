@@ -2,7 +2,7 @@
   <div class="cfooter">
     <div style="width: 60%;margin: 0 auto">
       <el-row style="color: #fff;line-height: 80px">
-        <span>关于万径</span>
+        <span>关于万房</span>
         <span>联系我们</span>
         <span>加入我们</span>
         <span>隐私声明</span>
@@ -21,7 +21,7 @@
 
 <script>
     export default {
-      name: "cfooter"
+      name: "cfooter",
     }
 </script>
 

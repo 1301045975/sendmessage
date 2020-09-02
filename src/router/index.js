@@ -59,6 +59,12 @@ const routes = [
     name: "PersonCenter",
     component: () => import("../views/shared/PersonCenter.vue")
   },
+
+  {
+    path: "/Detail_Page",
+    name: "Detail_Page",
+    component: () => import("../views/rent/Detail_Page")
+  },
   {
     path: "/oldHouse",
     name: "OldHouse",
