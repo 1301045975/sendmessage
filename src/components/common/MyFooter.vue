@@ -8,7 +8,8 @@
         <span>隐私声明</span>
         <span>网站地图</span>
         <span>友情链接</span>
-        <span style="float: right;color: #7dcfa0;">官方客服 4008123123</span>
+        <!-- 2020/09/02 没有客服电话，此项内容注释 -->
+        <!-- <span style="float: right;color: #7dcfa0;">官方客服 4008123123</span> -->
       </el-row>
       <el-row>
         <span

@@ -1,5 +1,5 @@
 <template>
-  <div class="map-wrapper">
+  <div>
     <baidu-map
       id="bm-view"
       class="bm-view"

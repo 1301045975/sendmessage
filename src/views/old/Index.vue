@@ -7,7 +7,7 @@
           <el-col
             :span="2"
             style="font-size: 28px;cursor: pointer;color: #00ae66;font-weight: bold"
-          >军军房产</el-col>
+          >{{ companyName }}</el-col>
           <el-col :span="8">
             <el-input
               placeholder="请输入内容"
@@ -135,11 +135,10 @@ export default {
     this.fetchCityConfig("510100");
     // 更多数据
     this.initialMoreFilterData();
-    // 查询房源数据
-    this.searchHouse();
   },
   data() {
     return {
+      companyName: "",
       center: { lng: 0, lat: 0 },
       zoom: 3,
       pojo: {},
@@ -202,7 +201,13 @@ export default {
     };
   },
   mounted() {
-    //
+    this.companyName = process.env.VUE_APP_COMPANY_NAME;
+    // 获取路由参数
+    this.searchContent = this.$route.params.searchContent;
+    console.log(this.$route.params);
+    console.log(this.searchContent);
+    // 查询房源数据
+    this.searchHouse();
   },
   methods: {
     toDetail(proId) {

@@ -15,9 +15,9 @@
           <el-menu-item index="/old">二手房</el-menu-item>
           <!-- <el-menu-item index="/newHouse">新房</el-menu-item> -->
           <el-menu-item index="/rent">租房</el-menu-item>
-          <el-menu-item index="/agent">经纪人</el-menu-item>
-          <el-menu-item index="/publish">发布房源</el-menu-item>
-          <el-menu-item index="/tool">工具</el-menu-item>
+          <!-- <el-menu-item index="/agent">经纪人</el-menu-item> -->
+          <!-- <el-menu-item index="/publish">发布房源</el-menu-item> -->
+          <!-- <el-menu-item index="/tool">工具</el-menu-item> -->
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
           <el-menu-item index="/map">地图找房</el-menu-item>
           <el-menu-item @click="toggleLoginDialog" style="float: right" v-show="!logoutFlag">登录/注册</el-menu-item>
