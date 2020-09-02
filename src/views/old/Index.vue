@@ -204,8 +204,6 @@ export default {
     this.companyName = process.env.VUE_APP_COMPANY_NAME;
     // 获取路由参数
     this.searchContent = this.$route.params.searchContent;
-    console.log(this.$route.params);
-    console.log(this.searchContent);
     // 查询房源数据
     this.searchHouse();
   },
