@@ -60,13 +60,13 @@
         <el-row type="flex" justify="center">
           <el-col :span="8" style="text-align: center">
             <span
-              style="color:#fff;cursor:pointer;padding-left:20px;"
+              :style="houseType === 'oldHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
               @click="searchType('oldHouse')"
-            >找二手房</span>
+            ><strong>找二手房</strong></span>
             <span
-              style="color:#fff;cursor:pointer;padding-left:20px;"
+              :style="houseType === 'rentHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
               @click="searchType('rentHouse')"
-            >找租房</span>
+            ><strong>找租房</strong></span>
           </el-col>
         </el-row>
 
@@ -326,16 +326,16 @@ export default {
       this.$router.push("/oldHouse/info/" + id);
     },
     searchHouse() {
-      console.log(this.houseType)
+      console.log(this.houseType);
       if (this.houseType === "oldHouse") {
         this.$router.push({
           name: "Old",
-          params: {searchContent: this.searchContent}
+          params: { searchContent: this.searchContent }
         });
       } else {
         this.$router.push({
           name: "Rent",
-          params: {searchContent: this.searchContent}
+          params: { searchContent: this.searchContent }
         });
       }
       // this.$router.push("/" + this.houseType + "/" + this.searchContent);

@@ -50,11 +50,20 @@
       <!-- 更多 -->
       <el-row class="crow">
         <label class="box-item4em">更多：</label>
+        <!-- <form action>
+          <select name="cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat" selected>Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+        </form> -->
         <div class="crow-right">
           <el-select
             multiple
             collapse-tags
             class="box-item8em"
+            :popper-append-to-body="false"
             v-for="(more, i) in moreFilterValues"
             v-model="moreFilterSelected[i]"
             :key="'moreFilterValues' + i"
@@ -95,6 +104,7 @@
       <el-pagination
         @size-change="fetchData"
         @current-change="fetchData"
+        :popper-append-to-body="false"
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="[10,20,30]"
@@ -210,11 +220,11 @@ export default {
   methods: {
     toDetail(proId) {
       this.$router.push({
-        path: '/old/detail',
+        path: "/old/detail",
         query: {
           proId: proId
         }
-      })
+      });
     },
     searchHouse() {
       this.loading = true;

@@ -55,6 +55,7 @@
             multiple
             collapse-tags
             class="box-item8em"
+            :popper-append-to-body="false"
             v-for="(more, i) in moreFilterValues"
             v-model="moreFilterSelected[i]"
             :key="'moreFilterValues' + i"
@@ -94,6 +95,7 @@
       <el-pagination
         @size-change="fetchData"
         @current-change="fetchData"
+        :append-to-body="false"
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="[10,20,30]"

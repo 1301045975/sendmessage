@@ -2,7 +2,7 @@
   <div class="main-container">
     <el-row :gutter="0">
       <el-col :span="6">
-        <el-popover placement="top-start" title width="400" trigger="click" content="热门城市">
+        <el-popover placement="top-start" title width="400" trigger="click" content="热门城市" :append-to-body="false">
           <div>
             <label for>
               <strong>热门城市</strong>
@@ -23,7 +23,7 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="bottom" width="150" trigger="click" content>
+        <el-popover placement="bottom" width="150" trigger="click" content="" :append-to-body="false">
           <div>
             <el-radio v-model="radioType" label="二手房">二手房</el-radio>
             <br />
