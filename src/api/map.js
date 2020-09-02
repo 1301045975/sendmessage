@@ -29,6 +29,7 @@ export function getRegions() {
   })
 };
 
+
 export function getEstatesByRegionId(regionId) {
   return request({
     url: '/map/getEstatesByRegionId',
