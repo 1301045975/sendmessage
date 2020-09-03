@@ -68,7 +68,7 @@ const routes = [
   {
     path: "/Detail_Page",
     name: "Detail_Page",
-    component: () => import("../views/rent/Detail_Page")
+    component: () => import("../views/rent/Detail_Page.vue")
   },
   {
     path: "/oldHouse",
