@@ -260,47 +260,50 @@
                                 <el-col :span="12">
                                     <el-form ref="form" :model="form" label-width="80px">
                                         <el-form-item label="贷款类型">
-                                            <el-select v-model="form.region" placeholder="商业贷款">
+                                            <el-select v-model="form.input1" placeholder="商业贷款">
                                                 <el-option label="商业贷款" value="商业贷款"></el-option>
                                                 <el-option label="公积金贷款" value="公积金贷款"></el-option>
                                                 <el-option label="组合贷款" value="组合贷款"></el-option>
                                             </el-select>
                                         </el-form-item>
                                         <el-form-item label="计算方式">
-                                            <el-select v-model="form.region" placeholder="按货款总额">
+                                            <el-select v-model="form.input2" placeholder="按货款总额">
                                                 <el-option label="按货款总额" value="按货款总额"></el-option>
                                                 <el-option label="按房屋总价" value="按房屋总价"></el-option>
                                             </el-select>
                                         </el-form-item>
-                                        <el-form-item label="商贷金额">
-                                            <el-input style="width: 300px" type="text" v-model="form.desc"  placeholder="请输入大于0的数字">
+                                        <el-form-item label="商贷金额" >
+                                            <el-input style="width: 300px" type="text" v-model="form.desc1"  placeholder="请输入大于0的数字">
                                                 <template slot="append">万元</template>
                                             </el-input>
 
                                         </el-form-item>
                                         <el-form-item label="商贷利率方式">
-                                            <el-select v-model="form.region" placeholder="按最新LPR">
+                                            <el-select v-model="form.input3" placeholder="按最新LPR">
                                                 <el-option label="按最新LPR" value="按最新LPR"></el-option>
                                                 <el-option label="按旧版基准利率" value="按旧版基准利率"></el-option>
                                             </el-select>
                                         </el-form-item>
                                         <el-form-item label="LPR">
-                                            <el-input style="width:350px" type="number" v-model="form.desc" placeholder="请输入中国人民银行网站公布的最新LPR" >
+                                            <el-button type="text" @click="open">
+                                            <i class="el-icon-info"></i>
+                                            </el-button>
+                                            <el-input style="width:350px" type="number" v-model="form.desc2" placeholder="请输入中国人民银行网站公布的最新LPR" >
                                                 <template slot="append">%</template>
                                             </el-input>
                                         </el-form-item>
                                         <el-form-item label="基点">
-                                            <el-input style="width: 300px" type="number" v-model="form.desc">
+                                            <el-input style="width: 300px" type="number" v-model="form.desc3">
                                                 <template slot="append">BP(‱)</template>
                                             </el-input>
                                         </el-form-item>
 
                                         <el-form-item label="商贷利率" placeholder="4.65">
-                                            <el-input style="width: 300px" type="text" v-model="form.desc"></el-input>
+                                            <el-input style="width: 300px" type="text" v-model="form.desc4"></el-input>
                                         </el-form-item>
 
                                         <el-form-item label="商贷年限">
-                                            <el-select v-model="form.region" placeholder="10年">
+                                            <el-select v-model="form.input4" placeholder="10年">
                                                 <el-option label="30年" value="30"></el-option>
                                                 <el-option label="29年" value="29"></el-option>
                                                 <el-option label="28年" value="28"></el-option>
@@ -350,19 +353,33 @@
                                             </el-row>
                                         </div>
                                         <el-row class="crow">
-                                            <el-col :span="6">类型</el-col>
-                                            <el-col :span="6">等额本息还款</el-col>
-                                            <el-col :span="6">等额本金还款</el-col>
+                                            <el-col :span="6">月供</el-col>
+                                            <el-col :span="6">0元</el-col>
+                                            <el-col :span="6">0元</el-col>
                                         </el-row>
+
                                         <el-row class="crow">
-                                            <el-col :span="6">类型</el-col>
-                                            <el-col :span="6">等额本息还款</el-col>
-                                            <el-col :span="6">等额本金还款</el-col>
+                                            <el-col :span="6">贷款年限</el-col>
+                                            <el-col :span="6">0年</el-col>
+                                            <el-col :span="6">0年</el-col>
                                         </el-row>
+
                                         <el-row class="crow">
-                                            <el-col :span="6">类型</el-col>
-                                            <el-col :span="6">等额本息还款</el-col>
-                                            <el-col :span="6">等额本金还款</el-col>
+                                            <el-col :span="6">贷款总额</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                        </el-row>
+
+                                        <el-row class="crow">
+                                            <el-col :span="6">利息总额</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                        </el-row>
+
+                                        <el-row class="crow">
+                                            <el-col :span="6">还款总额</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                            <el-col :span="6">0万元</el-col>
                                         </el-row>
                                     </el-card>
                                 </el-col>
@@ -371,7 +388,7 @@
                         <el-tab-pane label="新房税费计算器" name="second">
 
                         </el-tab-pane>
-                        <el-tab-pane label="二手房税费计算器" name="third">
+                        <el-tab-pane label="购房资质查询" name="third">
                         </el-tab-pane>
                     </el-tabs>
 
@@ -402,13 +419,19 @@
                 activeIndex2:'1',
                 form: {
                     name: '',
-                    region: '',
+                    input1:'',
+                    input2:'',
+                    input3:'',
+                    input4:'',
                     date1: '',
                     date2: '',
                     delivery: false,
                     type: [],
                     resource: '',
-                    desc: ''
+                    desc4: '',
+                    desc1: '',
+                    desc2: '',
+                    desc3: '',
                 },
                 activeName: 'first'
             }
@@ -417,6 +440,19 @@
         methods: {
             onSubmit() {
                 console.log('submit!');
+            },
+            open() {
+                this.$alert('自2019年10月8日起，新发放的商业住房贷款的贷款利率由“贷款基准利率（4.9%）”转换为“贷款款市场报价利率（LPR）”在LPR的基础上增加基点来确定最终的商贷利率； LPR每月20日（遇节假日顺延）报价一次，可在中国人民银行网站查询。', 'LPR（贷款市场报价利率）',
+                    {
+                    confirmButtonText: '确定',
+                    // callback: action => {
+                    //     this.$message({
+                    //         type: 'info',
+                    //         message: `action: ${ action }`
+                    //     }
+                    //     );
+                    // }
+                });
             }
         },
 
