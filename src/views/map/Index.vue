@@ -2,7 +2,7 @@
   <div>
     <baidu-map
       id="bm-view"
-      class="bm-view"
+      :style="{height:this.height}"
       ak="0dGpK7C09lZMjwx6QVhU6hzTRZBkGVAI"
       :center="center"
       :zoom="zoom"
@@ -42,7 +42,7 @@
           @click.native="clickArea(item, index)"
         ></area-overlay>
       </div>
-      <div v-if="showRegion && regions">
+      <!-- <div v-if="showRegion && regions">
         <area-overlay
           v-for="(item, index) in regions"
           :key="index"
@@ -53,7 +53,7 @@
           @mouseleave.native="cancelArea(item, index)"
           @click.native="clickRegion(item, index)"
         ></area-overlay>
-      </div>
+      </div> -->
       <div v-if="showEstate && estates">
         <estate-overlay
           v-for="(item, index) in estates"
@@ -123,12 +123,12 @@ export default {
     };
   },
   created() {
-    this.height = window.innerWidth + "px";
-    console.log(this.height);
+    // this.height = (window.innerHeight - 10) + "px";
+    // console.log(this.height);
   },
   mounted() {
-    this.height = window.innerWidth + "px";
-    console.log(this.height);
+    // this.height = window.innerWidth + "px";
+    // console.log(this.height);
     // 获取District信息
     getDistricts()
       .then(res => {
@@ -202,7 +202,7 @@ export default {
       const ZOOMBOUNDARY3 = 15;
       this.zoom = e.target.getZoom();
       this.showDistrict = this.zoom < ZOOMBOUNDARY1;
-      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY2;
+      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY3;
       this.showRegion = this.zoom >= ZOOMBOUNDARY2 && this.zoom < ZOOMBOUNDARY3;
       this.showEstate = this.zoom >= ZOOMBOUNDARY3;
       if (!this.showDistrict) {
@@ -213,7 +213,7 @@ export default {
       // console.log(this.showZone);
     },
     clickArea(item, index) {
-      this.zoom += 1;
+      this.zoom += 2;
       // console.log(item);
       this.$set(this.center, "lng", item.lng);
       this.$set(this.center, "lat", item.lat);
