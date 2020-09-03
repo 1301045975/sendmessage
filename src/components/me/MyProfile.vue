@@ -5,6 +5,7 @@
         <el-card class="box-card">
           <el-upload
             class="avatar-uploader"
+            :headers="imgUploadHeaders"
             :action="imgUploadUrl"
             :data="{telephone: mobile}"
             :show-file-list="false"
@@ -69,6 +70,12 @@ import { validatePassword } from "@/utils/validate";
 
 export default {
   name: "MyProfile",
+  mounted() {
+    // console.log(getToken());
+    // this.imgUploadHeaders = {
+    //     Authorization: getToken()
+    // };
+  },
   data() {
     let validateOldPwd = (rule, value, callback) => {
       if (value === "") {
@@ -100,6 +107,9 @@ export default {
     return {
       imageUrl: "",
       imgUploadUrl: process.env.VUE_APP_BASE_API_PORTAL + "/user/uploadImg",
+      imgUploadHeaders: {
+        Authorization: getToken()
+      },
       nameForm: {
         name: "",
         telephone: ""
@@ -189,12 +199,13 @@ export default {
             this.pwdForm.telephone = this.mobile;
             updatePwd(this.pwdForm)
               .then(res => {
-                if (res.code === 200) {
+                let data = res.data;
+                if (data.code === 200) {
                   this.$message.success("修改成功");
                   this.resetForm(formName);
                   // this.refreshUserInfo();
                 } else {
-                  this.$$message.error("修改失败");
+                  this.$message.error("修改失败");
                 }
               })
               .catch(err => {

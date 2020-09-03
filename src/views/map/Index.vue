@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div style="width:100%; height:98%;">
     <baidu-map
-      id="bm-view"
-      class="bm-view"
+      :style="{height:this.height}"
       ak="0dGpK7C09lZMjwx6QVhU6hzTRZBkGVAI"
       :center="center"
       :zoom="zoom"
@@ -11,13 +10,22 @@
       @zoomend="syncCenterAndZoom"
     >
       <bm-boundary
-        v-if="showBoundary"
+        v-if="false"
         :name="areaBoundry"
         :strokeWeight="2"
         strokeColor="blue"
         fillColor="skyblue"
         :fillOpacity="0.4"
       ></bm-boundary>
+      <bm-polygon
+        v-if="showBoundary"
+        :path="getPolygonPath"
+        stroke-color="blue"
+        :stroke-opacity="0.5"
+        :stroke-weight="2"
+        fill-color="skyblue"
+        :fill-opacity="0.4"
+      />
       <div v-if="showDistrict && districts">
         <area-overlay
           v-for="(item, index) in districts"
@@ -42,7 +50,7 @@
           @click.native="clickArea(item, index)"
         ></area-overlay>
       </div>
-      <div v-if="showRegion && regions">
+      <!-- <div v-if="showRegion && regions">
         <area-overlay
           v-for="(item, index) in regions"
           :key="index"
@@ -53,7 +61,7 @@
           @mouseleave.native="cancelArea(item, index)"
           @click.native="clickRegion(item, index)"
         ></area-overlay>
-      </div>
+      </div>-->
       <div v-if="showEstate && estates">
         <estate-overlay
           v-for="(item, index) in estates"
@@ -84,9 +92,16 @@ import ZoneOverlay from "@/components/map/ZoneOverlay.vue";
 import AreaOverlay from "@/components/map/AreaOverlay.vue";
 import EstateOverlay from "@/components/map/EstateOverlay.vue";
 import BmBoundary from "vue-baidu-map/components/others/Boundary";
+import BmPolygon from "vue-baidu-map/components/overlays/Polygon";
 import MapHeader from "@/components/map/MapHeader.vue";
 import MapFilter from "@/components//map/MapFilter.vue";
-import { getCity, getDistricts, getZones, getRegions, getEstatesByRegionId } from "@/api/map";
+import {
+  getCity,
+  getDistricts,
+  getZones,
+  getRegions,
+  getEstatesByRegionId
+} from "@/api/map";
 
 export default {
   name: "Map",
@@ -94,6 +109,7 @@ export default {
     BaiduMap,
     ZoneOverlay,
     BmBoundary,
+    BmPolygon,
     EstateOverlay,
     MapHeader,
     MapFilter,
@@ -119,20 +135,39 @@ export default {
       districts: null,
       zones: null,
       regions: null,
-      estates: null
+      estates: null,
+      polygonPath: ""
     };
   },
+  computed: {
+    getPolygonPath() {
+      let arr2 = [];
+      if (this.polygonPath !== "") {
+        let arr = this.polygonPath.split(";");
+        for (let i = 0; i < arr.length; i++) {
+          let arr3 = arr[i].split(",");
+          arr2.push({
+            lng: parseFloat(arr3[0]),
+            lat: parseFloat(arr3[1])
+          });
+        }
+      }
+      return arr2;
+    }
+  },
   created() {
-    this.height = window.innerWidth + "px";
-    console.log(this.height);
+    this.height = (window.innerHeight - 10) + "px";
+    // console.log(this.height);
   },
   mounted() {
-    this.height = window.innerWidth + "px";
-    console.log(this.height);
+    // this.height = window.innerWidth + "px";
+    // console.log(this.height);
     // 获取District信息
     getDistricts()
       .then(res => {
         this.districts = res.data;
+        // console.log(res.data);
+        // console.log(this.districts[0].border);
       })
       .catch(err => {
         console.log(err);
@@ -180,11 +215,17 @@ export default {
       });
     },
     selectArea(item, index) {
-      if (item.level === "district") {
-        this.area = index;
-        this.areaBoundry = `${item.cityName}${item.districtName}`; // 行政区名字，只供参考
-        this.showBoundary = true;
-      }
+      // if (item.level === "district") {
+      //   this.area = index;
+      //   // this.areaBoundry = `${item.cityName}${item.districtName}`; // 行政区名字，只供参考
+      //   this.polygonPath = item.border;
+      //   this.showBoundary = true;
+      //   // console.log(this.getPolygonPath);
+      // }
+      this.area = index;
+      // this.areaBoundry = `${item.cityName}${item.districtName}`; // 行政区名字，只供参考
+      this.polygonPath = item.border;
+      this.showBoundary = true;
     },
     cancelArea(item, index) {
       if (item.level === "district") {
@@ -202,7 +243,7 @@ export default {
       const ZOOMBOUNDARY3 = 15;
       this.zoom = e.target.getZoom();
       this.showDistrict = this.zoom < ZOOMBOUNDARY1;
-      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY2;
+      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY3;
       this.showRegion = this.zoom >= ZOOMBOUNDARY2 && this.zoom < ZOOMBOUNDARY3;
       this.showEstate = this.zoom >= ZOOMBOUNDARY3;
       if (!this.showDistrict) {
@@ -213,7 +254,7 @@ export default {
       // console.log(this.showZone);
     },
     clickArea(item, index) {
-      this.zoom += 1;
+      this.zoom += 2;
       // console.log(item);
       this.$set(this.center, "lng", item.lng);
       this.$set(this.center, "lat", item.lat);

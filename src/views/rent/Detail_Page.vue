@@ -30,63 +30,98 @@
                     <span style="color:#606266;line-height: 30px;">房源维护时间：2020-08-26 </span><br>
                     <span style="color:#606266">房源编号：BJ2419320526553497600 </span>
                 </el-row>
-<!--经纪人详情页                    -->
-                    <el-row style="margin-top: 20px;" :gutter="50">
-                        <el-col :span="14" >
-                            <div style="width:100%;height:400px;">
-                                <el-image :src="src" style="width: 100%;height: 100%"></el-image>
-                            </div>
-                        </el-col>
-                        <el-col :span="10" >
-                            <div style ="width:100%;height:400px;">
-                                <el-row>
-                                    <el-col>
-                                        <span style="font-weight: bold;font-size: 30px;color: red">1000元/月</span>
-                                    </el-col>
-                                </el-row>
-                                <el-row style="margin-top: 20px">
-                                    <el-col>
-                                        <el-tag type="danger" size="mini">近地铁</el-tag>
-                                        <el-tag type="warning" size="mini" style="margin-left: 3px">水电气三通</el-tag>
-                                        <el-tag size="mini" style="margin-left: 3px">有物管</el-tag>
-                                    </el-col>
-                                </el-row>
-                                <el-divider></el-divider>
-                                <el-row>
-                                    <el-col>
-                                        <span style="color: #606266;line-height: 26px;">房型：<span>高层户型</span></span>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col>
-                                        <span style="color: #606266;line-height: 26px;">所在楼层：<span>16楼</span></span>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col>
-                                        <span style="color: #606266;line-height: 26px;">房屋朝向：<span>向南</span></span>
-                                    </el-col>
-                                </el-row>
-                                <el-divider></el-divider>
-                                <el-row >
-                                    <el-col :span="6">
-                                        <el-image style="width: 80px;height: 80px;border-radius: 50%" :src="src"></el-image>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-row><h3>程飞飞</h3></el-row>
-                                        <el-row>链家经纪人</el-row>
-                                        <el-row>电话：18281828</el-row>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-button type="success" size="medium" @click="sendMessage(agent.id)">在线咨询</el-button>
-                                    </el-col>
-                                </el-row>
-                            </div>
-                        </el-col>
-                    </el-row>
-<!--房屋基本信息                    -->
+                <!--经纪人详情页                    -->
+                <el-row style="margin-top: 20px;" :gutter="50">
+                    <el-col :span="13" >
+                        <div style="width:100%" >
+                            <!--                                <el-image :src="src" style="width: 100%;height: 100%"></el-image>-->
+                            <el-carousel :interval="4000" type="card"  height="400px">
+                                <el-carousel-item
+                                        v-for="(item,index) in imgs"
+                                        :key="index">
+                                    <img class="lunbo" :src="item.src" style="position:relative">
+                                </el-carousel-item>
+                            </el-carousel>
+                        </div>
+                    </el-col>
+
+                    <el-col :span="10"  height="400px" >
+                        <div style ="width:100%">
+                            <el-row>
+                                <el-col>
+                                    <span style="font-weight: bold;font-size: 30px;color: red">1000元/月</span>
+                                </el-col>
+                            </el-row>
+                            <el-row style="margin-top: 20px">
+                                <el-col>
+                                    <el-tag type="danger" size="mini">近地铁</el-tag>
+                                    <el-tag type="warning" size="mini" style="margin-left: 3px">水电气三通</el-tag>
+                                    <el-tag size="mini" style="margin-left: 3px">有物管</el-tag>
+                                </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
+                            <el-row>
+                                <el-col>
+                                    <span style="color: #606266;line-height: 26px;">房型：<span>高层户型</span></span>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col>
+                                    <span style="color: #606266;line-height: 26px;">所在楼层：<span>16楼</span></span>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col>
+                                    <span style="color: #606266;line-height: 26px;">房屋朝向：<span>向南</span></span>
+                                </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
+                            <el-row >
+                                <el-col :span="6">
+                                    <el-image style="width: 80px;height: 80px;border-radius: 50%" :src="src"></el-image>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-row><h3>程飞飞</h3></el-row>
+                                    <el-row>链家经纪人</el-row>
+                                    <el-row>电话：18281828</el-row>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="24">
+                                    <el-button type="success" size="medium" @click="sendMessage(agent.id)">在线咨询</el-button>
+                                </el-col>
+                            </el-row>
+                        </div>
+                    </el-col>
+                </el-row>
+
+                <el-divider></el-divider>
+                <div style="position: relative">
+                    <el-menu
+                            :default-active="activeIndex1"
+                            class="el-menu-demo"
+                            mode="horizontal"
+                            @select="handleSelect"
+                            background-color="#f5f5f5"
+                            text-color="#101d37"
+                            active-text-color="red">
+                        <el-menu-item index="1">房屋信息</el-menu-item>
+                        <el-submenu index="2">
+                            <template slot="title">房源描述</template>
+                            <el-menu-item index="2-1">交通出行</el-menu-item>
+                            <el-menu-item index="2-2">周边配套</el-menu-item>
+                            <el-menu-item index="2-3">朝向坐标</el-menu-item>
+                        </el-submenu>
+                        <el-menu-item index="3">费用详情</el-menu-item>
+                        <el-menu-item index="4">推荐经纪人</el-menu-item>
+                        <el-menu-item index="5">地址和交通</el-menu-item>
+                        <el-menu-item index="6">房产计算器</el-menu-item>
+                        <el-button type="primary round" icon="el-icon-phone" style="margin-top:10px;margin-left: 30px">电话咨询</el-button>
+                        <el-button type="primary round" icon="el-icon-user-solid" style="position: relative">预约看房</el-button>
+                    </el-menu>
+
+                </div>
+                <!--房屋基本信息                    -->
                 <el-row>
                     <h2>房屋信息</h2>
                     <el-row>
@@ -115,7 +150,7 @@
                             <span>看房</span>
                         </el-col>
                         <el-col :span="6">
-                            <el-button type="primary" size="normal">预约看房</el-button>
+                            <el-button type="primary" icon="el-icon-user-solid" size="normal">预约看房</el-button>
                         </el-col>
 
                     </el-row>
@@ -192,27 +227,172 @@
                 <el-row>
                     <h2>推荐经纪人</h2><span>您可以通过拨打电话或在线咨询的方式联系经纪人</span>
                     <el-row style="line-height: 44px;margin-top: 20px;">
-                            <el-card shadow="never">
-                                <el-row>
-                                    <el-col :span="6">
-                                        <el-image :src="src" :fit="fit"></el-image>
-                                    </el-col>
-                                    <el-col :span="6">
-                                        <span style="margin-left: 80px" >王大军</span><br>
-                                        <span style="margin-left: 80px">评分:9.2 | 20次评价</span><br>
-                                        <span style="margin-left: 80px">182818281828</span><br>
-                                        <span style="margin-left: 80px"><el-button type="success" size="normal">在线咨询</el-button></span>
-                                    </el-col>
-                                </el-row>
-                            </el-card>
+                        <el-card shadow="never">
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-image :src="src" :fit="fit"></el-image>
+                                </el-col>
+                                <el-col :span="6">
+                                    <span style="margin-left: 80px" >王大军</span><br>
+                                    <span style="margin-left: 80px">评分:9.2 | 20次评价</span><br>
+                                    <span style="margin-left: 80px">182818281828</span><br>
+                                    <span style="margin-left: 80px"><el-button type="success" size="normal">在线咨询</el-button></span>
+                                </el-col>
+                            </el-row>
+                        </el-card>
                     </el-row>
 
                     <el-row>
                         <h2>地址和交通</h2>
                         <el-row>
-<!--                            <baidu-map>-->
-<!--                            </baidu-map>-->
+                            <baidu-map>
+                            </baidu-map>
                         </el-row>
+                    </el-row>
+                </el-row>
+                <el-divider></el-divider>
+                <el-row>
+                    <h2>房产计算器</h2>
+
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                        <el-tab-pane label="房贷计算器" name="first">
+                            <el-row style="padding-top: 20px" :gutter="40">
+                                <el-col :span="12">
+                                    <el-form ref="form" :model="form" label-width="80px">
+                                        <el-form-item label="贷款类型">
+                                            <el-select v-model="form.input1" placeholder="商业贷款">
+                                                <el-option label="商业贷款" value="商业贷款"></el-option>
+                                                <el-option label="公积金贷款" value="公积金贷款"></el-option>
+                                                <el-option label="组合贷款" value="组合贷款"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="计算方式">
+                                            <el-select v-model="form.input2" placeholder="按货款总额">
+                                                <el-option label="按货款总额" value="按货款总额"></el-option>
+                                                <el-option label="按房屋总价" value="按房屋总价"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="商贷金额" >
+                                            <el-input style="width: 300px" type="text" v-model="form.desc1"  placeholder="请输入大于0的数字">
+                                                <template slot="append">万元</template>
+                                            </el-input>
+
+                                        </el-form-item>
+                                        <el-form-item label="商贷利率方式">
+                                            <el-select v-model="form.input3" placeholder="按最新LPR">
+                                                <el-option label="按最新LPR" value="按最新LPR"></el-option>
+                                                <el-option label="按旧版基准利率" value="按旧版基准利率"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="LPR">
+                                            <el-button type="text" @click="open">
+                                            <i class="el-icon-info"></i>
+                                            </el-button>
+                                            <el-input style="width:350px" type="number" v-model="form.desc2" placeholder="请输入中国人民银行网站公布的最新LPR" >
+                                                <template slot="append">%</template>
+                                            </el-input>
+                                        </el-form-item>
+                                        <el-form-item label="基点">
+                                            <el-input style="width: 300px" type="number" v-model="form.desc3">
+                                                <template slot="append">BP(‱)</template>
+                                            </el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="商贷利率" placeholder="4.65">
+                                            <el-input style="width: 300px" type="text" v-model="form.desc4"></el-input>
+                                        </el-form-item>
+
+                                        <el-form-item label="商贷年限">
+                                            <el-select v-model="form.input4" placeholder="10年">
+                                                <el-option label="30年" value="30"></el-option>
+                                                <el-option label="29年" value="29"></el-option>
+                                                <el-option label="28年" value="28"></el-option>
+                                                <el-option label="27年" value="27"></el-option>
+                                                <el-option label="26年" value="26"></el-option>
+                                                <el-option label="25年" value="25"></el-option>
+                                                <el-option label="24年" value="24"></el-option>
+                                                <el-option label="23年" value="23"></el-option>
+                                                <el-option label="22年" value="22"></el-option>
+                                                <el-option label="21年" value="21"></el-option>
+                                                <el-option label="20年" value="20"></el-option>
+                                                <el-option label="19年" value="19"></el-option>
+                                                <el-option label="18年" value="18"></el-option>
+                                                <el-option label="17年" value="17"></el-option>
+                                                <el-option label="16年" value="16"></el-option>
+                                                <el-option label="15年" value="15"></el-option>
+                                                <el-option label="14年" value="14"></el-option>
+                                                <el-option label="13年" value="13"></el-option>
+                                                <el-option label="12年" value="12"></el-option>
+                                                <el-option label="11年" value="11"></el-option>
+                                                <el-option label="10年" value="10"></el-option>
+                                                <el-option label="9年" value="9"></el-option>
+                                                <el-option label="8年" value="8"></el-option>
+                                                <el-option label="7年" value="7"></el-option>
+                                                <el-option label="6年" value="6"></el-option>
+                                                <el-option label="5年" value="5"></el-option>
+                                                <el-option label="4年" value="4"></el-option>
+                                                <el-option label="3年" value="3"></el-option>
+                                                <el-option label="2年" value="2"></el-option>
+                                                <el-option label="1年" value="1"></el-option>
+
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button type="success" @click="onSubmit" class="cbtn-bg">开始计算</el-button>
+                                        </el-form-item>
+                                    </el-form>
+                                </el-col>
+
+                                <el-col :span="2">
+                                    <el-card class="box-card" style="width: 500px">
+                                        <div slot="header" class="clearfix">
+                                            <el-row>
+                                                <el-col :span="6">类型</el-col>
+                                                <el-col :span="6">等额本息还款</el-col>
+                                                <el-col :span="6">等额本金还款</el-col>
+                                            </el-row>
+                                        </div>
+                                        <el-row class="crow">
+                                            <el-col :span="6">月供</el-col>
+                                            <el-col :span="6">0元</el-col>
+                                            <el-col :span="6">0元</el-col>
+                                        </el-row>
+
+                                        <el-row class="crow">
+                                            <el-col :span="6">贷款年限</el-col>
+                                            <el-col :span="6">0年</el-col>
+                                            <el-col :span="6">0年</el-col>
+                                        </el-row>
+
+                                        <el-row class="crow">
+                                            <el-col :span="6">贷款总额</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                        </el-row>
+
+                                        <el-row class="crow">
+                                            <el-col :span="6">利息总额</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                        </el-row>
+
+                                        <el-row class="crow">
+                                            <el-col :span="6">还款总额</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                            <el-col :span="6">0万元</el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
+                            </el-row>
+                        </el-tab-pane>
+                        <el-tab-pane label="新房税费计算器" name="second">
+
+                        </el-tab-pane>
+                        <el-tab-pane label="购房资质查询" name="third">
+                        </el-tab-pane>
+                    </el-tabs>
+
+                    <el-row>
                     </el-row>
                 </el-row>
             </el-main>
@@ -222,38 +402,64 @@
 </template>
 
 <script type="text/javascript">
-    import cheader from "@/components/cheader";
     import MyHeader from "@/components/common/MyHeader.vue";
     import MyFooter from "@/components/common/MyFooter.vue";
     export default {
         name: "Detail_Page",
         data () {
             return {
-                src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-                center: {lng: 0, lat: 0},
-                zoom: 3
+                imgs:[
+                    {src: require("../../assets/img/bg-app.jpg")},
+                    {src: require("../../assets/img/banner.jpg")},
+                    {src: require("../../assets/img/bg-login.jpg")},
+                    {src: require("../../assets/img/bannerV2.jpg")},
+                    {src: require("../../assets/img/bg-login.jpg")},
+                ],
+                src:'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+                activeIndex2:'1',
+                form: {
+                    name: '',
+                    input1:'',
+                    input2:'',
+                    input3:'',
+                    input4:'',
+                    date1: '',
+                    date2: '',
+                    delivery: false,
+                    type: [],
+                    resource: '',
+                    desc4: '',
+                    desc1: '',
+                    desc2: '',
+                    desc3: '',
+                },
+                activeName: 'first'
             }
         },
-        methods :{
-            // handler ({BMap, map}) {
-            //     console.log(BMap, map)
-            //     this.center.lng = 116.404
-            //     this.center.lat = 39.915
-            //     this.zoom = 15
-            // }
+
+        methods: {
+            onSubmit() {
+                console.log('submit!');
+            },
+            open() {
+                this.$alert('自2019年10月8日起，新发放的商业住房贷款的贷款利率由“贷款基准利率（4.9%）”转换为“贷款款市场报价利率（LPR）”在LPR的基础上增加基点来确定最终的商贷利率； LPR每月20日（遇节假日顺延）报价一次，可在中国人民银行网站查询。', 'LPR（贷款市场报价利率）',
+                    {
+                    confirmButtonText: '确定',
+                    // callback: action => {
+                    //     this.$message({
+                    //         type: 'info',
+                    //         message: `action: ${ action }`
+                    //     }
+                    //     );
+                    // }
+                });
+            }
         },
+
         components:{
             MyHeader,
             MyFooter,
-            cheader
         },
-        mounted() {
-            console.log(this.$route.params.id)
-        },
-        created() {
-            var id = this.$route.params.id;
-            alert(id)
-        }
     }
 </script>
 
@@ -261,4 +467,22 @@
     span{
         color: #606266;
     }
+
+    .el-carousel__item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;}
+    .lunbo {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    /*.el-carousel__item:nth-child(2n) {*/
+    /*    background-color: #99a9bf;*/
+    /*}*/
+
+    /*.el-carousel__item:nth-child(2n+1) {*/
+    /*    background-color: #d3dce6;*/
+    /*}*/
 </style>
