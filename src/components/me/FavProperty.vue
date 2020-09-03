@@ -46,15 +46,24 @@ export default {
   mounted() {
     // mounted阶段无法vuex中拿到其中存储的值
     // console.log(this.mobile);
-    this.getTableData();
+    if (typeof this.mobile == "undefined" || this.mobile == "") {
+      // console.log("null");
+    } else {
+      this.getTableData();
+    }
   },
   update() {
     console.log(this.mobile);
   },
   watch: {
     // mobile发生变化是，此函数会执行
-    mobile(oldValue, newValue) {
-      this.getTableData();
+    mobile(newValue, oldValue) {
+      // console.log("mobile change");
+      if (typeof newValue == "undefined" || newValue == "") {
+        // console.log("null");
+      } else {
+        this.getTableData();
+      }
     }
   },
   data() {

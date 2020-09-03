@@ -5,9 +5,11 @@ import store from "./store";
 import ElementUI from "element-ui";
 import { Message, MessageBox } from 'element-ui'
 import "element-ui/lib/theme-chalk/index.css";
+import VueJsonp from 'vue-jsonp'
 
 Vue.use(ElementUI);
 Vue.use(router);
+Vue.use(VueJsonp);
 
 Vue.config.productionTip = false;
 

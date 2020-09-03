@@ -2,7 +2,7 @@
   <div class="main-container">
     <el-row :gutter="0">
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这是价格过滤器">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这是价格过滤器" :append-to-body="false">
           <div>
             <label for>
               <strong>价格（万）</strong>
@@ -65,7 +65,7 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这是房型过滤器。">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这是房型过滤器" :append-to-body="false">
           <div>
             <label for>
               <strong>房型</strong>
@@ -113,7 +113,7 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这是面积过滤器。">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这是面积过滤器" :append-to-body="false">
           <div>
             <label for>
               <strong>面积</strong>
@@ -164,7 +164,7 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这里是更多过滤器。">
+        <el-popover placement="top-start" title width="500" trigger="hover" content="这里是更多过滤器" :append-to-body="false">
           <div style="height:400px;">
             <el-scrollbar style="height:100%">
               <label for>

@@ -14,7 +14,7 @@
             </span>
           </el-col>
           <el-col :span="1" :offset="2" style="cursor: pointer">
-            <span @click="send('/old')">二手房</span>
+            <span @click="send('/sale')">二手房</span>
           </el-col>
           <el-col :span="1" style="cursor: pointer">
             <span @click="send('/rent')">租房</span>
@@ -60,13 +60,13 @@
         <el-row type="flex" justify="center">
           <el-col :span="8" style="text-align: center">
             <span
-              style="color:#fff;cursor:pointer;padding-left:20px;"
+              :style="houseType === 'oldHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
               @click="searchType('oldHouse')"
-            >找二手房</span>
+            ><strong>找二手房</strong></span>
             <span
-              style="color:#fff;cursor:pointer;padding-left:20px;"
+              :style="houseType === 'rentHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
               @click="searchType('rentHouse')"
-            >找租房</span>
+            ><strong>找租房</strong></span>
           </el-col>
         </el-row>
 
@@ -89,13 +89,13 @@
           <el-col :span="12" style="text-align: center;">
             <el-row>
               <el-image
-                @click="send('/old')"
+                @click="send('/sale')"
                 :src="require('../../assets/OldHouse.png')"
                 style="width:80px;height:80px"
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/old')" style="cursor:pointer">找二手房</span>
+              <span @click="send('/sale')" style="cursor:pointer">找二手房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">海量真实房源，数量不重复，点击开启看房旅程</el-row>
           </el-col>
@@ -326,16 +326,16 @@ export default {
       this.$router.push("/oldHouse/info/" + id);
     },
     searchHouse() {
-      console.log(this.houseType)
+      console.log(this.houseType);
       if (this.houseType === "oldHouse") {
         this.$router.push({
           name: "Old",
-          params: {searchContent: this.searchContent}
+          params: { searchContent: this.searchContent }
         });
       } else {
         this.$router.push({
           name: "Rent",
-          params: {searchContent: this.searchContent}
+          params: { searchContent: this.searchContent }
         });
       }
       // this.$router.push("/" + this.houseType + "/" + this.searchContent);

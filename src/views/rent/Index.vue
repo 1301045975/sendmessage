@@ -29,7 +29,7 @@
             v-for="(area, j) in areas.data"
             :key="'areas' + j"
             @click="handleAreaClick(areas.level, area.id)"
-            :class="area.id == areaIdSelected ? 'box-item4em link-active' : 'box-item4em'"
+            :class="area.id == areaIdSelected ? 'box-item6em link-active' : 'box-item6em'"
           >{{area.name}}</el-link>
         </div>
       </el-row>
@@ -55,6 +55,8 @@
             multiple
             collapse-tags
             class="box-item8em"
+            size="mini"
+            :popper-append-to-body="false"
             v-for="(more, i) in moreFilterValues"
             v-model="moreFilterSelected[i]"
             :key="'moreFilterValues' + i"
@@ -94,6 +96,7 @@
       <el-pagination
         @size-change="fetchData"
         @current-change="fetchData"
+        :append-to-body="false"
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="[10,20,30]"
