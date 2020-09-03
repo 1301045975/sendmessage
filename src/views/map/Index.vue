@@ -241,6 +241,8 @@ export default {
 <style lang="scss">
 #bm-view {
   height: 950px;
+  // height: 100%;
+
 }
 #map-header-wrapper {
   position: fixed;

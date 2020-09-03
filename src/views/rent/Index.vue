@@ -23,23 +23,23 @@
     <div class="box-body">
       <!-- 区域 -->
       <el-row class="crow" v-for="areas in areasArray" :key="'areasArray' + areas.level">
-        <label class="box-item4em">{{areas.level == 1 ? "区域：" : ""}}</label>
+        <label class="filter-title">{{areas.level == 1 ? "区域：" : ""}}</label>
         <div class="crow-right">
           <el-link
             v-for="(area, j) in areas.data"
             :key="'areas' + j"
             @click="handleAreaClick(areas.level, area.id)"
-            :class="area.id == areaIdSelected ? 'box-item6em link-active' : 'box-item6em'"
+            :class="area.id == areaIdSelected ? 'filter-area link-active' : 'filter-area'"
           >{{area.name}}</el-link>
         </div>
       </el-row>
       <!-- 范围 -->
       <el-row class="crow" v-for="(name, i) in filterRowsName" :key="'filterRowsName' + i">
-        <label class="box-item4em">{{name.displayName}}：</label>
+        <label class="filter-title">{{name.displayName}}：</label>
         <div class="crow-right">
           <el-checkbox-group v-model="filterRowsChecked[i]">
             <el-checkbox
-              class="box-item6em"
+              class="filter-item"
               v-for="(range, j) in filterRowsRight[i]"
               :label="range.label"
               :key="'filterRowName' + j"
@@ -49,12 +49,12 @@
       </el-row>
       <!-- 更多 -->
       <el-row class="crow">
-        <label class="box-item4em">更多：</label>
+        <label class="filter-title">更多：</label>
         <div class="crow-right">
           <el-select
             multiple
             collapse-tags
-            class="box-item8em"
+            class="filter-area"
             size="mini"
             :popper-append-to-body="false"
             v-for="(more, i) in moreFilterValues"
@@ -600,9 +600,11 @@ span {
   line-height: 30px;
   display: flex;
   flex-direction: row;
+  margin-top: 0.5em
 }
 
 .crow-right {
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -616,21 +618,22 @@ span {
   margin-right: 2em;
 }
 
-.box-item6em {
+.filter-item {
   width: 6em;
   margin-right: 2em;
 }
-.box-item8em {
-  width: 10em;
+.filter-area {
+  width: 6em;
   margin-right: 2em;
 }
-.box-item4em {
-  width: 4em;
+.filter-title {
+  width: 5%;
+  font-size:0.7em;
+  font-weight: bold;
   margin-right: 0.8em;
 }
 .box-body {
   width: 60%;
   margin: 0 auto;
-  padding: 20px;
 }
 </style>
