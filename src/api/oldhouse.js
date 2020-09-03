@@ -79,4 +79,10 @@ export default {
             data: searchMap
         })
     },
+    getRecommend(trade, cityPinYin, pageNum, pageSize) {
+        return request({
+            url: `/property/getRecommend?trade=${trade}&cityPinYin=${cityPinYin}&pageNum=${pageNum}&pageSize=${pageSize}`,
+            method: 'get',
+        })
+    },
 }
