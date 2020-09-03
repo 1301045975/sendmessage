@@ -43,5 +43,11 @@ export default {
       url: `/${group_name}/${api_name}/${id}`,
       method: 'delete'
     })
+  },
+  getProDetail(proId, cityPinYin) {
+    return request({
+      url: `/property/getProDetail?proId=${proId}&cityPinYin=${cityPinYin}`,
+      method: 'get'
+    })
   }
 }

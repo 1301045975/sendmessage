@@ -90,6 +90,7 @@
           v-for="(propertyInfo, i) in propertyInfoArray"
           :key="'propertyInfoArray' + i"
           :propertyInfo="propertyInfo"
+          @click.native="toDetail(propertyInfo.id)"
         ></rent-house-item>
       </div>
 
@@ -212,6 +213,14 @@ export default {
     this.searchHouse();
   },
   methods: {
+    toDetail(proId) {
+      this.$router.push({
+        path: "/Detail_Page",
+        query: {
+          proId: proId
+        }
+      });
+    },
     searchHouse() {
       this.loading = true;
       let cityPinYin = "chengdu";

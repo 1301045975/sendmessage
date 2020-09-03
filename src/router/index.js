@@ -68,7 +68,7 @@ const routes = [
   {
     path: "/Detail_Page",
     name: "Detail_Page",
-    component: () => import("../views/rent/Detail_Page")
+    component: () => import("../views/rent/Detail_Page.vue")
   },
   {
     path: "/oldHouse",
@@ -79,6 +79,11 @@ const routes = [
     path: "/around",
     name: "Around",
     component: () => import("../components/Around.vue")
+  },
+  {
+    path: "/recommend",
+    name: "recommend",
+    component: () => import("../components/Recommend.vue")
   },
 ];
 
