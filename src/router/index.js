@@ -80,6 +80,11 @@ const routes = [
     name: "Around",
     component: () => import("../components/Around.vue")
   },
+  {
+    path: "/recommend",
+    name: "recommend",
+    component: () => import("../components/recommend.vue")
+  },
 ];
 
 const router = new VueRouter({

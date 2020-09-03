@@ -92,6 +92,45 @@
                     <el-divider>
                         <!--                        <around/>-->
                     </el-divider>
+                    <h2>推荐二手房</h2>
+                    <el-row aria-rowspan="24">
+                        <el-col span="8">
+                            <img class="img-main" :src="imgUrl1"/>
+                            <h3>交大智能八区</h3>
+                            <el-row>
+                                <el-col style="color: red">101 ㎡</el-col>
+                                <el-col>2室一厅</el-col>
+                                <el-col>金科北路</el-col>
+                            </el-row>
+                        </el-col>
+                        <el-col span="8">
+                            <img class="img-main" :src="imgUrl2"/>
+                            <h3>交大智能八区</h3>
+                            <el-row>
+                                <el-col style="color: red">101 ㎡</el-col>
+                                <el-col>2室一厅</el-col>
+                                <el-col>金科北路</el-col>
+                            </el-row>
+                        </el-col>
+                        <el-col span="8">
+                            <img class="img-main" :src="imgUrl3"/>
+                            <h3>交大智能八区</h3>
+                            <el-row>
+                                <el-col style="color: red">101 ㎡</el-col>
+                                <el-col>2室一厅</el-col>
+                                <el-col>金科北路</el-col>
+                            </el-row>
+                        </el-col>
+                        <el-col span="8">
+                            <img class="img-main" :src="imgUrl4"/>
+                            <h3>交大智能八区</h3>
+                            <el-row>
+                                <p style="color: red">101 ㎡</p>
+                                <p>2室一厅</p>
+                                <p>金科北路</p>
+                            </el-row>
+                        </el-col>
+                    </el-row>
                 </el-col>
                 <el-col :span="8">
                     <div>
@@ -140,23 +179,11 @@
                     {src: require("../../assets/img/bannerV2.jpg")},
                     {src: require("../../assets/img/bg-login.jpg")},
                 ],
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }]
+                imgUrl1:{src: require("../../assets/img/bg-app.jpg")},
+                imgUrl2:{src: require("../../assets/img/bg-app.jpg")},
+                imgUrl3:{src: require("../../assets/img/bg-app.jpg")},
+                imgUrl4:{src: require("../../assets/img/bg-app.jpg")},
+
             };
         },
 
