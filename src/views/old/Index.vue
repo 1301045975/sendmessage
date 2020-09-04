@@ -2,10 +2,10 @@
   <div>
     <my-header></my-header>
     <div class="cheader">
-      <div style="width:77%;">
+      <div style="width:60%;">
         <el-row class="csearch" type="flex" justify="center">
-          <el-col :span="2" class="topTitle">{{ companyName }}</el-col>
-          <el-col :span="8">
+          <el-col  class="topTitle">{{ companyName }}</el-col>
+          <el-col >
             <el-input
               placeholder="请输入内容"
               v-model="searchContent"
@@ -25,7 +25,7 @@
             v-for="(area, j) in areas.data"
             :key="'areas' + j"
             @click="handleAreaClick(areas.level, area.id)"
-            :class="area.id == areaIdSelected ? 'filter-area link-active' : 'filter-item'"
+            :class="area.id == areaIdSelected ? 'filter-area link-active' : 'filter-area'"
           >{{area.name}}</el-link>
         </div>
       </el-row>
@@ -628,7 +628,7 @@ span {
   border-bottom: 1px solid #e6e6e6;
 }
 .crow-right {
-  width: 96%;
+  width: 94%;
   display: flex;
   flex-wrap: wrap;
     flex-direction: row;
@@ -647,17 +647,17 @@ span {
   margin-right: 1em;
 }
 .filter-area {
-  width: 6em;
+  /* width: 5em; */
   margin-right: 2em;
 }
 .filter-title {
-  width: 3%;
+  width: 5%;
   font-size: 0.7em;
   font-weight: bold;
   margin-right: 0.8em;
 }
 .box-body {
-  width: 73%;
+  width: 70%;
   margin: 0 auto;
 }
 </style>
