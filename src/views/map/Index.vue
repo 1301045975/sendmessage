@@ -35,7 +35,7 @@
           :class="areaIndex === index ? 'active' : ''"
           @mouseover.native="selectArea(item, index)"
           @mouseleave.native="cancelArea(item, index)"
-          @click.native="clickArea(item, index)"
+          @click.native="clickDistrict(item, index)"
         ></area-overlay>
       </div>
       <div v-if="showZone && zones">
@@ -47,7 +47,7 @@
           :class="areaIndex === index ? 'active' : ''"
           @mouseover.native="selectArea(item, index)"
           @mouseleave.native="cancelArea(item, index)"
-          @click.native="clickArea(item, index)"
+          @click.native="clickZone(item, index)"
         ></area-overlay>
       </div>
       <!-- <div v-if="showRegion && regions">
@@ -69,8 +69,7 @@
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
           :class="areaIndex === index ? 'active' : ''"
-          @mouseover.native="selectArea(item, index)"
-          @mouseleave.native="cancelArea(item, index)"
+
         ></estate-overlay>
       </div>
       <div id="map-header-wrapper">
@@ -100,7 +99,7 @@ import {
   getDistricts,
   getZones,
   getRegions,
-  getEstatesByRegionId
+  getEstatesByZoneId
 } from "@/api/map";
 
 export default {
@@ -181,15 +180,6 @@ export default {
       .catch(err => {
         console.log(err);
       });
-    // 获取Region信息
-    getRegions()
-      .then(res => {
-        this.regions = res.data;
-        // console.log(this.regions);
-      })
-      .catch(err => {
-        console.log(err);
-      });
   },
   methods: {
     handlerMapReady({ BMap, map }) {
@@ -236,40 +226,38 @@ export default {
     },
     syncCenterAndZoom(e) {
       // district与zone的分界线
-      const ZOOMBOUNDARY1 = 13;
-      // zone与boundry的分界线
-      const ZOOMBOUNDARY2 = 14;
-      // boundry与estate的分界线
-      const ZOOMBOUNDARY3 = 15;
+      const ZOOMBOUNDARY1 = 14;
+      // zone与estate的分界线
+      const ZOOMBOUNDARY2 = 16;
       this.zoom = e.target.getZoom();
       this.showDistrict = this.zoom < ZOOMBOUNDARY1;
-      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY3;
-      this.showRegion = this.zoom >= ZOOMBOUNDARY2 && this.zoom < ZOOMBOUNDARY3;
-      this.showEstate = this.zoom >= ZOOMBOUNDARY3;
+      this.showZone = this.zoom >= ZOOMBOUNDARY1 && this.zoom < ZOOMBOUNDARY2;
+      this.showEstate = this.zoom >= ZOOMBOUNDARY2;
       if (!this.showDistrict) {
         this.showBoundary = false;
       }
       // console.log(this.zoom);
       // console.log(this.showDistrict);
       // console.log(this.showZone);
+      // console.log(this.showEstate);
     },
-    clickArea(item, index) {
+    clickDistrict(item, index) {
       this.zoom += 2;
       // console.log(item);
       this.$set(this.center, "lng", item.lng);
       this.$set(this.center, "lat", item.lat);
       // console.log("clickArea");
     },
-    clickRegion(item, index) {
-      this.zoom += 1;
+    clickZone(item, index) {
+      this.zoom += 2;
       this.$set(this.center, "lng", item.lng);
       this.$set(this.center, "lat", item.lat);
-      console.log(item);
+      // console.log(item);
       // 获取Region信息
-      getEstatesByRegionId(item.areaId)
+      getEstatesByZoneId(item.areaId)
         .then(res => {
           this.estates = res.data;
-          // console.log(this.regions);
+          // console.log(this.estates);
         })
         .catch(err => {
           console.log(err);

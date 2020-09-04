@@ -30,11 +30,11 @@ export function getRegions() {
 };
 
 
-export function getEstatesByRegionId(regionId) {
+export function getEstatesByZoneId(zoneId) {
   return request({
-    url: '/map/getEstatesByRegionId',
+    url: '/map/getEstatesByZoneId',
     method: 'get',
-    params: { regionId }
+    params: { zoneId }
   })
 };
 
