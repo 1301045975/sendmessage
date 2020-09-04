@@ -62,7 +62,7 @@
           <el-select
             multiple
             collapse-tags
-            class="box-item8em"
+            class="filter-area"
             size="mini"
             :popper-append-to-body="false"
             v-for="(more, i) in moreFilterValues"
@@ -635,7 +635,7 @@ span {
 
 .filter-item {
   width: 6em;
-  margin-right: 2em;
+  margin-right: 1em;
 }
 .filter-area {
   width: 6em;

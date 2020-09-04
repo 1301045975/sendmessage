@@ -629,7 +629,7 @@ span {
 
 .filter-item {
   width: 6em;
-  margin-right: 2em;
+  margin-right: 1em;
 }
 .filter-area {
   width: 6em;

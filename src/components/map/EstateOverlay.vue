@@ -1,10 +1,14 @@
 <template>
-  <bm-overlay ref="customOverlay" class="zone" pane="labelPane" @draw="draw">
-    <div>
-      <p>{{ text.estateName }}</p>
-      <p>{{ text.houseCnt }}套</p>
-    </div>
-  </bm-overlay>
+  <bm-overlay ref="customOverlay" :class="isChoose===1?'zone Myactive':'zone'" pane="labelPane" @draw="draw">
+    <label>
+      <div>
+        <p>
+          {{ text.estateName }} | {{ text.houseCnt }}套
+          <span class="price">6万</span>
+        </p>
+      </div>
+    </label>
+  </bm-overlay> 
 </template>
 
 <script>
@@ -15,14 +19,27 @@ export default {
   components: {
     BmOverlay
   },
-  props: ["text", "position", "active"],
+  data() {
+    return {
+      IsChoose: 0
+    };
+  },
+  props: ["text", "position", "isChoose","TheIndex"],
   watch: {
     position: {
       handler() {
         this.$refs.customOverlay.reload();
       },
       deep: true
+    },
+    isChoose(newValue, old) {
+        console.log(this.TheIndex ,this.isChoose);   
+        // this.$forceUpsdate()
     }
+  },
+  mounted() { 
+    console.log(this.isChoose);
+    // console.log(this.height);
   },
   methods: {
     draw({ el, BMap, map }) {
@@ -40,20 +57,18 @@ export default {
   transition: background-color 0.15s ease-in-out;
   display: flex;
   align-items: center;
-  width: 84px;
-  height: 84px;
   background-color: rgba(58, 126, 255, 0.9);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #fff;
-  font-size: 12px;
+  font-size: 0.7em;
   text-align: center;
-  padding: 10px;
   position: absolute;
-  border-radius: 50%;
-  box-shadow: 0 0 4px #999;
+  border-radius: 1.2em;
+  box-shadow: 0 0 0.2em #999;
   box-sizing: border-box;
+  padding: 0.02em 0.6em;
 
   &:hover {
     z-index: 1;
@@ -63,10 +78,10 @@ export default {
 
   div {
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    // white-space: nowrap;
     justify-content: space-between;
 
     p {
@@ -75,8 +90,20 @@ export default {
       white-space: nowrap;
       width: 100%;
       text-align: center;
-      line-height: 16px;
+      line-height: 1.1em;
     }
   }
+  .price {
+    background-color: #fff;
+    color: rgba(58, 126, 255, 0.9);
+    padding: 0.3em 0.8em;
+    border-radius: 1.0em;
+  }
+}
+  .Myactive {
+    background-color: #fa5741;
+  }
+.Myactive .price{
+  color: #fa5741;
 }
 </style>

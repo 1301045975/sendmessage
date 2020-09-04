@@ -51,7 +51,7 @@ export default {
   text-align: center;
   padding: 10px;
   position: absolute;
-  border-radius: 50%;
+  border-radius: 10%;
   box-shadow: 0 0 4px #999;
   box-sizing: border-box;
 

@@ -32,7 +32,6 @@
           :key="index"
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
-          :class="areaIndex === index ? 'active' : ''"
           @mouseover.native="selectArea(item, index)"
           @mouseleave.native="cancelArea(item, index)"
           @click.native="clickDistrict(item, index)"
@@ -44,7 +43,6 @@
           :key="index"
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
-          :class="areaIndex === index ? 'active' : ''"
           @mouseover.native="selectArea(item, index)"
           @mouseleave.native="cancelArea(item, index)"
           @click.native="clickZone(item, index)"
@@ -68,8 +66,9 @@
           :key="index"
           :position="{ lng: item.lng, lat: item.lat }"
           :text="item"
-          :class="areaIndex === index ? 'active' : ''"
-
+          :TheIndex="index"
+          :isChoose="ChooseIndex === index ? 1 : 0"
+          @click.native="clickTest(index)"
         ></estate-overlay>
       </div>
       <div id="map-header-wrapper">
@@ -85,13 +84,16 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import connect from "../../connect.js";
-import ZoneOverlay from "@/components/map/ZoneOverlay.vue";
-import AreaOverlay from "@/components/map/AreaOverlay.vue";
-import EstateOverlay from "@/components/map/EstateOverlay.vue";
+ //百度地图
+import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import BmBoundary from "vue-baidu-map/components/others/Boundary";
 import BmPolygon from "vue-baidu-map/components/overlays/Polygon";
+
+import EstateOverlay from "@/components/map/EstateOverlay.vue";
+import AreaOverlay from "@/components/map/AreaOverlay.vue";
+import ZoneOverlay from "@/components/map/ZoneOverlay.vue";
+
 import MapHeader from "@/components/map/MapHeader.vue";
 import MapFilter from "@/components//map/MapFilter.vue";
 import {
@@ -116,7 +118,7 @@ export default {
   },
   data() {
     return {
-      center: { lng: 116.4133836971231, lat: 39.910924547299568 },
+      center: { lng: 116.4133836971231, lat: 39.910924547299568 } ,
       zoom: 12,
       districtIndex: "",
       estateIndex: "",
@@ -129,13 +131,14 @@ export default {
       areaBoundry: "",
       posCity: "成都市",
       input: "",
-      height: "950px",
+      height: "100%",
       city: null,
       districts: null,
       zones: null,
       regions: null,
       estates: null,
-      polygonPath: ""
+      polygonPath: "",
+      ChooseIndex:0 ,
     };
   },
   computed: {
@@ -155,7 +158,7 @@ export default {
     }
   },
   created() {
-    this.height = (window.innerHeight - 10) + "px";
+    this.height = window.innerHeight - 10 + "px";
     // console.log(this.height);
   },
   mounted() {
@@ -218,7 +221,7 @@ export default {
       this.showBoundary = true;
     },
     cancelArea(item, index) {
-      if (item.level === "district") {
+      if (item.level === "district") {             
         this.areaIndex = "";
         this.areaBoundry = "";
         this.showBoundary = false;
@@ -262,6 +265,10 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    clickTest(index){
+      this.ChooseIndex = index;
+      console.log(this.ChooseIndex)
     }
   }
 };
@@ -269,18 +276,17 @@ export default {
 
 <style lang="scss">
 #bm-view {
-  height: 950px;
+  // height: 950px;
   // height: 100%;
-
 }
 #map-header-wrapper {
   position: fixed;
-  top: 40px;
-  left: 50px;
+  top: 3%;
+  left: 5%;
 }
 #map-filter-wrapper {
   position: fixed;
-  top: 40px;
-  left: 500px;
+  top: 3% ;
+  left: 25%;
 }
 </style>

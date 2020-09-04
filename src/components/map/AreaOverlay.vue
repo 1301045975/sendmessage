@@ -15,7 +15,7 @@ export default {
   components: {
     BmOverlay
   },
-  props: ["text", "position", "active"],
+  props: ["text", "position"],
   watch: {
     position: {
       handler() {
@@ -60,20 +60,22 @@ export default {
   transition: background-color 0.15s ease-in-out;
   display: flex;
   align-items: center;
-  width: 84px;
-  height: 84px;
+  width: 7em;
+  height: 7em;
   background-color: rgba(58, 126, 255, 0.9);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #fff;
-  font-size: 12px;
+  font-size: 0.7em;
   text-align: center;
-  padding: 10px;
+  padding: 0.7em;
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 4px #999;
+  box-shadow: 0 0 0.2em #999;
   box-sizing: border-box;
+  // align-items: center;
+  justify-content: center;
 
   &:hover {
     z-index: 1;
@@ -95,7 +97,7 @@ export default {
       white-space: nowrap;
       width: 100%;
       text-align: center;
-      line-height: 16px;
+      line-height: 1.3em;
     }
   }
 }
