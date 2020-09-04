@@ -6,7 +6,7 @@
       <el-table-column prop="ufpProId" label="ufpProId" width="180"></el-table-column>
       <el-table-column prop="ufpUsrId" label="ufpUsrId"></el-table-column>
       <el-table-column prop="ufpCtyCode" label="ufpCtyCode"></el-table-column>
-      <el-table-column label="ufpCreateDate">
+      <el-table-column label="收藏时间">
         <template slot-scope="scope">{{scope.row.ufpCreateDate | formatTime}}</template>
       </el-table-column>
       <el-table-column label="操作">

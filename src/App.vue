@@ -13,11 +13,11 @@ export default {
     };
   },
   created() {
-    if (window.screen.width >= 1920) {
-      this.zoomValue = 1;
-    } else {
-      this.zoomValue = 0.7;
-    }
+    // if (window.screen.width >= 1920) {
+    //   this.zoomValue = 1;
+    // } else {
+    //   this.zoomValue = 0.7;
+    // }
   }
 };
 </script>

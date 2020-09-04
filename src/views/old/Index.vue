@@ -105,7 +105,7 @@
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="[10,20,30]"
-        layout="total, prev, pager, next, jumper"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="totalRecords"
       ></el-pagination>
     </div>
@@ -168,7 +168,7 @@ export default {
       searchContent: "",
       // 分页
       pageNum: 1,
-      pageSize: 20,
+      pageSize: 10,
       totalRecords: 0,
       // 区域
       areasArray: [],
@@ -326,7 +326,7 @@ export default {
       this.searchHouse();
     },
     fetchData() {
-      //
+      this.searchHouse();
     },
     // 记录点击区域的level和areaId
     handleAreaClick(level, areaId) {
@@ -577,6 +577,12 @@ export default {
           }
         ]
       ];
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     }
   }
 };
