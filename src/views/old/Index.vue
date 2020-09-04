@@ -2,18 +2,14 @@
   <div>
     <my-header></my-header>
     <div class="cheader">
-      <div style="padding-top: 30px">
+      <div style="width:77%;">
         <el-row class="csearch" type="flex" justify="center">
-          <el-col
-            :span="2"
-            style="font-size: 28px;cursor: pointer;color: #00ae66;font-weight: bold"
-          >{{ companyName }}</el-col>
+          <el-col :span="2" class="topTitle">{{ companyName }}</el-col>
           <el-col :span="8">
             <el-input
               placeholder="请输入内容"
               v-model="searchContent"
               class="input"
-              style="border-radius: 0px"
             ></el-input>
           </el-col>
           <el-button type="success" class="cbtn-bg" @click="searchHouse">开始找房</el-button>
@@ -22,7 +18,7 @@
     </div>
     <div class="box-body">
       <!-- 区域 -->
-      <el-row class="crow" v-for="areas in areasArray" :key="'areasArray' + areas.level">
+      <el-row class="crow area-crow" v-for="areas in areasArray" :key="'areasArray' + areas.level">
         <label class="filter-title">{{areas.level == 1 ? "区域：" : ""}}</label>
         <div class="crow-right">
           <el-link
@@ -57,7 +53,7 @@
             <option value="fiat" selected>Fiat</option>
             <option value="audi">Audi</option>
           </select>
-        </form> -->
+        </form>-->
         <div class="crow-right">
           <el-select
             multiple
@@ -595,10 +591,21 @@ export default {
   margin-right: 2em;
 }
 
+.topTitle {
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #00ae66;
+  font-weight: bold;
+}
 .cheader {
   width: 100%;
-  height: 100px;
+  height: 6em;
   background: #f5f5f6;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  justify-content: center;
 }
 span {
   color: #000;
@@ -609,24 +616,26 @@ span {
 .cbtn-bg {
   background: #00ae66;
   border: none;
-  border-radius: 0px;
 }
 .crow {
-  line-height: 30px;
+  line-height: 2em;
   display: flex;
   flex-direction: row;
   margin-top: 0.5em;
+  
 }
-
+.area-crow{
+  border-bottom: 1px solid #e6e6e6;
+}
 .crow-right {
-  width: 95%;
+  width: 96%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
+    flex-direction: row;
 }
+
 .cbtn {
   border: none;
-  border-radius: 0px;
 }
 
 .box-mg-right2em {
@@ -634,7 +643,7 @@ span {
 }
 
 .filter-item {
-  width: 6em;
+  width: 7.5em;
   margin-right: 1em;
 }
 .filter-area {
@@ -642,13 +651,13 @@ span {
   margin-right: 2em;
 }
 .filter-title {
-  width: 5%;
-  font-size:0.7em;
+  width: 3%;
+  font-size: 0.7em;
   font-weight: bold;
   margin-right: 0.8em;
 }
 .box-body {
-  width: 60%;
+  width: 73%;
   margin: 0 auto;
 }
 </style>
