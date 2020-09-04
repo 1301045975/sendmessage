@@ -252,8 +252,8 @@
                 </el-row>
                 <el-divider></el-divider>
                 <el-row>
-                    <h2>房产计算器</h2>
 
+                    <h2>房产计算器</h2>
                     <el-tabs v-model="activeName" @tab-click="handleClick">
                         <el-tab-pane label="房贷计算器" name="first">
                             <el-row style="padding-top: 20px" :gutter="40">
@@ -385,9 +385,138 @@
                                 </el-col>
                             </el-row>
                         </el-tab-pane>
-                        <el-tab-pane label="新房税费计算器" name="second">
 
-                        </el-tab-pane>
+                        <el-tab-pane label="新房税费计算器" name="second">
+                            el-row style="padding-top: 20px" :gutter="40">
+                            <el-col :span="12">
+                                <el-form ref="form" :model="form" label-width="80px">
+                                    <el-form-item label="贷款类型">
+                                        <el-select v-model="form.input1" placeholder="商业贷款">
+                                            <el-option label="商业贷款" value="商业贷款"></el-option>
+                                            <el-option label="公积金贷款" value="公积金贷款"></el-option>
+                                            <el-option label="组合贷款" value="组合贷款"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="计算方式">
+                                        <el-select v-model="form.input2" placeholder="按货款总额">
+                                            <el-option label="按货款总额" value="按货款总额"></el-option>
+                                            <el-option label="按房屋总价" value="按房屋总价"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="商贷金额" >
+                                        <el-input style="width: 300px" type="text" v-model="form.desc1"  placeholder="请输入大于0的数字">
+                                            <template slot="append">万元</template>
+                                        </el-input>
+
+                                    </el-form-item>
+                                    <el-form-item label="商贷利率方式">
+                                        <el-select v-model="form.input3" placeholder="按最新LPR">
+                                            <el-option label="按最新LPR" value="按最新LPR"></el-option>
+                                            <el-option label="按旧版基准利率" value="按旧版基准利率"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="LPR">
+                                        <el-button type="text" @click="open">
+                                            <i class="el-icon-info"></i>
+                                        </el-button>
+                                        <el-input style="width:350px" type="number" v-model="form.desc2" placeholder="请输入中国人民银行网站公布的最新LPR" >
+                                            <template slot="append">%</template>
+                                        </el-input>
+                                    </el-form-item>
+                                    <el-form-item label="基点">
+                                        <el-input style="width: 300px" type="number" v-model="form.desc3">
+                                            <template slot="append">BP(‱)</template>
+                                        </el-input>
+                                    </el-form-item>
+
+                                    <el-form-item label="商贷利率" placeholder="4.65">
+                                        <el-input style="width: 300px" type="text" v-model="form.desc4"></el-input>
+                                    </el-form-item>
+
+                                    <el-form-item label="商贷年限">
+                                        <el-select v-model="form.input4" placeholder="10年">
+                                            <el-option label="30年" value="30"></el-option>
+                                            <el-option label="29年" value="29"></el-option>
+                                            <el-option label="28年" value="28"></el-option>
+                                            <el-option label="27年" value="27"></el-option>
+                                            <el-option label="26年" value="26"></el-option>
+                                            <el-option label="25年" value="25"></el-option>
+                                            <el-option label="24年" value="24"></el-option>
+                                            <el-option label="23年" value="23"></el-option>
+                                            <el-option label="22年" value="22"></el-option>
+                                            <el-option label="21年" value="21"></el-option>
+                                            <el-option label="20年" value="20"></el-option>
+                                            <el-option label="19年" value="19"></el-option>
+                                            <el-option label="18年" value="18"></el-option>
+                                            <el-option label="17年" value="17"></el-option>
+                                            <el-option label="16年" value="16"></el-option>
+                                            <el-option label="15年" value="15"></el-option>
+                                            <el-option label="14年" value="14"></el-option>
+                                            <el-option label="13年" value="13"></el-option>
+                                            <el-option label="12年" value="12"></el-option>
+                                            <el-option label="11年" value="11"></el-option>
+                                            <el-option label="10年" value="10"></el-option>
+                                            <el-option label="9年" value="9"></el-option>
+                                            <el-option label="8年" value="8"></el-option>
+                                            <el-option label="7年" value="7"></el-option>
+                                            <el-option label="6年" value="6"></el-option>
+                                            <el-option label="5年" value="5"></el-option>
+                                            <el-option label="4年" value="4"></el-option>
+                                            <el-option label="3年" value="3"></el-option>
+                                            <el-option label="2年" value="2"></el-option>
+                                            <el-option label="1年" value="1"></el-option>
+
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="success" @click="onSubmit" class="cbtn-bg">开始计算</el-button>
+                                    </el-form-item>
+                                </el-form>
+                            </el-col>
+
+                            <el-col :span="2">
+                                <el-card class="box-card" style="width: 500px">
+                                    <div slot="header" class="clearfix">
+                                        <el-row>
+                                            <el-col :span="6">类型</el-col>
+                                            <el-col :span="6">等额本息还款</el-col>
+                                            <el-col :span="6">等额本金还款</el-col>
+                                        </el-row>
+                                    </div>
+                                    <el-row class="crow">
+                                        <el-col :span="6">月供</el-col>
+                                        <el-col :span="6">0元</el-col>
+                                        <el-col :span="6">0元</el-col>
+                                    </el-row>
+
+                                    <el-row class="crow">
+                                        <el-col :span="6">贷款年限</el-col>
+                                        <el-col :span="6">0年</el-col>
+                                        <el-col :span="6">0年</el-col>
+                                    </el-row>
+
+                                    <el-row class="crow">
+                                        <el-col :span="6">贷款总额</el-col>
+                                        <el-col :span="6">0万元</el-col>
+                                        <el-col :span="6">0万元</el-col>
+                                    </el-row>
+
+                                    <el-row class="crow">
+                                        <el-col :span="6">利息总额</el-col>
+                                        <el-col :span="6">0万元</el-col>
+                                        <el-col :span="6">0万元</el-col>
+                                    </el-row>
+
+                                    <el-row class="crow">
+                                        <el-col :span="6">还款总额</el-col>
+                                        <el-col :span="6">0万元</el-col>
+                                        <el-col :span="6">0万元</el-col>
+                                    </el-row>
+                                </el-card>
+                            </el-col>
+                </el-tab-pane>
+
+
                         <el-tab-pane label="购房资质查询" name="third">
                         </el-tab-pane>
                     </el-tabs>
@@ -478,11 +607,4 @@
         max-height: 100%;
     }
 
-    /*.el-carousel__item:nth-child(2n) {*/
-    /*    background-color: #99a9bf;*/
-    /*}*/
-
-    /*.el-carousel__item:nth-child(2n+1) {*/
-    /*    background-color: #d3dce6;*/
-    /*}*/
 </style>
