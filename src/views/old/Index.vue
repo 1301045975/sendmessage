@@ -2,7 +2,7 @@
   <div>
     <my-header></my-header>
     <div class="cheader">
-      <div style="width:60%;">
+      <div style="width:50%;">
         <el-row class="csearch" type="flex" justify="center">
           <el-col  class="topTitle">{{ companyName }}</el-col>
           <el-col >
@@ -58,7 +58,7 @@
           <el-select
             multiple
             collapse-tags
-            class="filter-area"
+            class="filter-item filter-more"
             size="mini"
             :popper-append-to-body="false"
             v-for="(more, i) in moreFilterValues"
@@ -637,14 +637,11 @@ span {
 .cbtn {
   border: none;
 }
-
-.box-mg-right2em {
-  margin-right: 2em;
-}
-
 .filter-item {
-  width: 7.5em;
-  margin-right: 1em;
+  margin-right: 1.7em;
+}
+.filter-more{
+  width: 6.2em;
 }
 .filter-area {
   /* width: 5em; */
