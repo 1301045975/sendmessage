@@ -85,6 +85,11 @@ const routes = [
     name: "recommend",
     component: () => import("../components/Recommend.vue")
   },
+  {
+    path: "/calculator",
+    name: "calculator",
+    component: () => import("../views/Tool/calculator.vue")
+  },
 ];
 
 const router = new VueRouter({
