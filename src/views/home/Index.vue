@@ -102,7 +102,7 @@
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/sale')" style="cursor:pointer">找二手房</span>
+              <span @click="send('/sale')" style="cursor:pointer;" >找二手房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">海量真实房源，数量不重复，点击开启看房旅程</el-row>
           </el-col>
@@ -115,7 +115,7 @@
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/rent')" style="cursor:pointer">找租房</span>
+              <span @click="send('/rent')" style="cursor:pointer;">找租房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">整租、短租公寓信息量大一应俱全</el-row>
           </el-col>
@@ -574,7 +574,7 @@ export default {
 
 <style scoped>
 .cbody {
-  background-image: url("../../assets/img/bannerV3.jpg");
+  background-image: url("../../assets/img/bannerV4.jpg");
   width: 100%;
   height: 700px;
   background-size: 100% 100%;
