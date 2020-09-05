@@ -132,6 +132,7 @@
             v-for="(item, index) in recOldProperties.slice(0,4)"
             :key="'recOldProperties2'+index"
             :property="item"
+            :houseType="'old'"
           ></my-recommend>
         </div>
         <div v-if="recOldProperties.length > 0">
@@ -153,7 +154,7 @@
             v-for="(item, index) in recOldProperties.slice(0,4)"
             :key="'recOldProperties2'+index"
             :property="item"
-            :houseType="'old'"
+            :houseType="'rent'"
           ></my-recommend>
         </div>
         <div v-if="recRentProperties.length > 0">
