@@ -20,8 +20,8 @@
             <span @click="send('/rent')">租房</span>
           </el-col>
           <el-col :span="1" style="cursor: pointer">
-          <span @click="send('/calculator')">工具</span>
-        </el-col>
+            <span @click="send('/calculator')">工具</span>
+          </el-col>
           <!-- <el-col :span="2" style="cursor: pointer">
             <span @click="business()">商业办公</span>
           </el-col>-->
@@ -65,11 +65,15 @@
             <span
               :style="houseType === 'oldHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
               @click="searchType('oldHouse')"
-            ><strong>找二手房</strong></span>
+            >
+              <strong>找二手房</strong>
+            </span>
             <span
               :style="houseType === 'rentHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
               @click="searchType('rentHouse')"
-            ><strong>找租房</strong></span>
+            >
+              <strong>找租房</strong>
+            </span>
           </el-col>
         </el-row>
 
@@ -117,6 +121,50 @@
           </el-col>
         </el-row>
       </div>
+    </el-container>
+
+    <el-container>
+      <el-main>
+        <span>热门售房</span>&nbsp;&nbsp;
+        <span @click="send('/old')">查看更多>></span>
+        <div v-if="recOldProperties.length > 0">
+          <my-recommend
+            v-for="(item, index) in recOldProperties.slice(0,4)"
+            :key="'recOldProperties2'+index"
+            :property="item"
+          ></my-recommend>
+        </div>
+        <div v-if="recOldProperties.length > 0">
+          <my-recommend
+            v-for="(item, index) in recOldProperties.slice(4,8)"
+            :key="'recOldProperties2'+index"
+            :property="item"
+          ></my-recommend>
+        </div>
+      </el-main>
+    </el-container>
+
+    <el-container>
+      <el-main>
+        <span>热门租房</span>&nbsp;&nbsp;
+        <span @click="send('/rent')">查看更多>></span>
+        <div v-if="recRentProperties.length > 0">
+          <my-recommend
+            v-for="(item, index) in recOldProperties.slice(0,4)"
+            :key="'recOldProperties2'+index"
+            :property="item"
+            :houseType="'old'"
+          ></my-recommend>
+        </div>
+        <div v-if="recRentProperties.length > 0">
+          <my-recommend
+            v-for="(item, index) in recOldProperties.slice(4,8)"
+            :key="'recOldProperties2'+index"
+            :property="item"
+            :houseType="'rent'"
+          ></my-recommend>
+        </div>
+      </el-main>
     </el-container>
 
     <!-- <el-container>
@@ -228,6 +276,9 @@
 import oldHouseApi from "@/api/oldhouse";
 import { getToken } from "@/utils/auth"; // 验权
 import store from "@/store";
+import MyRecommend from "@/components/common/MyRecommend.vue";
+import { getOldHouseRec, getRentHouseRec } from "@/api/home";
+
 (function(m, ei, q, i, a, j, s) {
   m[i] =
     m[i] ||
@@ -247,12 +298,16 @@ import store from "@/store";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import loginDialog from "@/components/login/loginDialog";
+import { getOldHouse, getRentHouse } from "@/api/map";
+import { str2Date, dateDiff, calculateLastUpdate } from "@/utils/date";
+
 export default {
   name: "Home",
   components: {
     MyHeader,
     MyFooter,
-    loginDialog
+    loginDialog,
+    MyRecommend
   },
   data() {
     return {
@@ -270,7 +325,10 @@ export default {
       ershouImage:
         "http://117.51.142.27:9003/5eb404d9-76d8-4048-ad69-24ef1243fa67.jpg",
       loginOrRegis: "登录/注册",
-      logoutFlag: false
+      logoutFlag: false,
+      recRentProperties: [],
+      recOldProperties: [],
+      defaultImg: require("../../assets/img/noimg.jpg")
     };
   },
   created() {
@@ -288,6 +346,118 @@ export default {
     } else {
       this.logoutFlag = true;
     }
+    getOldHouseRec()
+      .then(res => {
+        if (res.code === 200) {
+          // this.recOldProperties = res.data;
+          let data = res.data;
+          // 清空
+          this.recOldProperties.splice(0, this.recOldProperties.length);
+          if (data) {
+            data.forEach((item, i) => {
+              let propertyInfo = {};
+              // 默认封面图片
+              propertyInfo.id = item.proId;
+              propertyInfo.coverImg = item.proCoverUrl
+                ? item.proCoverUrl
+                : this.defaultImg;
+              // 详细页面链接
+              propertyInfo.detailUrl = "#";
+              // 标题
+              propertyInfo.title = item.proTitle;
+              // 位置
+              propertyInfo.location = item.proDistrict + "-" + item.proArea;
+              // x室y厅
+              propertyInfo.countFT = item.proTitle.split("，")[0];
+              // 面积
+              propertyInfo.houseArea = item.proSquare + "m²";
+              // 朝向
+              propertyInfo.direction = item.proDirection;
+              // 装修
+              propertyInfo.decoration = item.proDecoration;
+              // 楼层
+              propertyInfo.floor =
+                item.proFloor + "(共" + item.proFloorAll + "层)";
+              propertyInfo.completeYear = item.proCompleteYear + "建";
+              propertyInfo.houseType = item.proType;
+              propertyInfo.numFav = Math.round(Math.random() * 1000) + "关注";
+              propertyInfo.lastUpdate = calculateLastUpdate(
+                str2Date(item.proModDate)
+              );
+              propertyInfo.isSupportVR = true;
+              propertyInfo.isAllowView = true;
+              propertyInfo.isOverFiveYears = false;
+              propertyInfo.allPrice = item.proPrice + item.proPriceType;
+              propertyInfo.unitPrice =
+                "单价：" + item.proUnitPrice + item.proUnitPriceType;
+              propertyInfo.rentPrice =
+                item.proRentPrice + item.proRentPriceType;
+              this.recOldProperties.push(propertyInfo);
+            });
+          }
+        } else {
+          this.$message.error("二手房推荐获取失败");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    getRentHouseRec()
+      .then(res => {
+        if (res.code === 200) {
+          // this.recRentProperties = res.data;
+          let data = res.data;
+          // 清空
+          this.recRentProperties.splice(0, this.recRentProperties.length);
+          if (data) {
+            data.forEach((item, i) => {
+              let propertyInfo = {};
+              // 默认封面图片
+              propertyInfo.id = item.proId;
+              propertyInfo.coverImg = item.proCoverUrl
+                ? item.proCoverUrl
+                : this.defaultImg;
+              // 详细页面链接
+              propertyInfo.detailUrl = "#";
+              // 标题
+              propertyInfo.title = item.proTitle;
+              // 位置
+              propertyInfo.location = item.proDistrict + "-" + item.proArea;
+              // x室y厅
+              propertyInfo.countFT = item.proTitle.split("，")[0];
+              // 面积
+              propertyInfo.houseArea = item.proSquare + "m²";
+              // 朝向
+              propertyInfo.direction = item.proDirection;
+              // 装修
+              propertyInfo.decoration = item.proDecoration;
+              // 楼层
+              propertyInfo.floor =
+                item.proFloor + "(共" + item.proFloorAll + "层)";
+              propertyInfo.completeYear = item.proCompleteYear + "建";
+              propertyInfo.houseType = item.proType;
+              propertyInfo.numFav = Math.round(Math.random() * 1000) + "关注";
+              propertyInfo.lastUpdate = calculateLastUpdate(
+                str2Date(item.proModDate)
+              );
+              propertyInfo.isSupportVR = true;
+              propertyInfo.isAllowView = true;
+              propertyInfo.isOverFiveYears = false;
+              propertyInfo.allPrice = item.proPrice + item.proPriceType;
+              propertyInfo.unitPrice =
+                "单价：" + item.proUnitPrice + item.proUnitPriceType;
+              propertyInfo.rentPrice =
+                item.proRentPrice + item.proRentPriceType;
+              this.recRentProperties.push(propertyInfo);
+            });
+          }
+        } else {
+          this.$message.error("租房推荐获取失败");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   mounted() {
     this.ready();
