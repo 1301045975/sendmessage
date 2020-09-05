@@ -1,5 +1,10 @@
 <template>
-  <bm-overlay ref="customOverlay" :class="isChoose===1?'zone Myactive':'zone'" pane="labelPane" @draw="draw">
+  <bm-overlay
+    ref="customOverlay"
+    :class="isChoose===1?'zone Myactive':'zone'"
+    pane="labelPane"
+    @draw="draw"
+  >
     <label>
       <div>
         <p>
@@ -8,7 +13,7 @@
         </p>
       </div>
     </label>
-  </bm-overlay> 
+  </bm-overlay>
 </template>
 
 <script>
@@ -24,7 +29,7 @@ export default {
       IsChoose: 0
     };
   },
-  props: ["text", "position", "isChoose","TheIndex"],
+  props: ["text", "position", "isChoose", "TheIndex"],
   watch: {
     position: {
       handler() {
@@ -32,15 +37,9 @@ export default {
       },
       deep: true
     },
-    isChoose(newValue, old) {
-        console.log(this.TheIndex ,this.isChoose);   
-        // this.$forceUpsdate()
-    }
+    isChoose(newValue, old) {}
   },
-  mounted() { 
-    console.log(this.isChoose);
-    // console.log(this.height);
-  },
+  mounted() {},
   methods: {
     draw({ el, BMap, map }) {
       const { lng, lat } = this.position;
@@ -97,13 +96,13 @@ export default {
     background-color: #fff;
     color: rgba(58, 126, 255, 0.9);
     padding: 0.3em 0.8em;
-    border-radius: 1.0em;
+    border-radius: 1em;
   }
 }
-  .Myactive {
-    background-color: #fa5741;
-  }
-.Myactive .price{
+.Myactive {
+  background-color: #fa5741;
+}
+.Myactive .price {
   color: #fa5741;
 }
 </style>

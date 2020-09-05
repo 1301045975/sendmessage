@@ -46,14 +46,6 @@
       <!-- 更多 -->
       <el-row class="crow">
         <label class="filter-title">更多：</label>
-        <!-- <form action>
-          <select name="cars">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="fiat" selected>Fiat</option>
-            <option value="audi">Audi</option>
-          </select>
-        </form>-->
         <div class="crow-right">
           <el-select
             multiple
@@ -151,7 +143,6 @@ export default {
       pojo: {},
       agent: {},
       agents: [],
-      activeIndex: "/oldHouse/info",
       centerDialogVisible: false,
       messageAgent: {},
       messagePojo: {

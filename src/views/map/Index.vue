@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div style="width:100%; height:98%;">
     <baidu-map
       :style="{height:this.height}"
@@ -77,6 +77,12 @@
       <div id="map-filter-wrapper">
         <map-filter></map-filter>
       </div>
+      <div id="map-house-list">
+        <map-house-list
+          :ifShow="ChooseIndex == -1 ? 0 : 1"
+          :estates="ChooseIndex == -1 ? {} : estates[ChooseIndex]"
+        ></map-house-list>
+      </div>
     </baidu-map>
   </div>
 </template>
@@ -85,7 +91,7 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import connect from "../../connect.js";
- //百度地图
+//百度地图
 import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import BmBoundary from "vue-baidu-map/components/others/Boundary";
 import BmPolygon from "vue-baidu-map/components/overlays/Polygon";
@@ -96,6 +102,9 @@ import ZoneOverlay from "@/components/map/ZoneOverlay.vue";
 
 import MapHeader from "@/components/map/MapHeader.vue";
 import MapFilter from "@/components//map/MapFilter.vue";
+//地图左侧列表
+import MapHouseList from "@/components/map/MapHouseList.vue";
+
 import {
   getCity,
   getDistricts,
@@ -114,11 +123,12 @@ export default {
     EstateOverlay,
     MapHeader,
     MapFilter,
-    AreaOverlay
+    AreaOverlay,
+    MapHouseList
   },
   data() {
     return {
-      center: { lng: 116.4133836971231, lat: 39.910924547299568 } ,
+      center: { lng: 116.4133836971231, lat: 39.910924547299568 },
       zoom: 12,
       districtIndex: "",
       estateIndex: "",
@@ -138,7 +148,7 @@ export default {
       regions: null,
       estates: null,
       polygonPath: "",
-      ChooseIndex:0 ,
+      ChooseIndex: -1
     };
   },
   computed: {
@@ -221,7 +231,7 @@ export default {
       this.showBoundary = true;
     },
     cancelArea(item, index) {
-      if (item.level === "district") {             
+      if (item.level === "district") {
         this.areaIndex = "";
         this.areaBoundry = "";
         this.showBoundary = false;
@@ -260,15 +270,15 @@ export default {
       getEstatesByZoneId(item.areaId)
         .then(res => {
           this.estates = res.data;
-          // console.log(this.estates);
+          console.log(this.estates);
         })
         .catch(err => {
           console.log(err);
         });
     },
-    clickTest(index){
+    clickTest(index) {
       this.ChooseIndex = index;
-      console.log(this.ChooseIndex)
+      console.log(this.ChooseIndex);
     }
   }
 };
@@ -282,11 +292,21 @@ export default {
 #map-header-wrapper {
   position: fixed;
   top: 3%;
-  left: 5%;
+  left: 4%;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-filter-wrapper {
   position: fixed;
-  top: 3% ;
+  top: 3%;
   left: 25%;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+#map-house-list {
+  position: fixed;
+  left: 4%;
+  top: 12%;
+  border-radius: 3em;
+  // z-index: 20;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 </style>
