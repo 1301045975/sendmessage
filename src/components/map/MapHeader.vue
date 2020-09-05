@@ -84,11 +84,12 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  width: 400px;
-  padding: 5px;
-  border-radius: 2px;
+  width: 25em;
+  padding: 0.6em;
+  border-radius: 0.2em;
   background-color: white;
   text-align: center;
+  z-index:100;
 }
 #logo {
   background-color: white;

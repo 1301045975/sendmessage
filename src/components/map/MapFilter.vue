@@ -367,11 +367,12 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  width: 350px;
+  width: 22em;
   // height: 40px;
-  padding: 5px;
+  padding: 0.6em;
   background-color: white;
   text-align: center;
+  z-index: 100;
 }
 #logo {
   background-color: white;

@@ -68,7 +68,7 @@
           :text="item"
           :TheIndex="index"
           :isChoose="ChooseIndex === index ? 1 : 0"
-          @click.native="clickTest(index)"
+          @click.native="clickEstate(index)"
         ></estate-overlay>
       </div>
       <div id="map-header-wrapper">
@@ -79,7 +79,7 @@
       </div>
       <div id="map-house-list">
         <map-house-list
-          :ifShow="ChooseIndex == -1 ? 0 : 1"
+          ref="mapHouseList"
           :estates="ChooseIndex == -1 ? {} : estates[ChooseIndex]"
         ></map-house-list>
       </div>
@@ -276,9 +276,12 @@ export default {
           console.log(err);
         });
     },
-    clickTest(index) {
+    //点击小区
+    clickEstate(index) {
+      //更换选择的小区；
       this.ChooseIndex = index;
-      console.log(this.ChooseIndex);
+      //houseList重新显示结果
+      this.$refs.mapHouseList.chooseShow();
     }
   }
 };
@@ -290,19 +293,19 @@ export default {
   // height: 100%;
 }
 #map-header-wrapper {
-  position: fixed;
+  position: absolute;
   top: 3%;
   left: 4%;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-filter-wrapper {
-  position: fixed;
+  position: absolute;
   top: 3%;
-  left: 25%;
+  left: 27%;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-house-list {
-  position: fixed;
+  position: absolute;
   left: 4%;
   top: 12%;
   border-radius: 3em;
