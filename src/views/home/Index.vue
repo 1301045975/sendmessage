@@ -140,6 +140,7 @@
             v-for="(item, index) in recOldProperties.slice(4,8)"
             :key="'recOldProperties2'+index"
             :property="item"
+            :houseType="'old'"
           ></my-recommend>
         </div>
       </el-main>
