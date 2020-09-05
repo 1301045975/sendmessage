@@ -76,6 +76,11 @@ const routes = [
     component: () => import("../views/oldHouse/Index.vue")
   },
   {
+    path: "/calculator_tool",
+    name: "calculator_tool",
+    component: () => import("../components/calculator_tool")
+  },
+  {
     path: "/around",
     name: "Around",
     component: () => import("../components/Around.vue")
