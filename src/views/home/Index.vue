@@ -165,7 +165,7 @@
       <el-main>
         <div style="display:flex;justify-content:center;align-items:center;">
           <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
-            <h1>热门售房</h1>
+            <h1>热门租房</h1>
             <span @click="send('/rent')">查看更多>></span>
           </div>
         </div>
@@ -175,7 +175,7 @@
             style="display:flex;justify-content:space-between;align-items:center;width:70%;"
           >
             <my-recommend
-              v-for="(item, index) in recOldProperties.slice(0,4)"
+              v-for="(item, index) in recRentProperties.slice(0,4)"
               :key="'recOldProperties2'+index"
               :property="item"
               :houseType="'rent'"
@@ -189,7 +189,7 @@
             style="display:flex;justify-content:space-between;align-items:center;width:70%;"
           >
             <my-recommend
-              v-for="(item, index) in recOldProperties.slice(4,8)"
+              v-for="(item, index) in recRentProperties.slice(4,8)"
               :key="'recOldProperties2'+index"
               :property="item"
               :houseType="'rent'"
