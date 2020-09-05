@@ -125,46 +125,76 @@
 
     <el-container>
       <el-main>
-        <span>热门售房</span>&nbsp;&nbsp;
-        <span @click="send('/old')">查看更多>></span>
-        <div v-if="recOldProperties.length > 0">
-          <my-recommend
-            v-for="(item, index) in recOldProperties.slice(0,4)"
-            :key="'recOldProperties2'+index"
-            :property="item"
-            :houseType="'old'"
-          ></my-recommend>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
+            <h1>热门售房</h1>
+            <span @click="send('/old')">查看更多>></span>
+          </div>
         </div>
-        <div v-if="recOldProperties.length > 0">
-          <my-recommend
-            v-for="(item, index) in recOldProperties.slice(4,8)"
-            :key="'recOldProperties2'+index"
-            :property="item"
-            :houseType="'old'"
-          ></my-recommend>
+
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recOldProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+          >
+            <my-recommend
+              v-for="(item, index) in recOldProperties.slice(0,4)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'old'"
+            ></my-recommend>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recOldProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+          >
+            <my-recommend
+              v-for="(item, index) in recOldProperties.slice(4,8)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'old'"
+            ></my-recommend>
+          </div>
         </div>
       </el-main>
     </el-container>
 
     <el-container>
       <el-main>
-        <span>热门租房</span>&nbsp;&nbsp;
-        <span @click="send('/rent')">查看更多>></span>
-        <div v-if="recRentProperties.length > 0">
-          <my-recommend
-            v-for="(item, index) in recOldProperties.slice(0,4)"
-            :key="'recOldProperties2'+index"
-            :property="item"
-            :houseType="'rent'"
-          ></my-recommend>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
+            <h1>热门售房</h1>
+            <span @click="send('/rent')">查看更多>></span>
+          </div>
         </div>
-        <div v-if="recRentProperties.length > 0">
-          <my-recommend
-            v-for="(item, index) in recOldProperties.slice(4,8)"
-            :key="'recOldProperties2'+index"
-            :property="item"
-            :houseType="'rent'"
-          ></my-recommend>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recRentProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+          >
+            <my-recommend
+              v-for="(item, index) in recOldProperties.slice(0,4)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'rent'"
+            ></my-recommend>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recRentProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+          >
+            <my-recommend
+              v-for="(item, index) in recOldProperties.slice(4,8)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'rent'"
+            ></my-recommend>
+          </div>
         </div>
       </el-main>
     </el-container>
