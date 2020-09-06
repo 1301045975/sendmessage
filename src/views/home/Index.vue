@@ -102,7 +102,7 @@
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/sale')" style="cursor:pointer">找二手房</span>
+              <span @click="send('/sale')" style="cursor:pointer;" >找二手房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">海量真实房源，数量不重复，点击开启看房旅程</el-row>
           </el-col>
@@ -115,7 +115,7 @@
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/rent')" style="cursor:pointer">找租房</span>
+              <span @click="send('/rent')" style="cursor:pointer;">找租房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">整租、短租公寓信息量大一应俱全</el-row>
           </el-col>
@@ -126,7 +126,7 @@
     <el-container>
       <el-main>
         <div style="display:flex;justify-content:center;align-items:center;">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;">
             <h1>热门售房</h1>
             <span @click="send('/old')">查看更多>></span>
           </div>
@@ -135,7 +135,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recOldProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recOldProperties.slice(0,4)"
@@ -148,7 +148,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recOldProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recOldProperties.slice(4,8)"
@@ -164,7 +164,7 @@
     <el-container>
       <el-main>
         <div style="display:flex;justify-content:center;align-items:center;">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;">
             <h1>热门租房</h1>
             <span @click="send('/rent')">查看更多>></span>
           </div>
@@ -172,7 +172,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recRentProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recRentProperties.slice(0,4)"
@@ -186,7 +186,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recRentProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recRentProperties.slice(4,8)"
@@ -574,7 +574,7 @@ export default {
 
 <style scoped>
 .cbody {
-  background-image: url("../../assets/img/bannerV3.jpg");
+  background-image: url("../../assets/img/bannerV4.jpg");
   width: 100%;
   height: 700px;
   background-size: 100% 100%;
