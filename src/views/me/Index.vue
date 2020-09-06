@@ -12,8 +12,11 @@
               <!-- <el-tab-pane label="我的委托">
                 <h2>功能正在开发中，敬请期待...</h2>
               </el-tab-pane> -->
-              <el-tab-pane label="收藏房源">
+              <!-- <el-tab-pane label="收藏房源">
                 <fav-property></fav-property>
+              </el-tab-pane> -->
+              <el-tab-pane label="收藏房源">
+                <my-fav-property></my-fav-property>
               </el-tab-pane>
               <!-- <el-tab-pane label="收藏楼盘">
                 <fav-estate></fav-estate>
@@ -30,7 +33,7 @@
               <!-- <el-tab-pane label="楼盘推荐">
                 <h2>功能正在开发中，敬请期待...</h2>
               </el-tab-pane> -->
-              <el-tab-pane name="cityHousePriceManage" :lazy="true" v-if="true" label="房价管理">
+              <el-tab-pane v-if="roles.indexOf('admin')>-1" name="cityHousePriceManage" :lazy="true" label="房价管理">
                 <city-house-config></city-house-config>
               </el-tab-pane>
             </el-tabs>
@@ -43,11 +46,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import CityHouseConfig from "@/components/me/CityHouseConfig.vue";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import MyProfile from "@/components/me/MyProfile.vue";
 import FavProperty from "@/components/me/FavProperty.vue";
+import MyFavProperty from "@/components/me/MyFavProperty.vue";
 import FavEstate from "@/components/me/FavEstate.vue";
 
 export default {
@@ -58,8 +63,12 @@ export default {
     MyFooter,
     MyProfile,
     FavProperty,
-    FavEstate
-  }
+    FavEstate,
+    MyFavProperty
+  },
+  computed: {
+    ...mapGetters(["name", "imgurl", "mobile", "roles"])
+  },
 };
 </script>
 
