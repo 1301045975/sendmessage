@@ -23,7 +23,12 @@
           <el-menu-item @click="toggleLoginDialog" style="float: right" v-show="!logoutFlag">登录/注册</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
           <el-menu-item @click="center" style="float: right;" v-show="logoutFlag">
-            <el-image v-if="userAvatar" style="width: 40px; height: 40px" :src="userAvatar" fit="fill"></el-image>
+            <el-image
+              v-if="userAvatar"
+              style="width: 40px; height: 40px"
+              :src="userAvatar"
+              fit="fill"
+            ></el-image>
             <span style="margin-left:10px">{{userName}}</span>
           </el-menu-item>
           <!--<el-submenu index="person" style="float: right" v-show="logoutFlag">
@@ -63,10 +68,10 @@ export default {
       return process.env.VUE_APP_BASE_API_PORTAL + this.imgurl;
     },
     userName() {
-      console.log(this.name);
       return this.name ? this.name : this.mobile;
     }
   },
+  props: ["detailActive"],
   data() {
     return {
       activeIndex: "1",
@@ -94,6 +99,8 @@ export default {
   },
   mounted() {
     this.activeIndex = this.$route.path;
+    if (this.detailActive == 1) this.activeIndex = "/old";
+    if (this.detailActive == 2) this.activeIndex = "/rent";
   },
   methods: {
     handleSelect(key, keyPath) {

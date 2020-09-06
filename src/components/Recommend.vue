@@ -1,6 +1,6 @@
 <template>
 
-    <div class="recommendContainer" :name="recommend">
+    <div class="recommendContainer" >
         <el-row style="width: 100%;align-items: center;padding: 0 0 40px 40px">
             <el-col v-for="(item, i) in recomProperty" :key="i" :span=spanNumber>
                 <div class="el-image" style="position: relative">

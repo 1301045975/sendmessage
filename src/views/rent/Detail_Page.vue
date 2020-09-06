@@ -1,6 +1,6 @@
 <template>
     <div>
-        <my-header></my-header>
+        <my-header :detailActive=2></my-header>
         <div class="cheader">
             <div style="padding-top: 30px">
                 <el-row class="csearch" type="flex" justify="center">

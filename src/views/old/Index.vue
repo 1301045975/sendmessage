@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-header></my-header>
+    <my-header ></my-header>
     <div class="cheader">
       <div style="width:50%;">
         <el-row class="csearch" type="flex" justify="center">

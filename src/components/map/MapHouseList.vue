@@ -28,13 +28,13 @@
             <li v-for="(item, index) in Properties" :key="index" @click="toDetail(item.proId)">
               <img :src="item.proCoverUrl==null?defaultImg:item.proCoverUrl" />
               <div class="list-right-info">
-                <span class="main-info">{{item.proTitle}} {{item.proArea}} {{proDistrict}}</span>
+                <span class="main-info">{{item.proTitle}} {{item.proArea}} {{item.proDistrict}}</span>
                 <span
                   class="sub-info"
-                >{{item.proCountF}}室{{item.proCountT}}厅{{item.proCountW}}卫/{{item.proSquare}}m²/{{item.proDirection}}/{{proEstateName}}</span>
+                >{{item.proCountF}}室{{item.proCountT}}厅{{item.proCountW}}卫/{{item.proSquare}}m²/{{item.proDirection}}/{{item.proEstateName}}</span>
                 <span class="price">
                   <span class="total-price">{{item.proPrice}}{{item.proPriceType}}</span>
-                  {{item.proUnitPrice}}{{proUnitPriceType}}
+                  {{item.proUnitPrice}}{{item.proUnitPriceType}}
                 </span>
               </div>
             </li>
