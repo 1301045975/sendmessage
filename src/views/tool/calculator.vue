@@ -15,19 +15,23 @@
                     </el-col>
                 </el-row></div>
         <div style="height: 260px;width: 100%">
-            <calculator_tool></calculator_tool></div>
+            <calculator_tool></calculator_tool>
+        <MyFooter style="width:100% "></MyFooter>
+    </div>
     </div>
 </template>
 
 <script>
     import MyHeader from "../../components/common/MyHeader";
     import calculator_tool from "../../components/calculator_tool";
+    import MyFooter from "../../components/common/MyFooter";
 
     export default {
         name: "index",
         components: {
             MyHeader,
             calculator_tool,
+            MyFooter
 
         },
         data() {

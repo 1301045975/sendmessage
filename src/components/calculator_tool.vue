@@ -2,7 +2,9 @@
     <div>
         <div style="width: 70%;margin-left:200px; padding-top: 30px">
             <el-tabs v-model="activeName">
+
                 <el-tab-pane label="房贷计算器" name="first">
+
                     <el-row style="padding-top: 20px" :gutter="40">
                         <el-col :span="12">
                             <el-form ref="form" :model="form" label-width="80px">
@@ -117,7 +119,9 @@
                                 </el-form-item>
                             </el-form>
                         </el-col>
+
                         <el-col :span="12">
+<!--                            计算器卡片-->
                             <el-card class="box-card">
                                 <div slot="header" class="clearfix">
                                     <el-row>
@@ -163,6 +167,70 @@
                                 </el-row>
                             </el-card>
                         </el-col>
+
+                    </el-row>
+                </el-tab-pane>
+
+                <el-tab-pane label="税费计算器" name="second">
+                    <el-row style="padding-top: 20px" :gutter="40">
+                        <el-col :span="12">
+                            <el-form ref="form" :model="form" label-width="80px">
+                                <el-form-item label-width="100px" class="itemTitle" label="住宅类型">
+                                    <el-select style="width:280px" v-model="form.type1"
+                                               placeholder="普通住宅">
+                                        <el-option value="ptzz" label="普通住宅"></el-option>
+                                        <el-option value="fptzz" label="非普通住宅"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="住宅面积" v-if="ismj">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="zzmj"></el-input>
+                                    <span>平米</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="房屋总价" v-if="iszj">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="fwzj"></el-input>
+                                    <span>万元</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="是否为首套">
+                                <el-select style="width:280px" v-model="form.type2"
+                                           placeholder="首套">
+                                    <el-option value="st" label="首套"></el-option>
+                                    <el-option value="etf" label="二套房"></el-option>
+                                </el-select>
+                                </el-form-item>
+                            </el-form>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <!--                            计算器卡片-->
+                            <el-card class="box-card"  style="width: 250px;height: 250px">
+                                <div slot="header" class="clearfix" >
+                                    <el-row>
+                                        <el-col :span="8" class="repaymentTypeItem" >类型</el-col>
+                                        <el-col :span="8" style="text-align: right;margin-left: 50px">税费详情</el-col>
+                                    </el-row>
+                                </div>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">税费合计</el-col>
+                                    <el-col :span="8"  style="text-align: right;margin-left: 50px">0元</el-col>
+                                </el-row>
+                                <el-row class="crow" >
+                                    <el-col :span="8" class="repaymentTypeItem">契税</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0元</el-col>
+                                </el-row>
+                                <el-row class="crow" >
+                                    <el-col :span="8" class="repaymentTypeItem">交易手续费</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0年</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">维修基金</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0元</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">权属交易费</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0年</el-col>
+                                </el-row>
+                            </el-card>
+                        </el-col>
                     </el-row>
                 </el-tab-pane>
             </el-tabs>
@@ -202,8 +270,9 @@
                 isGjj: false,
                 isFwzj: false,
                 isDkbl: false,
+                iszj:true,
+                ismj:true,
                 dkze:0,
-                fwzj: 0,
                 form: {
                     name: '',
                     region: '',
@@ -212,6 +281,8 @@
                     style: '',
                     delivery: false,
                     type: [],
+                    type1: [],
+                    type2:[],
                     resource: '',
                     desc: ''
                 },
@@ -690,7 +761,6 @@
         font-size: 14px;
         color: #333;
         *zoom: 1;
-        width: 460px;
         border-bottom: 1px solid #f5f5f6;
     }
 
