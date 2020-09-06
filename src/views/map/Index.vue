@@ -80,7 +80,7 @@
       <div id="map-house-list">
         <map-house-list
           ref="mapHouseList"
-          :estates="ChooseIndex == -1 ? {} : estates[ChooseIndex]"
+          :estates="ChooseIndex == -1 ? -1 : estates[ChooseIndex]"
         ></map-house-list>
       </div>
     </baidu-map>
@@ -110,7 +110,8 @@ import {
   getDistricts,
   getZones,
   getRegions,
-  getEstatesByZoneId
+  getEstatesByZoneId,
+  
 } from "@/api/map";
 
 export default {
@@ -270,7 +271,6 @@ export default {
       getEstatesByZoneId(item.areaId)
         .then(res => {
           this.estates = res.data;
-          console.log(this.estates);
         })
         .catch(err => {
           console.log(err);
@@ -280,6 +280,7 @@ export default {
     clickEstate(index) {
       //更换选择的小区；
       this.ChooseIndex = index;
+      
       //houseList重新显示结果
       this.$refs.mapHouseList.chooseShow();
     }
@@ -294,20 +295,20 @@ export default {
 }
 #map-header-wrapper {
   position: absolute;
-  top: 3%;
-  left: 4%;
+  top: 2em;
+  left: 2em;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-filter-wrapper {
   position: absolute;
-  top: 3%;
-  left: 27%;
+  top: 2em;
+  left: 32em;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-house-list {
   position: absolute;
-  left: 4%;
-  top: 12%;
+  left: 2em;
+  top: 7em;
   border-radius: 3em;
   // z-index: 20;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);

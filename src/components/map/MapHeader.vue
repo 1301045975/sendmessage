@@ -84,8 +84,8 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  width: 25em;
-  padding: 0.6em;
+  width: 22em;
+  padding: 0.4em;
   border-radius: 0.2em;
   background-color: white;
   text-align: center;

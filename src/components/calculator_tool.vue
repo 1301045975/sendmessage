@@ -1,180 +1,252 @@
 <template>
-    <div style="width: 70%;margin-left:200px; padding-top: 30px">
-        <el-tabs v-model="activeName">
-            <el-tab-pane label="房贷计算器" name="first">
-                <el-row style="padding-top: 20px" :gutter="40">
-                    <el-col :span="12">
-                        <el-form ref="form" :model="form" label-width="80px">
-                            <el-form-item label-width="100px" class="itemTitle" label="贷款类型">
-                                <el-select style="width:280px" v-model="form.type" clearable @change="dklxChange"
-                                           placeholder="商业贷款">
-                                    <el-option value="sydk" label="商业贷款"></el-option>
-                                    <el-option value="gjjdk" label="公积金贷款"></el-option>
-                                    <el-option value="zhdk" label="组合贷款"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label-width="100px" class="itemTitle" label="计算方式">
-                                <el-select style="width:280px" clearable @change="jsfsChange" v-model="form.style"
-                                           placeholder="按贷款总额">
-                                    <el-option label="按贷款总额" value="adkze"></el-option>
-                                    <el-option label="按房屋总价" value="afwzj"></el-option>
-                                </el-select>
-                            </el-form-item>
+    <div>
+        <div style="width: 70%;margin-left:200px; padding-top: 30px">
+            <el-tabs v-model="activeName">
 
-                            <el-form-item label-width="100px" class="itemTitle" label="房屋总价" v-if="isFwzj">
-                                <el-input style="width: 280px" placeholder="请输入0~99999.99之间的数字"
-                                          v-model="fwzj"></el-input>
-                                <span>万元</span>
-                            </el-form-item>
+                <el-tab-pane label="房贷计算器" name="first">
 
-                            <el-form-item label-width="100px" class="itemTitle" label="贷款比例" v-if="isDkbl">
-                                <el-select style="width:280px;" v-model="dkbl" placeholder="7成">
-                                    <el-option v-for="item in bili" :key="item.value" :label="item.label"
-                                               :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
+                    <el-row style="padding-top: 20px" :gutter="40">
+                        <el-col :span="12">
+                            <el-form ref="form" :model="form" label-width="80px">
+                                <el-form-item label-width="100px" class="itemTitle" label="贷款类型">
+                                    <el-select style="width:280px" v-model="form.type" clearable @change="dklxChange"
+                                               placeholder="商业贷款">
+                                        <el-option value="sydk" label="商业贷款"></el-option>
+                                        <el-option value="gjjdk" label="公积金贷款"></el-option>
+                                        <el-option value="zhdk" label="组合贷款"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="计算方式">
+                                    <el-select style="width:280px" clearable @change="jsfsChange" v-model="form.style"
+                                               placeholder="按贷款总额">
+                                        <el-option label="按贷款总额" value="adkze"></el-option>
+                                        <el-option label="按房屋总价" value="afwzj"></el-option>
+                                    </el-select>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="贷款总额" v-if="isDkze">
-                                <el-input style="width: 280px"  v-model="dkze"></el-input>
-                                <span>万元</span>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="房屋总价" v-if="isFwzj">
+                                    <el-input style="width: 280px" placeholder="请输入0~99999.99之间的数字"
+                                              v-model="fwzj"></el-input>
+                                    <span>万元</span>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="公积金金额" v-if="isGjj">
-                                <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="gjjje"></el-input>
-                                <span>万元</span>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="贷款比例" v-if="isDkbl">
+                                    <el-select style="width:280px;" v-model="dkbl" placeholder="7成">
+                                        <el-option v-for="item in bili" :key="item.value" :label="item.label"
+                                                   :value="item.value"></el-option>
+                                    </el-select>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="公积金利率" v-if="isGjj">
-                                <el-select style="width:280px" v-model="gjjll" placeholder="基准利率(3.250%)">
-                                    <el-option v-for="item in gjjlls" :key="item.value" :label="item.label"
-                                               :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="贷款总额" v-if="isDkze">
+                                    <el-input style="width: 280px"  v-model="dkze"></el-input>
+                                    <span>万元</span>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="公积金年限" v-if="isGjj">
-                                <el-select style="width:280px;" v-model="gjjyear" clearable @change="gjjyearChange"
-                                           placeholder="30">
-                                    <el-option v-for="item in years" :key="item.value" :label="item.label"
-                                               :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="公积金金额" v-if="isGjj">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="gjjje"></el-input>
+                                    <span>万元</span>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="商贷金额" v-if="isSd">
-                                <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="sdje"></el-input>
-                                <span>万元</span>
-                            </el-form-item>
-                            <el-form-item label-width="100px" class="itemTitle" label="商贷利率方式" v-if="isSd">
-                                <el-button type="text" @click="open">
-                                    <i class="el-icon-info"></i>
-                                </el-button>
-                                <el-select style="width:280px" clearable @change="sdllfsChange"
-                                           v-model="form.region" placeholder="按最新LPR">
-                                    <el-option label="按最新LPR"  value="4.65"></el-option>
-                                    <el-option label="按旧版基准利率" value="ajbjzll"></el-option>
-                                </el-select>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="公积金利率" v-if="isGjj">
+                                    <el-select style="width:280px" v-model="gjjll" placeholder="基准利率(3.250%)">
+                                        <el-option v-for="item in gjjlls" :key="item.value" :label="item.label"
+                                                   :value="item.value"></el-option>
+                                    </el-select>
+                                </el-form-item>
 
+                                <el-form-item label-width="100px" class="itemTitle" label="公积金年限" v-if="isGjj">
+                                    <el-select style="width:280px;" v-model="gjjyear" clearable @change="gjjyearChange"
+                                               placeholder="30">
+                                        <el-option v-for="item in years" :key="item.value" :label="item.label"
+                                                   :value="item.value"></el-option>
+                                    </el-select>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="LPR" v-if="isLpr">
-                                <el-input style="width: 280px" placeholder="4.65" v-model="lpr"></el-input>
-                                <span>%</span>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="商贷金额" v-if="isSd">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="sdje"></el-input>
+                                    <span>万元</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="商贷利率方式" v-if="isSd">
+                                    <el-button style="margin-left: -12px;" type="text" @click="open">
+                                        <i class="el-icon-info"></i>
+                                    </el-button>
+                                    <el-select style="width:280px" clearable @change="sdllfsChange"
+                                               v-model="form.region" placeholder="按最新LPR">
+                                        <el-option label="按最新LPR"  value="4.65"></el-option>
+                                        <el-option label="按旧版基准利率" value="ajbjzll"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="LPR" v-if="isLpr">
+                                    <el-input style="width: 280px" placeholder="4.65" v-model="lpr"></el-input>
+                                    <span>%</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="基点" v-if="isBase">
+                                    <el-input style="width: 260px;" placeholder="0" v-model="base"></el-input>
+                                    <span>BP(‱)</span>
+                                </el-form-item>
 
+                                <el-form-item label-width="100px" class="itemTitle" label="商贷利率" v-if="isSdll">
+                                    <el-select style="width:280px;" v-model="rate" placeholder="旧版基准利率9折(4.410%)">
+                                        <el-option v-for="item in jbsdll" :key="item.value" :label="item.label"
+                                                   :value="item.value"></el-option>
+                                    </el-select>
+                                </el-form-item>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="基点" v-if="isBase">
-                                <el-input style="width: 260px;" placeholder="0" v-model="base"></el-input>
-                                <span>BP(‱)</span>
-                            </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="商贷利率" v-if="isLpr">
+                                    <el-input type="text" style="width:60px;font-color:black" disabled="true"
+                                              v-model="lpr"></el-input>
+                                    <span> % </span>
+                                    <span> + </span>
+                                    <el-input type="text" style="width:60px;font-color:black" disabled="true"
+                                              v-model="base"></el-input>
+                                    <span>BP(‱)</span>
+                                    <span>=</span>
+                                    <el-input type="text" style="width:60px;font-color:black" disabled="true"
+                                              v-model="rate"></el-input>
+                                    <span>%</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="商贷年限" v-if="isSd">
+                                    <el-select style="width:280px;" v-model="sdyear" clearable @change="sdyearChange"
+                                               placeholder="30">
+                                        <el-option v-for="item in years" :key="item.value" :label="item.label"
+                                                   :value="item.value"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button style="margin-left: 50px" type="success" @click="onSubmit"
+                                               class="cbtn-bg">开始计算
+                                    </el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-col>
 
-                            <el-form-item label-width="100px" class="itemTitle" label="商贷利率" v-if="isSdll">
-                                <el-select style="width:280px;" v-model="rate" placeholder="旧版基准利率9折(4.410%)">
-                                    <el-option v-for="item in jbsdll" :key="item.value" :label="item.label"
-                                               :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
-
-                            <el-form-item label-width="100px" class="itemTitle" label="商贷利率" v-if="isLpr">
-                                <el-input type="text" style="width:60px;font-color:black" disabled="true"
-                                          v-model="lpr"></el-input>
-                                <span> % </span>
-                                <span> + </span>
-                                <el-input type="text" style="width:60px;font-color:black" disabled="true"
-                                          v-model="base"></el-input>
-                                <span>BP(‱)</span>
-                                <span>=</span>
-                                <el-input type="text" style="width:60px;font-color:black" disabled="true"
-                                          v-model="rate"></el-input>
-                                <span>%</span>
-                            </el-form-item>
-                            <el-form-item label-width="100px" class="itemTitle" label="商贷年限" v-if="isSd">
-                                <el-select style="width:280px;" v-model="sdyear" clearable @change="sdyearChange"
-                                           placeholder="30">
-                                    <el-option v-for="item in years" :key="item.value" :label="item.label"
-                                               :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button style="margin-left: 50px" type="success" @click="onSubmit"
-                                           class="cbtn-bg">开始计算
-                                </el-button>
-                            </el-form-item>
-                        </el-form>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <el-row>
-                                    <el-col :span="8" class="repaymentTypeItem">类型</el-col>
-                                    <el-col :span="8">等额本息还款</el-col>
-                                    <el-col :span="8">等额本金还款</el-col>
+                        <el-col :span="12">
+<!--                            计算器卡片-->
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <el-row>
+                                        <el-col :span="8" class="repaymentTypeItem">类型</el-col>
+                                        <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">等额本息还款</el-col>
+                                        <el-col :span="8" style="text-align: right;">等额本金还款</el-col>
+                                    </el-row>
+                                </div>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">月供</el-col>
+                                    <el-col :span="8"  style="text-align: right;margin-left: -40px; margin-right: 20px">{{yuegong}}元</el-col>
+                                    <el-col :span="8"  style="text-align: right;">{{yuegongBen2}}元</el-col>
                                 </el-row>
-                            </div>
-                            <el-row class="crow">
-                                <el-col :span="8" class="repaymentTypeItem">月供</el-col>
-                                <el-col :span="8">{{yuegong}}元</el-col>
-                                <el-col :span="8">{{yuegongBen2}}元</el-col>
-                            </el-row>
-                            <el-row class="crow" v-if="isZhdk">
-                                <el-col :span="8" class="repaymentTypeItem">公积金金额</el-col>
-                                <el-col :span="8">{{gjjje}}万元</el-col>
-                                <el-col :span="8">{{gjjje}}万元</el-col>
-                            </el-row>
-                            <el-row class="crow" v-if="isZhdk">
-                                <el-col :span="8" class="repaymentTypeItem">公积金年限</el-col>
-                                <el-col :span="8">{{gjjyear}}年</el-col>
-                                <el-col :span="8">{{gjjyear}}年</el-col>
-                            </el-row>
-                            <el-row class="crow">
-                                <el-col :span="8" class="repaymentTypeItem">商贷金额</el-col>
-                                <el-col :span="8">{{sdje}}万元</el-col>
-                                <el-col :span="8">{{sdje}}万元</el-col>
-                            </el-row>
-                            <el-row class="crow">
-                                <el-col :span="8" class="repaymentTypeItem">商贷年限</el-col>
-                                <el-col :span="8">{{sdyear}}年</el-col>
-                                <el-col :span="8">{{sdyear}}年</el-col>
-                            </el-row>
-                            <el-row class="crow">
-                                <el-col :span="8" class="repaymentTypeItem">利息总额</el-col>
-                                <el-col :span="8">{{lixi}}万元</el-col>
-                                <el-col :span="8">{{lixiBen2}}万元</el-col>
-                            </el-row>
-                            <el-row class="crow">
-                                <el-col :span="8" class="repaymentTypeItem">还款总额</el-col>
-                                <el-col :span="8">{{lixihe}}万元</el-col>
-                                <el-col :span="8">{{lixiheBen2}}万元</el-col>
-                            </el-row>
-                        </el-card>
-                    </el-col>
-                </el-row>
-            </el-tab-pane>
-        </el-tabs>
+                                <el-row class="crow" v-if="isZhdk">
+                                    <el-col :span="8" class="repaymentTypeItem">公积金金额</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{gjjje}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{gjjje}}万元</el-col>
+                                </el-row>
+                                <el-row class="crow" v-if="isZhdk">
+                                    <el-col :span="8" class="repaymentTypeItem">公积金年限</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{gjjyear}}年</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{gjjyear}}年</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">商贷金额</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{sdje}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{sdje}}万元</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">商贷年限</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{sdyear}}年</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{sdyear}}年</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">利息总额</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{lixi}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{lixiBen2}}万元</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">还款总额</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{lixihe}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{lixiheBen2}}万元</el-col>
+                                </el-row>
+                            </el-card>
+                        </el-col>
+
+                    </el-row>
+                </el-tab-pane>
+
+                <el-tab-pane label="税费计算器" name="second">
+                    <el-row style="padding-top: 20px" :gutter="40">
+                        <el-col :span="12">
+                            <el-form ref="form" :model="form" label-width="80px">
+                                <el-form-item label-width="100px" class="itemTitle" label="住宅类型">
+                                    <el-select style="width:280px" v-model="form.type1"
+                                               placeholder="普通住宅">
+                                        <el-option value="ptzz" label="普通住宅"></el-option>
+                                        <el-option value="fptzz" label="非普通住宅"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="住宅面积" v-if="ismj">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="zzmj"></el-input>
+                                    <span>平米</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="房屋总价" v-if="iszj">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="fwzj"></el-input>
+                                    <span>万元</span>
+                                </el-form-item>
+                                <el-form-item label-width="100px" class="itemTitle" label="是否为首套">
+                                <el-select style="width:280px" v-model="form.type2"
+                                           placeholder="首套">
+                                    <el-option value="st" label="首套"></el-option>
+                                    <el-option value="etf" label="二套房"></el-option>
+                                </el-select>
+                                </el-form-item>
+                            </el-form>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <!--                            计算器卡片-->
+                            <el-card class="box-card"  style="width: 250px;height: 250px">
+                                <div slot="header" class="clearfix" >
+                                    <el-row>
+                                        <el-col :span="8" class="repaymentTypeItem" >类型</el-col>
+                                        <el-col :span="8" style="text-align: right;margin-left: 50px">税费详情</el-col>
+                                    </el-row>
+                                </div>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">税费合计</el-col>
+                                    <el-col :span="8"  style="text-align: right;margin-left: 50px">0元</el-col>
+                                </el-row>
+                                <el-row class="crow" >
+                                    <el-col :span="8" class="repaymentTypeItem">契税</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0元</el-col>
+                                </el-row>
+                                <el-row class="crow" >
+                                    <el-col :span="8" class="repaymentTypeItem">交易手续费</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0年</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">维修基金</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0元</el-col>
+                                </el-row>
+                                <el-row class="crow">
+                                    <el-col :span="8" class="repaymentTypeItem">权属交易费</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0年</el-col>
+                                </el-row>
+                            </el-card>
+                        </el-col>
+                    </el-row>
+                </el-tab-pane>
+            </el-tabs>
+
+        </div>
     </div>
 </template>
 
 <script>
+    import newheader from '@/components/newheader';
+
     export default {
-        name: "calculator_tool",
+        name: "index",
+        components: {
+            newheader: newheader
+        },
         data() {
             return {
                 sdje: 0,
@@ -198,8 +270,9 @@
                 isGjj: false,
                 isFwzj: false,
                 isDkbl: false,
+                iszj:true,
+                ismj:true,
                 dkze:0,
-                fwzj: 0,
                 form: {
                     name: '',
                     region: '',
@@ -208,6 +281,8 @@
                     style: '',
                     delivery: false,
                     type: [],
+                    type1: [],
+                    type2:[],
                     resource: '',
                     desc: ''
                 },
@@ -444,19 +519,6 @@
             }
         },
         methods: {
-            computeMoney(jinge,rate,year){
-                var P = jinge;
-                var R = rate / 100 / 12;
-                var N = year*12;
-                var yuegong = P * R * Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1) * 10000;
-                yuegong = yuegong.toFixed(2);
-                var lixihe = yuegong * N / 10000;
-                lixihe =lixihe.toFixed(2);
-                var lixi =lixihe - jinge;
-                lixi = lixi.toFixed(2);
-                var info = {"yuegong":yuegong,"lixihe":lixihe,"lixi":lixi}
-                return info;
-            },
             open() {
                 this.$alert('自2019年10月8日起，新发放的商业住房贷款的贷款利率由“贷款基准利率（4.9%）”转换为“贷款款市场报价利率（LPR）”在LPR的基础上增加基点来确定最终的商贷利率； LPR每月20日（遇节假日顺延）报价一次，可在中国人民银行网站查询。', 'LPR（贷款市场报价利率）',
                     {
@@ -469,6 +531,19 @@
                         //     );
                         // }
                     });
+            },
+            computeMoney(jinge,rate,year){
+                var P = jinge;
+                var R = rate / 100 / 12;
+                var N = year*12;
+                var yuegong = P * R * Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1) * 10000;
+                yuegong = yuegong.toFixed(2);
+                var lixihe = yuegong * N / 10000;
+                lixihe =lixihe.toFixed(2);
+                var lixi =lixihe - jinge;
+                lixi = lixi.toFixed(2);
+                var info = {"yuegong":yuegong,"lixihe":lixihe,"lixi":lixi}
+                return info;
             },
             computeBenjin(jinge,rate,year){
                 var P = jinge;
@@ -547,8 +622,6 @@
                     this.lixiBen2 = this.lixiBen2.toFixed(2);
                     this.lixiheBen2 = parseFloat(this.lixiBen2) + parseFloat(M3) + parseFloat(M2);
                     this.lixiheBen2 = this.lixiheBen2.toFixed(2);
-                    // this.lixiheBen2 = this.lixiBen2;
-                    // this.lixiBen2 = (this.lixiheBen2 - parseFloat(M2) - parseFloat(M3)).toFixed(2);
                 }
             },
             jsfsChange(selectValue) {
@@ -588,6 +661,17 @@
                 this.isDkze = false;
                 this.isSd = true;
                 this.isGjj = false;
+                this.yuegongBen2 = 0;
+                this.yuegong = 0;
+                this.sdyear = 0;
+                this.gjjyear = 0;
+                this.sdje = 0;
+                this.gjjje = 0;
+                this.lixi = 0;
+                this.lixiheBen2 = 0;
+                this.lixihe = 0;
+                this.lixiBen2 = 0;
+
                 if (selectValue == 'sydk') {
                     this.isGjj = false;
                     this.isdkze = false;
@@ -620,16 +704,24 @@
                 this.rate = parseFloat(this.lpr) + parseFloat(this.base * 1.0) / 100;
             },
             dkbl: function () {
-                this.dkze = this.fwzj * this.dkbl;
+                if(this.isZhdk == true){
+                    this.dkze = this.fwzj * this.dkbl;
+                }
             },
             fwzj: function () {
-                this.dkze = this.fwzj * this.dkbl;
+                if(this.isZhdk == true){
+                    this.dkze = this.fwzj * this.dkbl;
+                }
             },
             gjjje:function () {
-                this.sdje = this.dkze - this.gjjje;
+                if(this.isZhdk == true){
+                    this.sdje = this.dkze - this.gjjje;
+                }
             },
             sdje:function () {
-                this.gjjje = this.dkze - this.sdje;
+                if(this.isZhdk == true){
+                    this.gjjje = this.dkze - this.sdje;
+                }
             }
         }
     }
@@ -669,7 +761,6 @@
         font-size: 14px;
         color: #333;
         *zoom: 1;
-        width: 460px;
         border-bottom: 1px solid #f5f5f6;
     }
 
@@ -688,6 +779,5 @@
         font-weight: 700;
         display: inline-block;
     }
+
 </style>
-
-

@@ -18,29 +18,52 @@
           <span style="color: red;font-size:1.4em;">6万</span>
         </span>
       </div>
-      <!-- 详细信息 -->
+      <!-- 详细信息 --> 
       <div class="house-list">
-        <div></div>
-        <div>
-          <ol>
-            <li class="card-list" v-for="(x, index) in [1,2,3,4,5, 1, 1, 1]" :key="index">
-              <span>{{x}}</span>
+        <!-- 自定义排序部分 -->
+        <div class="list-picker"></div>
+        <!-- 列表显示结果 -->
+        <div class="list-info">
+          <ul>
+            <li v-for="(item, index) in Properties" :key="index" @click="toDetail(item.proId)">
+              <img :src="item.proCoverUrl==null?defaultImg:item.proCoverUrl" />
+              <div class="list-right-info">
+                <span class="main-info">{{item.proTitle}} {{item.proArea}} {{proDistrict}}</span>
+                <span
+                  class="sub-info"
+                >{{item.proCountF}}室{{item.proCountT}}厅{{item.proCountW}}卫/{{item.proSquare}}m²/{{item.proDirection}}/{{proEstateName}}</span>
+                <span class="price">
+                  <span class="total-price">{{item.proPrice}}{{item.proPriceType}}</span>
+                  {{item.proUnitPrice}}{{proUnitPriceType}}
+                </span>
+              </div>
             </li>
-          </ol>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
 <script>
+import { getPropertiesByEstateId } from "@/api/map";
 export default {
   data() {
     return {
-      showList: 0
+      showList: 0,
+      Properties: [],
+      defaultImg: require("../../assets/img/noimg.jpg")
     };
   },
   props: ["estates", "eststeList"],
+  watch: {
+    estates(newValue, oldValue) {
+      //暂时只有1有，因此不传具体的参数
+      // this.updateProperties(newValue.estateId);
+      this.updateProperties(1);
+    }
+  },
   methods: {
     //上下箭头按钮，是否显示；
     showMore() {
@@ -49,6 +72,22 @@ export default {
     //外部组件调用，选择estate时就会自动显示；
     chooseShow() {
       this.showList = 1;
+    },
+    //检查到estates变化时更新对应的房源信息
+    updateProperties(estateid) {
+      getPropertiesByEstateId(estateid).then(res => {
+        this.Properties = res.data;
+      });
+    },
+    // 点击前往详情页面
+    toDetail(proid) {
+      console.log(proid + " toDetail");
+      this.$router.push({
+        path: "/old/detail",
+        query: {
+          proId: proid
+        }
+      });
     }
   }
 };
@@ -57,8 +96,8 @@ export default {
 <style lang="scss" scoped>
 .map-house-list {
   z-index: 99;
-  width: 25em;
-  padding: 0.6em;
+  width: 22em;
+  padding: 0.4em;
   border-radius: 0.2em;
   background-color: #fff;
   -webkit-transition: top 0.5s;
@@ -78,6 +117,7 @@ export default {
     }
   }
 }
+
 .base-info {
   height: 3em;
   display: flex;
@@ -86,7 +126,56 @@ export default {
   padding: 0.7em 1em 0;
 }
 .house-list {
-  height: 15em;
+  height: 25em;
+  .list-picker {
+
+  }
+  .list-info {
+    overflow-y: auto;
+    max-height: 25em;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.7em;
+    ul {
+      padding: 0px;
+    }
+    li {
+      display: flex;
+      flex-direction: row;
+      padding: 0.5em 0;
+      list-style-type: none;
+      height: 5em;
+      background-color: #fff;
+      border-bottom: 1px solid #f0f0f0;
+      overflow: hidden;
+      img {
+        height: 5em;
+        width: 7em;
+      }
+      .list-right-info {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0.9em;
+        justify-content: space-between;
+        .main-info {
+          flex-wrap: nowrap;
+          font-size: 1em;
+          font-weight: bold;
+        }
+        .sub-info {
+          font-size: 0.4em;
+        }
+        .price {
+          font-size: 0.8em;
+          color: gray;
+        }
+        .total-price {
+          font-size: 1.2em;
+          color: red;
+        }
+      }
+    }
+  }
 }
 .info-name {
   font-size: 1.1em;
@@ -96,9 +185,5 @@ export default {
   color: gray;
   padding-top: 0.7em;
   font-size: 0.7em;
-}
-.card-list {
-  height: 2.5em;
-  background-color: red;
 }
 </style>

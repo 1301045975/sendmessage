@@ -93,7 +93,7 @@ const routes = [
   {
     path: "/calculator",
     name: "calculator",
-    component: () => import("../views/Tool/calculator.vue")
+    component: () => import("../views/tool/calculator.vue")
   },
 ];
 
