@@ -499,34 +499,34 @@ export default {
         ],
         [
           {
-            label: "低区",
-            value: "低区"
+            label: "低层",
+            value: "低层"
           },
           {
-            label: "中区",
-            value: "中区"
+            label: "中层",
+            value: "中层"
           },
           {
-            label: "高区",
-            value: "高区"
+            label: "高层",
+            value: "高层"
           }
         ],
         [
           {
             label: "朝南",
-            value: "南"
+            value: "朝南"
           },
           {
             label: "朝北",
-            value: "北"
+            value: "朝北"
           },
           {
             label: "朝中",
-            value: "中"
+            value: "朝中"
           },
           {
             label: "朝东",
-            value: "东"
+            value: "朝东"
           },
           {
             label: "东西",
