@@ -23,6 +23,7 @@
 
     <el-container class="detail-container">
       <el-main class="detail-main">
+        <!-- 标题信息 -->
         <el-row :span="18" style="display:flex; flex-direction: row;">
           <el-col>
             <h1
@@ -37,8 +38,9 @@
           <el-col :span="16" class="house-regin">军军房产网 > 成都二手房 > 郫都区二手房 > 犀浦二手房 > 当前房源</el-col>
           <el-col :span="8" class="house-regin">房源发布机构 加入对比 分享此房源</el-col>
         </el-row>
+        <!-- 图片及基本信息 -->
         <el-row style="margin-top: 20px;">
-          <el-col :span="14">
+          <el-col :span="12">
             <!-- <div style="width:100%">
               <el-carousel :interval="4000" type="card" height="400px">
                 <el-carousel-item v-for="(item,index) in imgs" :key="index">
@@ -71,66 +73,46 @@
               <div slot="nextBtn" class="next-btn" @click="handleNextSlide">&gt;</div>
             </swiper-footer>
           </el-col>
-
-          <el-col :span="10" height="400px">
-            <div style="width:100%">
-              <el-row>
-                <el-col>
-                  <span
-                    style="font-weight: bold;font-size: 30px;color: red"
-                  >{{this.property.proPrice + this.property.proPriceType}}</span>
-                </el-col>
-              </el-row>
-              <el-row style="margin-top: 20px">
-                <el-col>
-                  <el-tag type="danger" size="mini">近地铁</el-tag>
-                  <el-tag type="warning" size="mini" style="margin-left: 3px">水电气三通</el-tag>
-                  <el-tag size="mini" style="margin-left: 3px">有物管</el-tag>
-                </el-col>
-              </el-row>
+          <!-- 右边基本信息 -->
+          <el-col :span="12">
+            <div class="base-info">
+              <!-- 价格 -->
+              <div class="base-info-one">
+                <div class="left-price">
+                  <span class="left-price-unit">{{property.proPrice }}</span>
+                  {{property.proPriceType}}
+                </div>
+                <div class="left-singleprice">
+                  <span>
+                    <span
+                      style="font-weight:bold;"
+                    >{{property.proPrice * 10000 / property.proSquare}}</span>
+                    <i>元/平米</i>
+                  </span>
+                  <span class="left-singleprice-monthly">首付{{property.proPrice * 0.3}}万</span>
+                </div>
+              </div>
+              <!-- 分割线 -->
               <el-divider></el-divider>
-              <el-row>
-                <el-col>
-                  <span style="color: #606266;line-height: 26px;">
-                    房型：
-                    <span>高层户型</span>
-                  </span>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col>
-                  <span style="color: #606266;line-height: 26px;">
-                    所在楼层：
-                    <span>16楼</span>
-                  </span>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col>
-                  <span style="color: #606266;line-height: 26px;">
-                    房屋朝向：
-                    <span>{{this.property.proDirection}}</span>
-                  </span>
-                </el-col>
-              </el-row>
+              <!-- 基本信息 -->
+              <div class="base-info-two">
+                <div class="base-info-item">
+                  <span class="base-info-main">{{property.proCountF}}室{{property.proCountT}}厅</span>
+                  <span class="base-info-sub">{{property.proFloor}}共{{property.proFloorAll}}层</span>
+                </div>
+                <div class="base-info-item">
+                  <span class="base-info-main">{{property.proDirection}}</span>
+                  <span class="base-info-sub">其他</span>
+                </div>
+                <div class="base-info-item">
+                  <span class="base-info-main">{{property.proSquare}} 平米</span>
+                  <span class="base-info-sub">{{property.proDate.substring(0,4)}}年建楼</span>
+                </div>
+              </div>
+              <!-- 分割线 -->
               <el-divider></el-divider>
-              <el-row>
-                <el-col :span="6">
-                  <el-image style="width: 80px;height: 80px;border-radius: 50%" :src="src"></el-image>
-                </el-col>
-                <el-col :span="12">
-                  <el-row>
-                    <h3>{{this.property.proCompanyName}}</h3>
-                  </el-row>
-                  <el-row>链家经纪人</el-row>
-                  <el-row>电话：18281828</el-row>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-button type="success" size="medium">在线咨询</el-button>
-                </el-col>
-              </el-row>
+              <!-- 区域信息 -->
+              <div class="base-info-san"></div>
             </div>
           </el-col>
         </el-row>
@@ -379,11 +361,8 @@ export default {
       autoPlay: true,
       imgUrls: [
         "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg",
-
         "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg",
-
-        "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg",
-
+        "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg"
       ],
       src:
         "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
@@ -483,6 +462,48 @@ export default {
       line-height: 3em;
       //   background-color: #f5f5f6;
     }
+    .base-info {
+      padding: 0 7em;
+      //   justify-content: center;
+      .base-info-one {
+        display: flex;
+        .left-price {
+          font-size: 1.2em;
+          color: red;
+          .left-price-unit {
+            font-size: 2em;
+            font-weight: bolder;
+          }
+        }
+        .left-singleprice {
+          display: flex;
+          margin-left: 1.5em;
+          flex-direction: column;
+          justify-content: flex-end;
+          .left-singleprice-monthly {
+            margin-top: 1em;
+            font-size: 0.5em;
+          }
+        }
+      }
+      .base-info-two {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .base-info-item {
+          display: flex;
+          flex-direction: column;
+          .base-info-main {
+            font-weight: bold;
+            font-size: 1.4em;
+          }
+          .base-info-sub {
+            margin-top: 0.2em;
+            font-size: 0.6em;
+          }
+        }
+      }
+    }
   }
 }
 .title {
@@ -494,15 +515,18 @@ export default {
   height: 5em;
   width: 8em;
   margin: 0.5em 0.5em 0 0;
+  align-items: center;
   cursor: pointer;
 }
 .prev-btn {
   position: absolute;
   float: left;
   left: 0;
-  display: block;
+  display: flex;
   width: 2em;
+  align-items: center;
   cursor: pointer;
+  justify-content: center;
   color: #fff;
   background-color: #333;
   margin: 0.5em 0 0 0;
@@ -513,8 +537,9 @@ export default {
   position: absolute;
   float: right;
   right: 0;
-  display: block;
+  display: flex;
   width: 2em;
+  justify-content: center;
   cursor: pointer;
   color: #fff;
   background-color: #333;
