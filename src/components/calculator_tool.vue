@@ -176,28 +176,33 @@
                         <el-col :span="12">
                             <el-form ref="form" :model="form" label-width="80px">
                                 <el-form-item label-width="100px" class="itemTitle" label="住宅类型">
-                                    <el-select style="width:280px" v-model="form.type1"
-                                               placeholder="普通住宅">
+                                    <el-select style="width:280px" v-model="form.type1" clearable @change="zzlxChange" placeholder="普通住宅">
                                         <el-option value="ptzz" label="普通住宅"></el-option>
                                         <el-option value="fptzz" label="非普通住宅"></el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item label-width="100px" class="itemTitle" label="住宅面积" v-if="ismj">
-                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="zzmj"></el-input>
+                                <el-form-item label-width="100px" class="itemTitle" label="住宅面积">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="taxZzmj"></el-input>
                                     <span>平米</span>
                                 </el-form-item>
-                                <el-form-item label-width="100px" class="itemTitle" label="房屋总价" v-if="iszj">
-                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="fwzj"></el-input>
+                                <el-form-item label-width="100px" class="itemTitle" label="房屋总价">
+                                    <el-input style="width: 280px" placeholder="请输入大于0数字" v-model="taxFwzj"></el-input>
                                     <span>万元</span>
                                 </el-form-item>
                                 <el-form-item label-width="100px" class="itemTitle" label="是否为首套">
-                                <el-select style="width:280px" v-model="form.type2"
-                                           placeholder="首套">
+                                <el-select style="width:280px" v-model="form.type2" clearable placeholder="首套">
                                     <el-option value="st" label="首套"></el-option>
                                     <el-option value="etf" label="二套房"></el-option>
                                 </el-select>
                                 </el-form-item>
+
+                                <el-form-item>
+                                    <el-button style="margin-left: 50px" type="success" @click="onTaxSubmit"
+                                               class="cbtn-bg">开始计算
+                                    </el-button>
+                                </el-form-item>
                             </el-form>
+
                         </el-col>
 
                         <el-col :span="12">
@@ -206,28 +211,28 @@
                                 <div slot="header" class="clearfix" >
                                     <el-row>
                                         <el-col :span="8" class="repaymentTypeItem" >类型</el-col>
-                                        <el-col :span="8" style="text-align: right;margin-left: 50px">税费详情</el-col>
+                                        <el-col :span="10" style="text-align: right;margin-left: 50px">税费详情</el-col>
                                     </el-row>
                                 </div>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">税费合计</el-col>
-                                    <el-col :span="8"  style="text-align: right;margin-left: 50px">0元</el-col>
+                                    <el-col :span="10"  style="text-align: right;margin-left: 50px">{{sfhj}}元</el-col>
                                 </el-row>
                                 <el-row class="crow" >
                                     <el-col :span="8" class="repaymentTypeItem">契税</el-col>
-                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0元</el-col>
+                                    <el-col :span="10" style="text-align: right;margin-left: 50px">{{qs}}元</el-col>
                                 </el-row>
                                 <el-row class="crow" >
                                     <el-col :span="8" class="repaymentTypeItem">交易手续费</el-col>
-                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0年</el-col>
+                                    <el-col :span="10" style="text-align: right;margin-left: 50px">{{jysxf}}元</el-col>
                                 </el-row>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">维修基金</el-col>
-                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0元</el-col>
+                                    <el-col :span="10" style="text-align: right;margin-left: 50px">{{wxjj}}元</el-col>
                                 </el-row>
                                 <el-row class="crow">
-                                    <el-col :span="8" class="repaymentTypeItem">权属交易费</el-col>
-                                    <el-col :span="8" style="text-align: right;margin-left: 50px">0年</el-col>
+                                    <el-col :span="8" class="repaymentTypeItem">权属登记费</el-col>
+                                    <el-col :span="10" style="text-align: right;margin-left: 50px">{{qsdjf}}元</el-col>
                                 </el-row>
                             </el-card>
                         </el-col>
@@ -251,6 +256,8 @@
             return {
                 sdje: 0,
                 dkbl: 0,
+                taxZzmj:0,
+                taxFwzj:0,
                 gjjje: 0,
                 jzlv: 3.25,
                 jzlvfs: 3.575,
@@ -259,6 +266,8 @@
                 sdyear: 0,
                 rate: 0.0,
                 gjjyear: 0,
+                isPtzz:false,
+                isFptzz:false,
                 gjjll: 0,
                 isZhdk: false,
                 isLpr:false,
@@ -515,6 +524,11 @@
                 lixiBen2:0,
                 lixiheBen2:0,
                 yuegongBen2:0,
+                qsdjf:0,
+                wxjj:0,
+                jysxf:0,
+                qs:0,
+                sfhj:0,
                 activeName: 'first'
             }
         },
@@ -560,6 +574,22 @@
                 var lh1 = this.lixiheBen2;
                 var info = {"yuegongBen":y1,"lixiBen":l1,"lixiheBen":lh1};
                 return info;
+            },
+            onTaxSubmit(){
+                if(this.isPtzz == true){
+                    this.qsdjf = 80;
+                    this.jysxf = parseInt(this.taxZzmj)*3;
+                    this.qs = parseInt(this.taxFwzj)*150;
+                    this.wxjj = parseInt(this.taxFwzj)*300;
+                    this.sfhj = parseInt(this.qsdjf) + parseInt(this.jysxf) + parseInt(this.qs) + parseInt(this.wxjj);
+                }
+                if(this.isFptzz == true){
+                    this.qsdjf = 80;
+                    this.jysxf = parseInt(this.taxZzmj)*11;
+                    this.qs = parseInt(this.taxFwzj)*300;
+                    this.wxjj = parseInt(this.taxFwzj)*300;
+                    this.sfhj = parseInt(this.qsdjf) + parseInt(this.jysxf) + parseInt(this.qs) + parseInt(this.wxjj);
+                }
             },
             onSubmit() {
                 if (this.isSd == true) {
@@ -635,6 +665,7 @@
                     this.isDkbl = false;
                 }
             },
+
             sdllfsChange(selectValue) {
                 if (selectValue == 'ajbjzll') {
                     this.isJbsdll = true;
@@ -694,8 +725,16 @@
                     this.isDkze = true;
                     this.isZhdk = true;
                 }
+            },
+            zzlxChange(selectValue){
+                if(selectValue == 'ptzz'){
+                    this.isPtzz = true;
+                }else {
+                    this.isFptzz = true;
+                }
             }
         },
+
         watch: {
             lpr: function () {
                 this.rate = parseFloat(this.lpr) + parseFloat(this.base * 1.0) / 100;
