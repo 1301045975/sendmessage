@@ -102,7 +102,7 @@
               ></el-image>
             </el-row>
             <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/sale')" style="cursor:pointer;" >找二手房</span>
+              <span @click="send('/sale')" style="cursor:pointer;">找二手房</span>
             </el-row>
             <el-row style="line-height:40px;font-size:12px;color:grey">海量真实房源，数量不重复，点击开启看房旅程</el-row>
           </el-col>
@@ -400,7 +400,13 @@ export default {
               // 位置
               propertyInfo.location = item.proDistrict + "-" + item.proArea;
               // x室y厅
-              propertyInfo.countFT = item.proTitle.split("，")[0];
+              propertyInfo.countFT =
+                item.proCountF +
+                "室" +
+                item.proCountT +
+                "厅" +
+                item.proCountW +
+                "卫";
               // 面积
               propertyInfo.houseArea = item.proSquare + "m²";
               // 朝向
