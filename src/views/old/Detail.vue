@@ -260,7 +260,7 @@
                 <el-divider></el-divider>
                 <el-row>
                     <h2>周边配套</h2>
-<!--                    <around class="around"/>-->
+                    <around class="around"/>
                 </el-row>
                 <el-divider></el-divider>
                 <el-row>

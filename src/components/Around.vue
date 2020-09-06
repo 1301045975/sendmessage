@@ -3,28 +3,28 @@
         <div class="tabBox">
             <ul class="aroundType">
                 <li :class="{'LOGCLICK': true, selectTag: 'traffic' === currentLabel}" data-log_evtid="10242"
-                    data-bl="traffic" @click="levelOneClick('traffic')"
+                    data-bl="traffic" @click="levelOneClick($event)"
                     data-key="地铁站,公交站" data-index="subway,bus" data-length="10,10" id="traffic_panel">交通
                 </li>
                 <li :class="{'LOGCLICK': true, selectTag: 'education' === currentLabel}" data-log_evtid="10242"
-                    data-bl="education" data-key="幼儿园,小学,中学,大学" @click="levelOneClick('education')"
+                    data-bl="education" data-key="幼儿园,小学,中学,大学" @click="levelOneClick($event)"
                     data-index="kindergarten,primary-school,middle-school,University"
                     data-length="10,10,10,10">教育
                 </li>
                 <li :class="{'LOGCLICK': true, selectTag: 'medical' === currentLabel}" data-log_evtid="10242"
-                    data-bl="medical" data-key="医院,药店" @click="levelOneClick('medical')"
+                    data-bl="medical" data-key="医院,药店" @click="levelOneClick($event)"
                     data-index="hospital,pharmacy" data-length="10,10">医疗
                 </li>
                 <li :class="{'LOGCLICK': true, selectTag: 'shopping' === currentLabel}" data-log_evtid="10242"
-                    data-bl="shopping" data-key="商场,超市,市场" @click="levelOneClick('shopping')"
+                    data-bl="shopping" data-key="商场,超市,市场" @click="levelOneClick($event)"
                     data-index="mall,supermarket,market" data-length="10,10,10">购物
                 </li>
                 <li :class="{'LOGCLICK': true, selectTag: 'life' === currentLabel}" data-log_evtid="10242"
-                    data-bl="life" data-key="银行,ATM,餐厅,咖啡馆" @click="levelOneClick('life')"
+                    data-bl="life" data-key="银行,ATM,餐厅,咖啡馆" @click="levelOneClick($event)"
                     data-index="bank,atm,restaurant,coffee" data-length="10,10,10,10">金融
                 </li>
                 <li :class="{'LOGCLICK': true, selectTag: 'entertainment' === currentLabel}" data-log_evtid="10242"
-                    data-bl="entertainment" @click="levelOneClick('entertainment')"
+                    data-bl="entertainment" @click="levelOneClick($event)"
                     data-key="公园,电影院,健身房,体育馆" data-index="park,cinema,gym,sport"
                     data-length="10,10,10,10">休闲
                 </li>
@@ -32,89 +32,89 @@
             <div :class="{'itemTagBox': true, levelTwoStyle: 'traffic' !== currentLabel}" id="traffic">
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'subway' === currentTwoLabel}"
                      data-bl="subway" data-log_evtid="10242"
-                     data-index="subway" data-length="10" @click="twoLevelClick('subway')">地铁站
+                     data-index="subway" data-length="10" @click="twoLevelClick($event)">地铁站
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'bus' === currentTwoLabel}" data-bl="bus"
                      data-log_evtid="10242" data-index="bus"
-                     data-length="10" @click="twoLevelClick('bus')">公交站
+                     data-length="10" @click="twoLevelClick($event)">公交站
                 </div>
             </div>
             <div :class="{'itemTagBox': true, levelTwoStyle: 'education' !== currentLabel}" id="education">
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'kindergarten' === currentTwoLabel}"
                      data-bl="kindergarten" data-log_evtid="10242"
-                     data-index="kindergarten" data-length="10" @click="twoLevelClick('kindergarten')">幼儿园
+                     data-index="kindergarten" data-length="10" @click="twoLevelClick($event)">幼儿园
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'primary-school' === currentTwoLabel}"
                      data-bl="primary-school" data-log_evtid="10242"
-                     data-index="primary-school" data-length="10" @click="twoLevelClick('primary-school')">小学
+                     data-index="primary-school" data-length="10" @click="twoLevelClick($event)">小学
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'middle-school' === currentTwoLabel}"
                      data-bl="middle-school" data-log_evtid="10242"
-                     data-index="middle-school" data-length="10" @click="twoLevelClick('middle-school')">中学
+                     data-index="middle-school" data-length="10" @click="twoLevelClick($event)">中学
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'University' === currentTwoLabel}"
                      data-bl="University" data-log_evtid="10242"
-                     data-index="University" data-length="10" @click="twoLevelClick('University')">大学
+                     data-index="University" data-length="10" @click="twoLevelClick($event)">大学
                 </div>
             </div>
             <div :class="{'itemTagBox': true, levelTwoStyle: 'medical' !== currentLabel}" id="medical">
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'hospital' === currentTwoLabel}"
                      data-bl="hospital" data-log_evtid="10242"
-                     data-index="hospital" data-length="10" @click="twoLevelClick('hospital')">医院
+                     data-index="hospital" data-length="10" @click="twoLevelClick($event)">医院
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'pharmacy' === currentTwoLabel}"
                      data-bl="pharmacy" data-log_evtid="10242"
-                     data-index="pharmacy" data-length="10" @click="twoLevelClick('pharmacy')">药店
+                     data-index="pharmacy" data-length="10" @click="twoLevelClick($event)">药店
                 </div>
             </div>
             <div :class="{'itemTagBox': true, levelTwoStyle: 'shopping' !== currentLabel}" id="shopping">
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'mall' === currentTwoLabel}" data-bl="mall"
                      data-log_evtid="10242"
-                     data-index="mall" data-length="10" @click="twoLevelClick('mall')">商场
+                     data-index="mall" data-length="10" @click="twoLevelClick($event)">商场
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'supermarket' === currentTwoLabel}"
                      data-bl="supermarket" data-log_evtid="10242"
-                     data-index="supermarket" data-length="10" @click="twoLevelClick('supermarket')">超市
+                     data-index="supermarket" data-length="10" @click="twoLevelClick($event)">超市
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'market' === currentTwoLabel}"
                      data-bl="market" data-log_evtid="10242"
-                     data-index="market" data-length="10" @click="twoLevelClick('market')">市场
+                     data-index="market" data-length="10" @click="twoLevelClick($event)">市场
                 </div>
             </div>
             <div :class="{'itemTagBox': true, levelTwoStyle: 'life' !== currentLabel}" id="life">
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'bank' === currentTwoLabel}" data-bl="bank"
                      data-log_evtid="10242"
-                     data-index="bank" data-length="10" @click="twoLevelClick('bank')">银行
+                     data-index="bank" data-length="10" @click="twoLevelClick($event)">银行
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'atm' === currentTwoLabel}" data-bl="atm"
                      data-log_evtid="10242" data-index="atm"
-                     data-length="10" @click="twoLevelClick('atm')">ATM
+                     data-length="10" @click="twoLevelClick($event)">ATM
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'restaurant' === currentTwoLabel}"
                      data-bl="restaurant" data-log_evtid="10242"
-                     data-index="restaurant" data-length="10" @click="twoLevelClick('restaurant')">餐厅
+                     data-index="restaurant" data-length="10" @click="twoLevelClick($event)">餐厅
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'coffee' === currentTwoLabel}"
                      data-bl="coffee" data-log_evtid="10242"
-                     data-index="coffee" data-length="10" @click="twoLevelClick('coffee')">咖啡馆
+                     data-index="coffee" data-length="10" @click="twoLevelClick($event)">咖啡馆
                 </div>
             </div>
             <div :class="{'itemTagBox': true, levelTwoStyle: 'entertainment' !== currentLabel}" id="entertainment">
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'cinema' === currentTwoLabel}"
                      data-bl="cinema" data-log_evtid="10242"
-                     data-index="cinema" data-length="10" @click="twoLevelClick('cinema')">电影院
+                     data-index="cinema" data-length="10" @click="twoLevelClick($event)">电影院
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'gym' === currentTwoLabel}" data-bl="gym"
                      data-log_evtid="10242" data-index="gym"
-                     data-length="10" @click="twoLevelClick('gym')">健身房
+                     data-length="10" @click="twoLevelClick($event)">健身房
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'sport' === currentTwoLabel}" data-bl="sport"
                      data-log_evtid="10242" data-index="sport"
-                     data-length="10" @click="twoLevelClick('sport')">体育馆
+                     data-length="10" @click="twoLevelClick($event)">体育馆
                 </div>
                 <div :class="{'tagStyle': true, 'LOGCLICK': true, select: 'park' === currentTwoLabel}" data-bl="park"
                      data-log_evtid="10242"
-                     data-index="park" data-length="10" @click="twoLevelClick('park')">公园
+                     data-index="park" data-length="10" @click="twoLevelClick($event)">公园
                 </div>
             </div>
 
@@ -151,6 +151,10 @@
         >
             <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT"></bm-navigation>
             <bm-scale anchor="BMAP_ANCHOR_BOTTOM_LEFT"></bm-scale>
+            <bm-marker pane="makerPane" v-for="(item, i) in pointArray" :key="i" :position="item" ></bm-marker>
+<!--            <bm-overlay :position="center">-->
+<!--                <div style="background-color: #2a86ef">{{addrName}}</div>-->
+<!--            </bm-overlay>-->
         </baidu-map>
         <!--地图end-->
     </div>
@@ -161,6 +165,8 @@
     import BaiduMap from "vue-baidu-map/components/map/Map.vue";
     import BmNavigation from 'vue-baidu-map/components/controls/Navigation'
     import BmScale from 'vue-baidu-map/components/controls/Scale'
+    import BmMarker from 'vue-baidu-map/components/overlays/Marker'
+    import BmOverlay from 'vue-baidu-map/components/overlays/Overlay'
 
 
     export default {
@@ -169,6 +175,8 @@
             BaiduMap,
             BmNavigation,
             BmScale,
+            BmMarker,
+            BmOverlay
         },
         data() {
             return {
@@ -187,13 +195,24 @@
             }
         },
         methods: {
-            levelOneClick(label) {
-                this.currentLabel = label
+            levelOneClick(e) {
+                console.log(this.center)
+                this.currentLabel = e.currentTarget.getAttributeNode('data-bl').value;
+                this.currentText = e.currentTarget.innerText;
+                this.currentTwoLabel = document.getElementById(this.currentLabel).firstElementChild.getAttributeNode('data-bl').value;
+                this.currentTwoText = document.getElementById(this.currentLabel).firstElementChild.innerText;
+                this.addPoint()
             },
-            twoLevelClick(label) {
-                this.currentTwoLabel = label
+            twoLevelClick(e) {
+                this.currentTwoLabel = e.currentTarget.getAttributeNode('data-bl').value;
+                this.currentTwoText = e.currentTarget.innerText;
+                this.addPoint()
             },
-            handlerMapReady({BMap, map}) {
+            handlerMapReady() {
+                let item = {};
+                item.a = "1";
+                item.b = "2";
+                console.log(item);
                 this.$jsonp('http://api.map.baidu.com/geocoder/v2/?address=' + this.addrName + "&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
                     .then(res => {
                         const location = res.result.location;
@@ -201,7 +220,7 @@
                         // this.$set(this.center, 'addrLng', location.lng.toString());
                         this.center.lat = location.lat.toString();
                         this.center.lng = location.lng.toString();
-                        console.log(this.center.lat, this.center.lng)
+                        // console.log(this.center.lat, this.center.lng)
                         this.addPoint()
                     }).catch(err => {
                     console.log(err)
@@ -234,7 +253,17 @@
                     "&radius=2000&scope=2&filter=sort_name:distance|sort_rule:1&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
                     .then(res => {
                         this.serviceArray = res.results;
-                        console.log(this.serviceArray)
+                        let point = {};
+                        this.pointArray = [];
+                        for (let item in this.serviceArray) {
+                            // eslint-disable-next-line no-prototype-builtins
+                            if (this.serviceArray.hasOwnProperty(item)) {
+                                point.lat = this.serviceArray[item].location.lat;
+                                point.lng = this.serviceArray[item].location.lng;
+                                this.pointArray.push(point)
+                            }
+                        }
+                        console.log(this.pointArray)
                     }).catch(err => {
                     console.log(err)
                 })
@@ -259,7 +288,7 @@
         margin: 0 auto;
         height: 510px;
         /*margin-top: 18px;*/
-        position: absolute;
+        position: relative;
         overflow: hidden;
     }
 
