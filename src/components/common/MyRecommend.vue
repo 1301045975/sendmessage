@@ -1,6 +1,6 @@
 <template>
   <div class="el-image" style="position:relative;margin-bottom:40px">
-    <img style="height:250px;width:250px;" :src="property.coverImg" />
+    <img style="height:200px;width:240px;" :src="property.coverImg" />
     <span
       style="height:40px;width:80px;color:red;background-color:rgba(66,66,66,0.3);position:absolute;left:0px;top:0px;text-align:center;line-height:40px"
     >{{ houseType === "old" ? property.allPrice : property.rentPrice}}</span>

@@ -126,7 +126,7 @@
     <el-container>
       <el-main>
         <div style="display:flex;justify-content:center;align-items:center;">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;">
             <h1>热门售房</h1>
             <span @click="send('/old')">查看更多>></span>
           </div>
@@ -135,7 +135,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recOldProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recOldProperties.slice(0,4)"
@@ -148,7 +148,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recOldProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recOldProperties.slice(4,8)"
@@ -164,7 +164,7 @@
     <el-container>
       <el-main>
         <div style="display:flex;justify-content:center;align-items:center;">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:70%;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;">
             <h1>热门租房</h1>
             <span @click="send('/rent')">查看更多>></span>
           </div>
@@ -172,7 +172,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recRentProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recRentProperties.slice(0,4)"
@@ -186,7 +186,7 @@
         <div style="display:flex;justify-content:center;align-items:center;">
           <div
             v-if="recRentProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:70%;"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
           >
             <my-recommend
               v-for="(item, index) in recRentProperties.slice(4,8)"
