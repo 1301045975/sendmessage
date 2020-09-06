@@ -182,12 +182,12 @@ export default {
   padding: 0.7em 1em 0;
 }
 .house-list {
-  height: 25em;
+  // height: 25em;
   .list-picker {
   }
   .list-info {
-    overflow-y: auto;
-    max-height: 25em;
+    // overflow-y: auto;
+    // max-height: 25em;
     display: flex;
     flex-direction: column;
     padding: 0 0.7em;
