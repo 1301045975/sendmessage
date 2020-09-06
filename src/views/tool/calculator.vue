@@ -1,22 +1,6 @@
 <template>
     <div>
         <newheader></newheader>
-        <div style="height: 260px;background: #f5f5f6;width: 100%">
-            <div style="width: 60%;margin:  0 auto;">
-                <el-row>
-                    <el-col :span="5">
-                        <h2 style="color: #00ae66;">万径房产</h2>
-                    </el-col>
-                    <el-col :span="14" style="text-align: center;padding-top: 100px">
-                        <h1>购房计算</h1>
-                        <span>复杂的房贷税费计算，链家购房工具帮你解决</span>
-                    </el-col>
-                    <el-col :span="5" style="text-align: right">
-                        <span style="line-height: 70px">下载万径APP</span>
-                    </el-col>
-                </el-row>
-            </div>
-        </div>
 
         <div style="width: 70%;margin-left:200px; padding-top: 30px">
             <el-tabs v-model="activeName">
@@ -83,7 +67,7 @@
                                     <span>万元</span>
                                 </el-form-item>
                                 <el-form-item label-width="100px" class="itemTitle" label="商贷利率方式" v-if="isSd">
-                                    <el-button type="text" @click="open">
+                                    <el-button style="margin-left: -12px;" type="text" @click="open">
                                         <i class="el-icon-info"></i>
                                     </el-button>
                                     <el-select style="width:280px" clearable @change="sdllfsChange"
@@ -140,44 +124,44 @@
                                 <div slot="header" class="clearfix">
                                     <el-row>
                                         <el-col :span="8" class="repaymentTypeItem">类型</el-col>
-                                        <el-col :span="8">等额本息还款</el-col>
-                                        <el-col :span="8">等额本金还款</el-col>
+                                        <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">等额本息还款</el-col>
+                                        <el-col :span="8" style="text-align: right;">等额本金还款</el-col>
                                     </el-row>
                                 </div>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">月供</el-col>
-                                    <el-col :span="8">{{yuegong}}元</el-col>
-                                    <el-col :span="8">{{yuegongBen2}}元</el-col>
+                                    <el-col :span="8"  style="text-align: right;margin-left: -40px; margin-right: 20px">{{yuegong}}元</el-col>
+                                    <el-col :span="8"  style="text-align: right;">{{yuegongBen2}}元</el-col>
                                 </el-row>
                                 <el-row class="crow" v-if="isZhdk">
                                     <el-col :span="8" class="repaymentTypeItem">公积金金额</el-col>
-                                    <el-col :span="8">{{gjjje}}万元</el-col>
-                                    <el-col :span="8">{{gjjje}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{gjjje}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{gjjje}}万元</el-col>
                                 </el-row>
                                 <el-row class="crow" v-if="isZhdk">
                                     <el-col :span="8" class="repaymentTypeItem">公积金年限</el-col>
-                                    <el-col :span="8">{{gjjyear}}年</el-col>
-                                    <el-col :span="8">{{gjjyear}}年</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{gjjyear}}年</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{gjjyear}}年</el-col>
                                 </el-row>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">商贷金额</el-col>
-                                    <el-col :span="8">{{sdje}}万元</el-col>
-                                    <el-col :span="8">{{sdje}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{sdje}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{sdje}}万元</el-col>
                                 </el-row>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">商贷年限</el-col>
-                                    <el-col :span="8">{{sdyear}}年</el-col>
-                                    <el-col :span="8">{{sdyear}}年</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{sdyear}}年</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{sdyear}}年</el-col>
                                 </el-row>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">利息总额</el-col>
-                                    <el-col :span="8">{{lixi}}万元</el-col>
-                                    <el-col :span="8">{{lixiBen2}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{lixi}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{lixiBen2}}万元</el-col>
                                 </el-row>
                                 <el-row class="crow">
                                     <el-col :span="8" class="repaymentTypeItem">还款总额</el-col>
-                                    <el-col :span="8">{{lixihe}}万元</el-col>
-                                    <el-col :span="8">{{lixiheBen2}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;margin-left: -40px; margin-right: 20px">{{lixihe}}万元</el-col>
+                                    <el-col :span="8" style="text-align: right;">{{lixiheBen2}}万元</el-col>
                                 </el-row>
                             </el-card>
                         </el-col>
@@ -569,8 +553,6 @@
                     this.lixiBen2 = this.lixiBen2.toFixed(2);
                     this.lixiheBen2 = parseFloat(this.lixiBen2) + parseFloat(M3) + parseFloat(M2);
                     this.lixiheBen2 = this.lixiheBen2.toFixed(2);
-                    // this.lixiheBen2 = this.lixiBen2;
-                    // this.lixiBen2 = (this.lixiheBen2 - parseFloat(M2) - parseFloat(M3)).toFixed(2);
                 }
             },
             jsfsChange(selectValue) {
@@ -610,6 +592,17 @@
                 this.isDkze = false;
                 this.isSd = true;
                 this.isGjj = false;
+                this.yuegongBen2 = 0;
+                this.yuegong = 0;
+                this.sdyear = 0;
+                this.gjjyear = 0;
+                this.sdje = 0;
+                this.gjjje = 0;
+                this.lixi = 0;
+                this.lixiheBen2 = 0;
+                this.lixihe = 0;
+                this.lixiBen2 = 0;
+
                 if (selectValue == 'sydk') {
                     this.isGjj = false;
                     this.isdkze = false;
@@ -642,16 +635,24 @@
                 this.rate = parseFloat(this.lpr) + parseFloat(this.base * 1.0) / 100;
             },
             dkbl: function () {
-                this.dkze = this.fwzj * this.dkbl;
+                if(this.isZhdk == true){
+                    this.dkze = this.fwzj * this.dkbl;
+                }
             },
             fwzj: function () {
-                this.dkze = this.fwzj * this.dkbl;
+                if(this.isZhdk == true){
+                    this.dkze = this.fwzj * this.dkbl;
+                }
             },
             gjjje:function () {
-                this.sdje = this.dkze - this.gjjje;
+                if(this.isZhdk == true){
+                    this.sdje = this.dkze - this.gjjje;
+                }
             },
             sdje:function () {
-                this.gjjje = this.dkze - this.sdje;
+                if(this.isZhdk == true){
+                    this.gjjje = this.dkze - this.sdje;
+                }
             }
         }
     }
@@ -710,4 +711,5 @@
         font-weight: 700;
         display: inline-block;
     }
+
 </style>
