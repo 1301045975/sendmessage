@@ -369,7 +369,7 @@ export default {
 .main-container {
   width: 22em;
   // height: 40px;
-  padding: 0.6em;
+  padding: 0.4em;
   background-color: white;
   text-align: center;
   z-index: 100;

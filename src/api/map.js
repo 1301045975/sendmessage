@@ -38,4 +38,11 @@ export function getEstatesByZoneId(zoneId) {
   })
 };
 
-
+//获取estateId下房源信息
+export function getPropertiesByEstateId(estateId) {
+  return request({
+    url: '/property/getPropertiesByEstateId',
+    method: 'get',
+    params: { estateId }
+  })
+};
