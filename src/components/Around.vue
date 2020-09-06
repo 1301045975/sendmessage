@@ -147,14 +147,46 @@
                 ak="0dGpK7C09lZMjwx6QVhU6hzTRZBkGVAI"
                 :scroll-wheel-zoom="true"
                 @ready="handlerMapReady"
-                @zoomend="syncCenterAndZoom"
         >
+            <!-- 导航覆盖物 -->
             <bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT"></bm-navigation>
+            <!-- 比例尺覆盖物 -->
             <bm-scale anchor="BMAP_ANCHOR_BOTTOM_LEFT"></bm-scale>
-            <bm-marker pane="makerPane" v-for="(item, i) in pointArray" :key="i" :position="item" ></bm-marker>
-<!--            <bm-overlay :position="center">-->
-<!--                <div style="background-color: #2a86ef">{{addrName}}</div>-->
-<!--            </bm-overlay>-->
+            <!-- 自定义中心点信息覆盖物 -->
+            <bm-overlay class="aroundOverlay"
+                        ref="customOverlay"
+                        pane="labelPane"
+                        @draw="draw">
+                <div id="content" class="content" :style="labelStyle" @mouseover="mouseUpLabel" @mouseout="mouseOutLabel">{{addrName}}</div>
+                <div class="icon" :style="{backgroundPositionY: iconPositionY}"></div>
+            </bm-overlay>
+
+            <!-- 周边点标记覆盖物 -->
+            <div v-if="pointArray.type === 'traffic'">
+                <bm-marker v-for="(item, i) in pointArray.point" :key="i" :position="item"
+                           :icon="{url: require('../assets/aroundImg/traffic.png'), size: {width: 24, height: 32}}"></bm-marker>
+            </div>
+            <div v-else-if="pointArray.type === 'education'">
+                <bm-marker v-for="(item, i) in pointArray.point" :key="i" :position="item"
+                           :icon="{url: require('../assets/aroundImg/education.png'), size: {width: 24, height: 32}}"></bm-marker>
+            </div>
+            <div v-else-if="pointArray.type === 'medical'">
+                <bm-marker v-for="(item, i) in pointArray.point" :key="i" :position="item"
+                           :icon="{url: require('../assets/aroundImg/medical.png'), size: {width: 24, height: 32}}"></bm-marker>
+            </div>
+            <div v-else-if="pointArray.type === 'shopping'">
+                <bm-marker v-for="(item, i) in pointArray.point" :key="i" :position="item"
+                           :icon="{url: require('../assets/aroundImg/shopping.png'), size: {width: 24, height: 32}}"></bm-marker>
+            </div>
+            <div v-else-if="pointArray.type === 'life'">
+                <bm-marker v-for="(item, i) in pointArray.point" :key="i" :position="item"
+                           :icon="{url: require('../assets/aroundImg/life.png'), size: {width: 24, height: 32}}"></bm-marker>
+            </div>
+            <div v-else>
+                <bm-marker v-for="(item, i) in pointArray.point" :key="i" :position="item"
+                           :icon="{url: require('../assets/aroundImg/entertainment.png'), size: {width: 24, height: 32}}"></bm-marker>
+            </div>
+
         </baidu-map>
         <!--地图end-->
     </div>
@@ -167,7 +199,8 @@
     import BmScale from 'vue-baidu-map/components/controls/Scale'
     import BmMarker from 'vue-baidu-map/components/overlays/Marker'
     import BmOverlay from 'vue-baidu-map/components/overlays/Overlay'
-
+    import BmInfoWindow from 'vue-baidu-map/components/overlays/InfoWindow'
+    import BmLabel from 'vue-baidu-map/components/overlays/Label'
 
     export default {
         name: "Around",
@@ -176,64 +209,129 @@
             BmNavigation,
             BmScale,
             BmMarker,
-            BmOverlay
+            BmOverlay,
+            BmInfoWindow,
+            BmLabel
         },
         data() {
             return {
+                Bmap: {},
+                map: {},
+                width: 0,
+                height: 0,
                 addrName: "交大智能八期",
-                center: {
-                    lng: '',
-                    lat: '',
-                },
+                center: {lng: '', lat: ''},
                 zoom: 16,
                 currentLabel: 'traffic',
                 currentTwoLabel: 'subway',
                 currentText: '交通',
-                currentTwoText: '地铁',
+                currentTwoText: '地铁站',
                 serviceArray: [],
-                pointArray: []
+                pointArray: {
+                    type: "traffic",
+                    point: []
+                },
+                labelStyle: {
+                    background: '#EE5D5B',
+                    border: '1px solid rgb(188, 59, 58)',
+                    color: 'white',
+                    padding: '2px',
+                    lineHeight: '28px',
+                    whiteSpace: 'nowrap',
+                    fontSize: '16px',
+                    userSelect: 'none',
+                    position: 'relative',
+                    left: '-40px',
+                },
+                markerSize: {
+                    width: 11,
+                    height: 9,
+                },
+                iconPositionY: '0px'
+            }
+        },
+        created() {
+        },
+        mounted() {
+        },
+        computed: {
+            contentLeftOffset() {
+                // console.log(document.getElementsByClassName("content").content.offsetWidth)
+                // return -document.getElementsByClassName("content").content.offsetWidth/2 + 11 + 'px';
+                return -40 + 'px';
             }
         },
         methods: {
-            levelOneClick(e) {
-                console.log(this.center)
-                this.currentLabel = e.currentTarget.getAttributeNode('data-bl').value;
-                this.currentText = e.currentTarget.innerText;
-                this.currentTwoLabel = document.getElementById(this.currentLabel).firstElementChild.getAttributeNode('data-bl').value;
-                this.currentTwoText = document.getElementById(this.currentLabel).firstElementChild.innerText;
-                this.addPoint()
-            },
-            twoLevelClick(e) {
-                this.currentTwoLabel = e.currentTarget.getAttributeNode('data-bl').value;
-                this.currentTwoText = e.currentTarget.innerText;
-                this.addPoint()
-            },
-            handlerMapReady() {
-                let item = {};
-                item.a = "1";
-                item.b = "2";
-                console.log(item);
+            //地图初始化方法，地图组件渲染完毕时触发
+            handlerMapReady({BMap, map}) {
+                this.BMap = BMap;
+                this.map = map;
                 this.$jsonp('http://api.map.baidu.com/geocoder/v2/?address=' + this.addrName + "&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
                     .then(res => {
                         const location = res.result.location;
-                        // this.$set(this.center, 'addrLat', location.lat.toString());
-                        // this.$set(this.center, 'addrLng', location.lng.toString());
                         this.center.lat = location.lat.toString();
                         this.center.lng = location.lng.toString();
-                        // console.log(this.center.lat, this.center.lng)
-                        this.addPoint()
+                        this.addPoint('traffic');
                     }).catch(err => {
                     console.log(err)
                 });
             },
-            syncCenterAndZoom() {
-
+            //添加周边点
+            addPoint(pointType) {
+                this.$jsonp("http://api.map.baidu.com/place/v2/search?query=" + this.currentText + this.currentTwoText +
+                    "&location=" + this.center.lat + "," + this.center.lng +
+                    "&radius=2000&scope=2&filter=sort_name:distance|sort_rule:1&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
+                    .then(res => {
+                        this.serviceArray = res.results;
+                        this.pointArray.point = [];
+                        for (let item in this.serviceArray) {
+                            let point = {};
+                            // console.log(this.serviceArray[item].location);
+                            point.lat = this.serviceArray[item].location.lat;
+                            point.lng = this.serviceArray[item].location.lng;
+                            this.pointArray.point.push(point);
+                        }
+                        this.pointArray.type = pointType;
+                    }).catch(err => {
+                    console.log(err)
+                })
             },
-            // 复杂的自定义覆盖物
-            ComplexCustomOverlay(point, text, mouseoverText) {
-                this._point = point;
-                this._text = text;
-                this._overText = mouseoverText;
+            //一级选项点击触发
+            levelOneClick(e) {
+                const point = new this.BMap.Point(this.center.lng, this.center.lat);
+                this.map.centerAndZoom(point, 16);
+                this.currentLabel = e.currentTarget.getAttributeNode('data-bl').value;
+                this.currentText = e.currentTarget.innerText;
+                this.currentTwoLabel = document.getElementById(this.currentLabel).firstElementChild.getAttributeNode('data-bl').value;
+                this.currentTwoText = document.getElementById(this.currentLabel).firstElementChild.innerText;
+                this.addPoint(e.currentTarget.getAttributeNode('data-bl').value)
+            },
+            //二级选项点击触发
+            twoLevelClick(e) {
+                const point = new this.BMap.Point(this.center.lng, this.center.lat);
+                this.map.centerAndZoom(point, 16);
+                this.currentTwoLabel = e.currentTarget.getAttributeNode('data-bl').value;
+                this.currentTwoText = e.currentTarget.innerText;
+                this.addPoint(this.pointArray.type)
+            },
+            mouseUpLabel() {
+                this.labelStyle.background = "#6BADCA";
+                this.labelStyle.borderColor = "#0000ff";
+                this.addrName = "交大智能八期 416套"
+                this.iconPositionY = '-20px'
+            },
+            mouseOutLabel() {
+                this.labelStyle.background = "#EE5D5B";
+                this.labelStyle.borderColor = "rgb(188, 59, 58)";
+                this.addrName = "交大智能八期"
+                this.iconPositionY = '0px'
+            },
+            //绘制自定义覆盖物，根据坐标设置放置位置
+            draw({el, BMap, map}) {
+                const {lng, lat} = this.center;
+                const pixel = map.pointToOverlayPixel(new BMap.Point(lng, lat));
+                el.style.left = pixel.x + 'px';
+                el.style.top = pixel.y - 35 + 'px';
             },
             //获取目标地址经纬度
             getAddrLatAndLng() {
@@ -246,38 +344,22 @@
                     console.log(err)
                 });
             },
-            //添加周边点
-            addPoint() {
-                this.$jsonp("http://api.map.baidu.com/place/v2/search?query=" + this.currentText + this.currentTwoText +
-                    "&location=" + this.center.lat + "," + this.center.lng +
-                    "&radius=2000&scope=2&filter=sort_name:distance|sort_rule:1&output=json&ak=9pwN0orTUYNywM8HBvFC9qSgGpIGHtKO")
-                    .then(res => {
-                        this.serviceArray = res.results;
-                        let point = {};
-                        this.pointArray = [];
-                        for (let item in this.serviceArray) {
-                            // eslint-disable-next-line no-prototype-builtins
-                            if (this.serviceArray.hasOwnProperty(item)) {
-                                point.lat = this.serviceArray[item].location.lat;
-                                point.lng = this.serviceArray[item].location.lng;
-                                this.pointArray.push(point)
-                            }
-                        }
-                        console.log(this.pointArray)
-                    }).catch(err => {
-                    console.log(err)
-                })
-            }
-
-        },
-        created() {
-            this.handlerMapReady()
         }
-
     }
 </script>
 
 <style scoped>
+    .aroundOverlay {
+        position: absolute;
+    }
+
+    .icon {
+        background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat;
+        width: 11px;
+        height: 10px;
+        overflow: hidden;
+    }
+
     .bm-view {
         height: 500px;
         width: 1150px;
