@@ -12,9 +12,9 @@
               <!-- <el-tab-pane label="我的委托">
                 <h2>功能正在开发中，敬请期待...</h2>
               </el-tab-pane> -->
-              <!-- <el-tab-pane label="收藏房源">
+              <el-tab-pane label="收藏房源">
                 <fav-property></fav-property>
-              </el-tab-pane> -->
+              </el-tab-pane>
               <el-tab-pane label="收藏房源">
                 <my-fav-property></my-fav-property>
               </el-tab-pane>

@@ -1,5 +1,5 @@
 <template>
-  <div class="el-image" style="position:relative;margin-bottom:40px">
+  <div class="el-image" style="position:relative;margin-bottom:40px" @click="toDetail(property.id)">
     <img style="height:200px;width:240px;" :src="property.coverImg" />
     <span
       style="height:40px;width:80px;color:red;background-color:rgba(66,66,66,0.3);position:absolute;left:0px;top:0px;text-align:center;line-height:40px"
@@ -8,8 +8,7 @@
     <el-row>
       <span>{{ property.location }}</span> |
       <span>{{ property.countFT }}</span> |
-      <span>{{ property.houseArea }}</span> |
-      <span>{{ property.decoration }}</span>
+      <span>{{ property.houseArea }}</span>
     </el-row>
     <el-row>
       <span>{{ companyName }} &nbsp;推荐房源</span>
@@ -33,7 +32,17 @@ export default {
   created() {
     this.companyName = process.env.VUE_APP_COMPANY_NAME;
   },
-  methods: {}
+  methods: {
+    toDetail(proid) {
+      console.log(proid + " toDetail");
+      this.$router.push({
+        path: "/old/detail",
+        query: {
+          proId: proid
+        }
+      });
+    }
+  }
 };
 </script>
 

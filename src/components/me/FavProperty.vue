@@ -1,45 +1,50 @@
 <template>
-  <div>
-    <!-- 表格 -->
-    <el-table :data="tableData" :height="containerHeight*0.8" border style="width: 100%">
-      <el-table-column prop="ufpId" label="ufpId" width="180"></el-table-column>
-      <el-table-column prop="ufpProId" label="ufpProId" width="180"></el-table-column>
-      <el-table-column prop="ufpUsrId" label="ufpUsrId"></el-table-column>
-      <el-table-column prop="ufpCtyCode" label="ufpCtyCode"></el-table-column>
-      <el-table-column label="收藏时间">
-        <template slot-scope="scope">{{scope.row.ufpCreateDate | formatTime}}</template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="danger"
-            plain
-            round
-            @click="handleDelete(scope.$index, scope.row)"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!-- 分页符 -->
-    <div class="block">
-      <el-pagination
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="pageSize"
-        :current-page.sync="pageIndex"
-        layout="total, sizes, prev, pager, next"
-        :total="totalRows"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      ></el-pagination>
+  <div class="map-house-list">
+    <!-- 详细信息 -->
+    <div class="house-list">
+      <!-- 列表显示结果 -->
+      <div class="list-info" v-if="propertyInfoArray.length > 0">
+        <ul>
+          <li v-for="(item, index) in propertyInfoArray" :key="index">
+            <img
+              :src="item.proCoverUrl==null?defaultImg:item.proCoverUrl"
+              @click="toDetail(item.proId)"
+            />
+            <div class="list-right-info" @click="toDetail(item.proId)">
+              <span class="main-info">{{item.proTitle}} {{item.proArea}} {{item.proDistrict}}</span>
+              <span
+                class="sub-info"
+              >{{item.proCountF}}室{{item.proCountT}}厅{{item.proCountW}}卫/{{item.proSquare}}m²/{{item.proDirection}}/{{item.proEstateName}}</span>
+              <span class="price">
+                <span class="total-price">{{item.proPrice}}{{item.proPriceType}}</span>
+                {{item.proUnitPriceitem}}{{item.proUnitPriceType}}
+              </span>
+            </div>
+            <div>
+              <el-button size="mini" type="danger" plain round @click="handleDelete(index, item)">删除</el-button>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <el-pagination
+      @size-change="getTableData"
+      @current-change="getTableData"
+      :append-to-body="false"
+      :current-page.sync="pageNum"
+      :page-size.sync="pageSize"
+      :page-sizes="[10,20,30]"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalRecords"
+    ></el-pagination>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { formatDate } from "@/utils/date";
-import { getFavProperty, deleteFavProperty } from "@/api/me";
+import { getFavProperties, deleteFavPropertyV2 } from "@/api/me";
 
 export default {
   name: "FavProperty",
@@ -68,21 +73,16 @@ export default {
   },
   data() {
     return {
-      containerHeight: 600,
-      pageIndex: 1,
+      defaultImg: require("../../assets/img/noimg.jpg"),
+      // 分页
+      pageNum: 1,
       pageSize: 10,
-      totalRows: 10,
-      tableData: []
+      totalRecords: 0,
+      propertyInfoArray: []
     };
   },
   computed: {
-    ...mapGetters(["name", "imgurl", "mobile"])
-  },
-  filters: {
-    formatTime(time) {
-      let date = new Date(time);
-      return formatDate(date, "yyyy-MM-dd hh:mm:ss");
-    }
+    ...mapGetters(["name", "imgurl", "mobile", "roles"])
   },
   methods: {
     handleSizeChange() {
@@ -96,25 +96,25 @@ export default {
     getTableData() {
       let formData = {
         telephone: this.mobile,
-        pageNum: this.pageIndex,
+        pageNum: this.pageNum,
         pageSize: this.pageSize
       };
-      // console.log(formData);
-      getFavProperty(formData)
-        .then(res => {
-          if (res.code == 200) {
-            let data = res.data;
-            this.totalRows = data.total;
-            // s.substring(0, 25) + '8' + s.substring(26)
-            // data.list.forEach((item, index) => {
-            //   item.ufpCreateDate = item.ufpCreateDate.substring(0, 25) + '8' + item.ufpCreateDate.substring(26)
-            // })
-            // let date = new Date(data.list[0].ufpCreateDate);
-            // console.log(date);
-            this.tableData = data.list;
-          } else {
-            this.$message.error("数据获取失败");
+      console.log(formData);
+      getFavProperties(formData)
+        .then(response => {
+          if (response.code == 200) {
+            let data = response.data;
+            // 设置数据
+            this.totalRecords = data.total;
+            // 先清空
+            this.propertyInfoArray.splice(0, this.propertyInfoArray.length);
+            if (data.list) {
+              data.list.forEach((item, i) => {
+                this.propertyInfoArray.push(item);
+              });
+            }
           }
+          // console.log(this.propertyInfoArray);
         })
         .catch(err => {
           console.log(err);
@@ -125,13 +125,16 @@ export default {
       // console.log(row);
       // console.log(row.ufpId);
       let formData = {
-        favPropId: row.ufpId
+        propertyId: row.proId,
+        telephone: this.mobile,
+        cityCode: "510100"
       };
       // console.log(formData);
-      deleteFavProperty(formData)
+      deleteFavPropertyV2(formData)
         .then(res => {
           if (res.code == 200) {
             this.$message.success("删除成功");
+            // 重新加载数据
             this.getTableData();
           } else {
             this.$message.error("删除失败");
@@ -140,13 +143,102 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    toDetail(proid) {
+      console.log(proid + " toDetail");
+      this.$router.push({
+        path: "/old/detail",
+        query: {
+          proId: proid
+        }
+      });
     }
   }
 };
 </script>
 
-<style scoped>
-.mg_top {
-  margin-top: 15px;
+<style lang="scss" scoped>
+.map-house-list {
+  z-index: 99;
+  width: 40em;
+  padding: 0.4em;
+  border-radius: 0.2em;
+  background-color: #fff;
+  -webkit-transition: top 0.5s;
+}
+.showMoreInfo {
+  i {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.base-info {
+  height: 3em;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0.7em 1em 0;
+}
+.house-list {
+  height: 25em;
+  .list-picker {
+  }
+  .list-info {
+    overflow-y: auto;
+    max-height: 25em;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.7em;
+    ul {
+      padding: 0px;
+    }
+    li {
+      display: flex;
+      flex-direction: row;
+      padding: 0.5em 0;
+      list-style-type: none;
+      height: 5em;
+      background-color: #fff;
+      border-bottom: 1px solid #f0f0f0;
+      overflow: hidden;
+      img {
+        height: 5em;
+        width: 7em;
+      }
+      .list-right-info {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0.9em;
+        justify-content: space-between;
+        .main-info {
+          flex-wrap: nowrap;
+          font-size: 1em;
+          font-weight: bold;
+        }
+        .sub-info {
+          font-size: 0.4em;
+        }
+        .price {
+          font-size: 0.8em;
+          color: gray;
+        }
+        .total-price {
+          font-size: 1.2em;
+          color: red;
+        }
+      }
+    }
+  }
+}
+.info-name {
+  font-size: 1.1em;
+  line-height: 0.9em;
+}
+.info-subinfo {
+  color: gray;
+  padding-top: 0.7em;
+  font-size: 0.7em;
 }
 </style>

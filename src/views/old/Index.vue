@@ -4,13 +4,9 @@
     <div class="cheader">
       <div style="width:50%;">
         <el-row class="csearch" type="flex" justify="center">
-          <el-col  class="topTitle">{{ companyName }}</el-col>
-          <el-col >
-            <el-input
-              placeholder="请输入内容"
-              v-model="searchContent"
-              class="input"
-            ></el-input>
+          <el-col class="topTitle">{{ companyName }}</el-col>
+          <el-col>
+            <el-input placeholder="请输入内容" v-model="searchContent" class="input"></el-input>
           </el-col>
           <el-button type="success" class="cbtn-bg" @click="searchHouse">开始找房</el-button>
         </el-row>
@@ -280,7 +276,13 @@ export default {
                 // 位置
                 propertyInfo.location = item.proDistrict + "-" + item.proArea;
                 // x室y厅
-                propertyInfo.countFT = item.proTitle.split("，")[0];
+                propertyInfo.countFT =
+                  item.proCountF +
+                  "室" +
+                  item.proCountT +
+                  "厅" +
+                  item.proCountW +
+                  "卫";
                 // 面积
                 propertyInfo.houseArea = item.proSquare + "m²";
                 // 朝向
@@ -619,16 +621,15 @@ span {
   display: flex;
   flex-direction: row;
   margin-top: 0.5em;
-  
 }
-.area-crow{
+.area-crow {
   border-bottom: 1px solid #e6e6e6;
 }
 .crow-right {
   width: 94%;
   display: flex;
   flex-wrap: wrap;
-    flex-direction: row;
+  flex-direction: row;
 }
 
 .cbtn {
@@ -637,7 +638,7 @@ span {
 .filter-item {
   margin-right: 1.7em;
 }
-.filter-more{
+.filter-more {
   width: 6.2em;
 }
 .filter-area {

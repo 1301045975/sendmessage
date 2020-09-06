@@ -6,11 +6,7 @@
         <el-row class="csearch" type="flex" justify="center">
           <el-col class="topTitle">{{ companyName }}</el-col>
           <el-col>
-            <el-input
-              placeholder="请输入内容"
-              v-model="searchContent"
-              class="input"
-            ></el-input>
+            <el-input placeholder="请输入内容" v-model="searchContent" class="input"></el-input>
           </el-col>
           <el-button type="success" class="cbtn-bg" @click="searchHouse">开始找房</el-button>
         </el-row>
@@ -206,7 +202,7 @@ export default {
     this.searchContent = this.$route.params.searchContent;
     // 查询房源数据
     this.searchHouse();
-  }, 
+  },
   methods: {
     toDetail(proId) {
       this.$router.push({
@@ -282,7 +278,13 @@ export default {
                 // 位置
                 propertyInfo.location = item.proDistrict + "-" + item.proArea;
                 // x室y厅
-                propertyInfo.countFT = item.proTitle.split("，")[0];
+                propertyInfo.countFT =
+                  item.proCountF +
+                  "室" +
+                  item.proCountT +
+                  "厅" +
+                  item.proCountW +
+                  "卫";
                 // 面积
                 propertyInfo.houseArea = item.proSquare + "m²";
                 // 朝向
