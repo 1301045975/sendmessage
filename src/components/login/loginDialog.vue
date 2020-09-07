@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialog.title" :width="width" :height="height" :visible.sync="dialog.show">
+  <el-dialog :title="dialog.title" :width="width" :height="height" :visible.sync="dialog.show" :close-on-click-modal="false">
     <el-row v-show="loginShow">
       <el-row>
         <h2 style="color: #000">账号密码登录</h2>
@@ -267,7 +267,7 @@ export default {
       loading: false,
       dialog: {
         show: false,
-        title: "登陆"
+        title: "登录"
       },
       loginShow: true,
       registerShow: false,
@@ -298,7 +298,7 @@ export default {
               this.$store
                 .dispatch("GetInfo")
                 .then(() => {
-                  // 通知父组件登陆成功
+                  // 通知父组件登录成功
                   // this.noticeParentComp();
                   // this.showDialog(false);
                   location.reload();
@@ -327,7 +327,7 @@ export default {
                 message: response.message,
                 type: response.code == 200 ? "success" : "error"
               });
-              // 切换至登陆
+              // 切换至登录
               if (response.code == 200) {
                 this.loginForm.telephone = this.registerForm.telephone;
                 this.loginForm.password = this.registerForm.password;
@@ -356,7 +356,7 @@ export default {
                 message: response.message,
                 type: response.code == 200 ? "success" : "error"
               });
-              // 切换至登陆
+              // 切换至登录
               if (response.code == 200) {
                 this.loginForm.telephone = this.forgetForm.telephone;
                 this.loginForm.password = this.forgetForm.password;
@@ -379,7 +379,7 @@ export default {
     },
     tabForm(id) {
       if (id === 1) {
-        this.dialog.title = "登陆";
+        this.dialog.title = "登录";
         this.forgetShow = false;
         this.registerShow = false;
         this.loginShow = true;
@@ -465,7 +465,7 @@ export default {
           .catch(err => {});
       }
     },
-    // 通知父组件已经登陆
+    // 通知父组件已经登录
     noticeParentComp() {
       this.$emit("loginSuccess");
     }
