@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-header :detailActive="1"></my-header>
+    <my-header :detailActive="1" ref="myheader"></my-header>
     <div class="cheader">
       <div style="padding-top: 30px">
         <el-row class="csearch" type="flex" justify="center">
@@ -31,24 +31,24 @@
             >{{property.proArea}}{{property.proDistrict}}{{property.proEstateName}} {{property.proSquare}}平米{{property.proDecoration}} {{property.proTitle}}</h1>
           </el-col>
           <el-col :span="6" style="display:flex;justify-content:center; align-items:center">
-            <el-button class="collect-house-btn" @click="collectHouse" plain>关注房源</el-button>
+            <el-button
+              v-if="isCollect == 0"
+              class="collect-house-btn"
+              @click="collectHouse"
+              plain
+            >关注房源</el-button>
+            <el-button v-else class="collect-house-btn" @click="cancelCollect" plain>已关注</el-button>
           </el-col>
         </el-row>
+        <!-- 链接信息 -->
         <el-row>
           <el-col :span="16" class="house-regin">军军房产网 > 成都二手房 > 郫都区二手房 > 犀浦二手房 > 当前房源</el-col>
           <el-col :span="8" class="house-regin">房源发布机构 加入对比 分享此房源</el-col>
         </el-row>
         <!-- 图片及基本信息 -->
         <el-row style="margin-top: 20px;">
+          <!-- 左边轮播图 -->
           <el-col :span="12">
-            <!-- <div style="width:100%">
-              <el-carousel :interval="4000" type="card" height="400px">
-                <el-carousel-item v-for="(item,index) in imgs" :key="index">
-                  <img class="lunbo" :src="item.src" style="position:relative" />
-                </el-carousel-item>
-              </el-carousel>
-            </div>-->
-            <!-- 左边轮播图 -->
             <swiper ref="swiper" :autoPlay="false" :showIndicator="true">
               <slide v-for="(imgUrl, index) in imgUrls" :key="'imgUrls' + index">
                 <img class="img-main" :src="imgUrl" />
@@ -75,7 +75,7 @@
           </el-col>
           <!-- 右边基本信息 -->
           <el-col :span="12">
-            <div class="base-info">
+            <div class="left-base-info">
               <!-- 价格 -->
               <div class="base-info-one">
                 <div class="left-price">
@@ -106,204 +106,96 @@
                 </div>
                 <div class="base-info-item">
                   <span class="base-info-main">{{property.proSquare}} 平米</span>
-                  <span class="base-info-sub">{{property.proDate.substring(0,4)}}年建楼</span>
+                  <span
+                    class="base-info-sub"
+                  >{{property.proDate ? property.proDate.substring(0, 4):""}}年建楼</span>
                 </div>
               </div>
               <!-- 分割线 -->
               <el-divider></el-divider>
-              <!-- 区域信息 -->
-              <div class="base-info-san"></div>
+              <!-- 循环处理区域信息 -->
+              <div class="base-info-san">
+                <span v-for="(item, index) in topInfoList" :key="index" class="left-title">
+                  <span class="right-info">{{topInfoList[index]}}</span>
+                  {{topInfoListRight[index]}}
+                </span>
+              </div>
+              <el-divider></el-divider>
             </div>
           </el-col>
         </el-row>
 
         <el-divider></el-divider>
-        <div style="position: relative">
-          <el-menu
-            class="el-menu-demo"
-            mode="horizontal"
-            background-color="#f5f5f5"
-            text-color="#101d37"
-            active-text-color="red"
-          >
-            <el-menu-item index="1">房屋信息</el-menu-item>
-            <el-submenu index="2">
-              <template slot="title">房源描述</template>
-              <el-menu-item index="2-1">交通出行</el-menu-item>
-              <el-menu-item index="2-2">周边配套</el-menu-item>
-              <el-menu-item index="2-3">朝向坐标</el-menu-item>
-            </el-submenu>
-            <el-menu-item index="3">费用详情</el-menu-item>
-            <el-menu-item index="4">推荐经纪人</el-menu-item>
-            <el-menu-item index="5">地址和交通</el-menu-item>
-            <el-menu-item index="6">房产计算器</el-menu-item>
-            <el-button
-              type="primary round"
-              icon="el-icon-phone"
-              style="margin-top:10px;margin-left: 30px"
-            >电话咨询</el-button>
-            <el-button
-              type="primary round"
-              icon="el-icon-user-solid"
-              style="position: relative"
-            >预约看房</el-button>
-          </el-menu>
-        </div>
-        <!--房屋基本信息                    -->
-        <el-row>
-          <h2>房屋信息</h2>
-          <el-row>
-            <el-col :span="4">
-              <span>基本信息</span>
-            </el-col>
-            <el-col :span="6">
-              <el-row style="line-height: 30px;">房屋户型：三居室</el-row>
-              <el-row style="line-height: 30px;">租房方式：月付</el-row>
-              <el-row style="line-height: 30px;">委托人：飞飞程</el-row>
-              <el-row style="line-height: 30px;">房屋朝向：南北</el-row>
-              <el-row style="line-height: 30px;">房屋面积：362㎡</el-row>
-              <el-row style="line-height: 30px;">配套电梯：三部</el-row>
-            </el-col>
-            <el-col :span="6">
-              <el-row style="line-height: 30px;">所在楼层：17层</el-row>
-              <el-row style="line-height: 30px;">租期：六个月</el-row>
-              <el-row style="line-height: 30px;">取暖：有</el-row>
-              <el-row style="line-height: 30px;">燃气：有</el-row>
-              <el-row style="line-height: 30px;">用电：有</el-row>
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 20px">
-            <el-col :span="4">
-              <span>看房</span>
-            </el-col>
-            <el-col :span="6">
-              <el-button type="primary" icon="el-icon-user-solid" size="normal">预约看房</el-button>
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 20px">
-            <el-col :span="4">
-              <span>配套设施</span>
-            </el-col>
-            <el-col :span="2" style="text-align: center">
-              <el-row style="line-height: 40px">
-                <i class="el-icon-circle-check" style="font-size:32px;width: 36px;height: 36px"></i>
-              </el-row>
-              <el-row>保险</el-row>
-            </el-col>
+        <!--房屋基本信息-->
+        <el-row class="main-item">
+          <el-col :span="12">
+            <h1>房源信息</h1>
+            <el-divider></el-divider>
 
-            <el-col :span="2" style="text-align: center">
-              <el-row style="line-height: 40px">
-                <i class="el-icon-help" style="font-size:32px;width: 36px;height: 36px"></i>
-              </el-row>
-              <el-row>电视</el-row>
-            </el-col>
-            <el-col :span="2" style="text-align: center">
-              <el-row style="line-height: 40px">
-                <i class="el-icon-s-custom" style="font-size:32px;width: 36px;height: 36px"></i>
-              </el-row>
-              <el-row>物管</el-row>
-            </el-col>
-            <el-col :span="2" style="text-align: center">
-              <el-row style="line-height: 40px">
-                <i class="el-icon-plus" style="font-size:32px;width: 36px;height: 36px"></i>
-              </el-row>
-              <el-row>商超</el-row>
-            </el-col>
-            <el-col :span="2" style="text-align: center">
-              <el-row style="line-height: 40px">
-                <i class="el-icon-map-location" style="font-size:32px;width: 36px;height: 36px"></i>
-              </el-row>
-              <el-row>地铁</el-row>
-            </el-col>
-            <el-col :span="2" style="text-align: center">
-              <el-row style="line-height: 40px">
-                <i class="el-icon-key" style="font-size:32px;width: 36px;height: 36px"></i>
-              </el-row>
-              <el-row>
-                <span>电子门锁</span>
-              </el-row>
-            </el-col>
-          </el-row>
-        </el-row>
-        <el-row>
-          <h2>房源描述</h2>
-          <el-row style="margin-bottom: 20px;">
-            <el-col :span="12" style="line-height: 28px">
-              【交通出行】
-              小区距离八通线通州北苑站986m（来源于百度地图） 公交车站（1）：复兴里：317路、802路、通22路、通2路、通43路 （2）后南仓：317路、802路、809路
-            </el-col>
-          </el-row>
-          <el-row style="margin-bottom: 20px;">
-            <el-col :span="12" style="line-height: 28px">
-              【周边配套】
-              小区北侧就是万达广场、万达宝贝王，万达影城，永辉超市，建行，国泰百货，东侧是潞河医院
-            </el-col>
-          </el-row>
-        </el-row>
-        <el-row style="margin-bottom: 20px">
-          <h2>费用详情</h2>
-          <el-row>
-            <h4>年租价 当租期不足1年时租金可能会上浮，详询管家</h4>
-          </el-row>
-          <el-row style="line-height: 44px;">
-            <el-col :span="4">付款方式</el-col>
-            <el-col :span="4">租金 (元/月)</el-col>
-            <el-col :span="4">押金 (元)</el-col>
-            <el-col :span="4">服务费 (元)</el-col>
-            <el-col :span="4">中介费 (元)</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="4">季付</el-col>
-            <el-col :span="4">2200</el-col>
-            <el-col :span="4">三个月</el-col>
-            <el-col :span="4">1000</el-col>
-            <el-col :span="4">3000</el-col>
-          </el-row>
-        </el-row>
-        <el-row>
-          <h2>推荐经纪人</h2>
-          <span>您可以通过拨打电话或在线咨询的方式联系经纪人</span>
-          <el-row style="line-height: 44px;margin-top: 20px;">
-            <el-card shadow="never">
-              <el-row>
-                <el-col :span="6">
-                  <el-image :src="src"></el-image>
-                </el-col>
-                <el-col :span="6">
-                  <span style="margin-left: 80px">王大军</span>
-                  <br />
-                  <span style="margin-left: 80px">评分:9.2 | 20次评价</span>
-                  <br />
-                  <span style="margin-left: 80px">182818281828</span>
-                  <br />
-                  <span style="margin-left: 80px">
-                    <el-button type="success" size="normal">在线咨询</el-button>
-                  </span>
-                </el-col>
-              </el-row>
-            </el-card>
-          </el-row>
-
-          <el-row>
-            <h2>地址和交通</h2>
-            <el-row>
-              <!-- <baidu-map>
-              </baidu-map>-->
+            <el-row v-for="(item, index) in houseBaseInfo" :key="index">
+              <div class="house-base-info">
+                <div class="house-base-title">{{houseBaseTitle[index]}}</div>
+                <div class="house-base-list">
+                  <ul>
+                    <li v-for="(item2, index2) in item" :key="index2" class="base-info-item">
+                      <span>{{item2.title}} {{item2.info}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <el-divider></el-divider>
             </el-row>
-          </el-row>
+          </el-col>
+          <el-col :span="8" class="contact-employee">
+            <h1>联系经纪人</h1>
+            <el-divider></el-divider>
+            <div class="contact-item">
+              <img
+                class="contact-img"
+                :src="property.proEmployee1Img?  property.proEmployee1Img :defaultImg"
+              />
+              <div class="contact-info">
+                <span class="contact-name">姓名：{{property.proEmployee1Name}}</span>
+                <span class="contact-tel">电话：<span>{{property.proEmployee1Phone ? property.proEmployee1Phone : 12345678900}}</span></span>
+              </div>
+            </div>
+            <el-divider></el-divider>
+          </el-col>
+        </el-row>
+
+        <el-row class="main-item">
+          <span>
+            <h2>房源特色</h2>
+            <span>总共0条此房源评价记录</span>
+          </span>
+          <el-divider></el-divider>
+          <span>暂无数据</span>
+          <el-divider></el-divider>
+        </el-row>
+        <el-row class="main-item">
+          <h2>房源评论</h2>
+          <el-divider></el-divider>
+          <span>查看更多照片</span>
+          <el-divider></el-divider>
+        </el-row>
+        <el-row class="main-item">
+          <h2>房源照片</h2>
+          <el-divider></el-divider>
+          <span>查看更多照片</span>
+          <el-divider></el-divider>
         </el-row>
         <el-divider></el-divider>
-        <el-row>
+        <el-row class="main-item">
           <h2>房产计算器</h2>
           <calculator_tool></calculator_tool>
         </el-row>
         <el-divider></el-divider>
-        <el-row>
+        <el-row class="main-item">
           <h2>周边配套</h2>
           <around class="around" />
         </el-row>
         <el-divider></el-divider>
-        <el-row>
+        <el-row class="main-item">
           <h2>推荐二手房</h2>
           <Recommend :recomProperty="recomProperty" />
         </el-row>
@@ -314,8 +206,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import houseApi from "@/api/house";
 import oldHouseApi from "@/api/oldhouse";
+import {
+  addFavProperty,
+  isUserFavProperty,
+  deleteFavPropertyV2
+} from "@/api/me";
+import { getToken } from "@/utils/auth";
+import store from "@/store";
 import searchHouse from "@/views/old/Index";
 import calculator_tool from "@/components/calculator_tool";
 
@@ -345,44 +245,69 @@ export default {
     Recommend,
     calculator_tool
   },
+
   data() {
     return {
       proId: -1,
       searchContent: "",
       recomProperty: [],
-      imgs: [
-        { src: require("../../assets/img/bg-app.jpg") },
-        { src: require("../../assets/img/banner.jpg") },
-        { src: require("../../assets/img/bg-login.jpg") },
-        { src: require("../../assets/img/bannerV2.jpg") },
-        { src: require("../../assets/img/bg-login.jpg") }
-      ],
+      isCollect: 0, //是否收藏该房源
+      isLogin: 0, //是否登录
       imgActiveIndex: 0,
       autoPlay: true,
       imgUrls: [
-        "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg",
-        "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg",
-        "https://image1.ljcdn.com/110000-inspection/pc1_vcEpfzgJg_1.jpg.710x400.jpg"
+        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599491744156&di=48b8a3160a19136d004770afd8c8a4c2&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2F2i%2Fi8%2FQJ6373288283.jpg",
+        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599491744156&di=3044432e2317bc5b949e276b61517a33&imgtype=0&src=http%3A%2F%2Fimg.article.pchome.net%2F00%2F39%2F50%2F11%2Fpic_lib%2Fs960x639%2FMyHome_1003s960x639.jpg",
+        "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=175887210,2607723101&fm=26&gp=0.jpg",
+        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599491811325&di=9053e36f9ab003407ee94f0ae5a5ae92&imgtype=0&src=http%3A%2F%2Ftiebapic.baidu.com%2Fforum%2Fw%3D580%2Fsign%3D9b6cbc515d90f60304b09c4f0913b370%2Fdfbd3ad8bc3eb135221487dbb11ea8d3fc1f4431.jpg",
+        "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1189167979,2795395867&fm=26&gp=0.jpg"
       ],
       src:
         "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       activeIndex2: "1",
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
+      defaultImg: require("../../assets/img/noimg.jpg"),
       property: {
         proTitle: ""
       },
       activeName: "first",
-      loading: true
+      loading: true,
+      topInfoList: [
+        "小区名称",
+        "所在区域",
+        "看房时间",
+        "房源编号",
+        "信息真实性负责人"
+      ],
+      topInfoListRight: [],
+      //房源信息-基本信息-交易属性
+      houseBaseTitle: ["基本信息", "交易属性"],
+      houseBaseInfo: [
+        [
+          { title: "房屋户型:", info: "" },
+          { title: "所在楼层:", info: "" },
+          { title: "建筑面积:", info: "" },
+          { title: "户型结构:", info: "" },
+          { title: "套内面积:", info: "" },
+          { title: "建筑类型:", info: "" },
+          { title: "房屋朝向:", info: "" },
+          { title: "装修情况:", info: "" },
+          { title: "梯户比例:", info: "" },
+          { title: "配备电梯:", info: "" },
+          { title: "产权年限:", info: "" }
+        ],
+        [
+          { title: "委托时间:", info: "" },
+          { title: "刷新时间:", info: "" },
+          { title: "房屋用途:", info: "" },
+          { title: "产权日期:", info: "" },
+          { title: "产权所属:", info: "" },
+          { title: "抵押状态:", info: "" }
+        ]
+      ]
     };
+  },
+  computed: {
+    ...mapGetters(["name", "imgurl", "mobile", "roles"])
   },
   created() {
     this.init();
@@ -391,11 +316,14 @@ export default {
     init() {
       //获取页面传递的参数
       this.proId = this.$route.query.proId;
+      //检查登录状态
+      this.checkLogin();
       //通过pid获取详细信息
       houseApi
         .getProDetail(this.proId, "chengdu")
         .then(res => {
           this.property = res.data;
+          this.getTopInfoList();
         })
         .catch(err => {
           console.log(err);
@@ -408,6 +336,56 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    //基础信息部分获取区域等信息
+    getTopInfoList() {
+      let tempList = [];
+      tempList[0] = this.property.proEstateName; //小区名称
+      tempList[1] = this.property.proArea + " " + this.property.proDistrict; //  所在区域
+      tempList[2] = "提前预约随时可看"; //  看房时间
+      tempList[3] = this.property.proNo; //  房源编号
+      tempList[4] = this.property.proCompanyName + " - "; //信息真实性负责人
+      tempList[4] += this.property.proEmployee1Name; //      信息真实性负责人
+      this.topInfoListRight = tempList;
+      //房源信息-基本信息
+      this.houseBaseInfo[0][0].info += this.property.proCountF + "室"; //房屋户型
+      this.houseBaseInfo[0][0].info += this.property.proCountT + "厅"; //房屋户型
+      this.houseBaseInfo[0][0].info += this.property.proCountW + "卫"; //房屋户型
+      this.houseBaseInfo[0][0].info += this.property.proCountY + "阳台"; //房屋户型
+      this.houseBaseInfo[0][1].info = this.property.proFloor + "共"; //所在楼层
+      this.houseBaseInfo[0][1].info += this.property.proFloorAll + "层"; //所在楼层
+      this.houseBaseInfo[0][2].info = this.property.proSquare + " m²"; //建筑面积
+      this.houseBaseInfo[0][3].info = this.property.proTye; //户型结构
+      this.houseBaseInfo[0][4].info = "暂无数据"; //套内面积
+      this.houseBaseInfo[0][5].info = this.property.proTye; //建筑类型
+      this.houseBaseInfo[0][6].info = this.property.proDirection; //房屋朝向
+      this.houseBaseInfo[0][7].info = this.property.proDecoration; //装修情况
+      this.houseBaseInfo[0][8].info = this.property.proLadderRatio; //梯户比例
+      this.houseBaseInfo[0][9].info = this.property.proElevator; //配备电梯
+      this.houseBaseInfo[0][10].info = this.property.proRightYears; //产权年限
+      //房源信息-交易属性
+      this.houseBaseInfo[1][0].info = this.property.proTrustDate.substring(
+        0,
+        10
+      ); //委托时间
+      this.houseBaseInfo[1][1].info = this.property.proModDate.substring(0, 10); //刷新时间
+      this.houseBaseInfo[1][2].info = this.property.proUsage; //房屋用途
+      this.houseBaseInfo[1][3].info = this.property.proDate.substring(0, 10); //产权日期
+      this.houseBaseInfo[1][4].info = this.property.proOwnership; //产权所属
+      this.houseBaseInfo[1][5].info = this.property.proMortgate; //抵押状态
+      //判断是否收藏该房源
+      console.log(this.isLogin);
+      if (this.isLogin == 1) {
+        let formData = {
+          telephone: this.mobile,
+          propId: this.property.proId
+        };
+        isUserFavProperty(formData).then(res => {
+          if (res.code == 200) {
+            this.isCollect = 1;
+          }
+        });
+      }
     },
     //自定义swiper需要的一些参数
     handlePrevSlide() {
@@ -426,13 +404,57 @@ export default {
       this.$refs.swiper.slideTo(index);
       this.imgActiveIndex = index;
     },
-    //关注房源
+    //点击关注房源
     collectHouse(e) {
-      let target = e.target;
-      if (target.nodeName == "SPAN" || target.nodeName == "I") {
-        target = e.target.parentNode;
+      // this.checkLogin();
+      if (this.isLogin == 0) {
+        this.$refs.myheader.toggleLoginDialog();
+      } else {
+        this.toCollect();
       }
-      e.target.blur();
+    },
+    //检查登录
+    checkLogin() {
+      if (getToken()) {
+        this.isLogin = 1;
+      } else {
+        console.log("eslse");
+      }
+    },
+    //开始收藏
+    toCollect() {
+      let formData = {
+        propertyId: this.property.proId,
+        telephone: this.mobile,
+        cityCode: 510100,
+        type: 1
+      };
+      addFavProperty(formData)
+        .then(res => {
+          console.log(res);
+          if (res.code == 200) {
+            console.log("yes");
+            this.isCollect = 1;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    //取消收藏
+    cancelCollect() {
+      let formData = {
+        propertyId: this.property.proId,
+        telephone: this.mobile,
+        cityCode: 510100,
+        type: 1
+      };
+      deleteFavPropertyV2(formData).then(res => {
+        if (res.code == 200) {
+          console.log("取消成功");
+          this.isCollect = 0;
+        }
+      });
     }
   }
 };
@@ -448,6 +470,7 @@ export default {
     .collect-house-btn {
       height: 3em;
     }
+
     .house-regin {
       font-size: 0.8em;
       color: gray;
@@ -462,11 +485,18 @@ export default {
       line-height: 3em;
       //   background-color: #f5f5f6;
     }
-    .base-info {
+    .main-item {
+      .el-row {
+        margin: 0 !important;
+        width: 100% !important;
+      }
+    }
+    .left-base-info {
       padding: 0 7em;
       //   justify-content: center;
       .base-info-one {
         display: flex;
+        margin: 2.5em 0;
         .left-price {
           font-size: 1.2em;
           color: red;
@@ -490,6 +520,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin: 2.5em 0;
         .base-info-item {
           display: flex;
           flex-direction: column;
@@ -503,11 +534,84 @@ export default {
           }
         }
       }
+      .base-info-san {
+        display: flex;
+        flex-direction: column;
+        margin: 1em 0;
+        .left-title {
+          padding: 0.5em 0;
+          font-size: 0.9em;
+          .right-info {
+            margin-right: 2em;
+            font-size: 0.9em;
+            color: gray;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .house-base-info {
+      display: flex;
+      font-size: 0.97em;
+      color: #999999;
+      .house-base-title {
+        margin: 0;
+        width: 20%;
+      }
+      .house-base-list {
+        width: 66%;
+        // padding-bottom: 2em;
+        border-bottom: 1rpx solid gray;
+        ul {
+          padding: 0;
+          margin-top: -0.5em;
+        }
+        li {
+          float: left;
+          width: 40%;
+          padding: 0.5em 0;
+          list-style-type: none;
+        }
+      }
+    }
+    .contact-employee {
+      margin-left: 6em;
+      .contact-item{
+        display: flex;
+        .contact-img{
+        width: 5em;
+        height: 6em;
+      }
+      .contact-info{
+        display: flex;
+        padding-left: 2em;
+        flex-direction: column;
+        justify-content: center;
+        .contact-name{
+          font-size: 1.1em;
+          font-weight: bold;
+        }
+        .contact-tel{
+          margin-top: 0.5em;
+          font-size: 1.3em;
+          color:red;
+          span{
+            font-weight: bold;
+          }
+        }
+    
+      }
+      }
+      
     }
   }
 }
 .title {
   font-size: 2em;
+}
+.img-main {
+  width: 40em;
 }
 .img-footer,
 .prev-btn,

@@ -21,6 +21,23 @@ export function updatePwd(formData) {
   })
 };
 
+//关注房源
+export function addFavProperty(formData) {
+  return request({
+    url: '/user/addFavProperty',
+    method: 'get',
+    params: formData
+  })
+};
+//是否收藏该房源
+export function isUserFavProperty(formData) {
+  return request({
+    url: '/user/isUserFavProperty',
+    method: 'get',
+    params: formData
+  })
+};
+//获取收藏的房源
 export function getFavProperty(formData) {
   return request({
     url: '/user/getFavProperty',
