@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-header :detailActive="1" ref="myheader"></my-header>
+    <my-header :detailActive="2" ref="myheader"></my-header>
     <el-container class="detail-container">
       <div class="detail-main">
         <!-- 标题信息 -->
@@ -62,17 +62,8 @@
               <!-- 价格 -->
               <div class="base-info-one">
                 <div class="left-price">
-                  <span class="left-price-unit">{{property.proPrice }}</span>
-                  {{property.proPriceType}}
-                </div>
-                <div class="left-singleprice">
-                  <span>
-                    <span
-                      style="font-weight:bold;"
-                    >{{property.proPrice * 10000 / property.proSquare}}</span>
-                    <i>元/平米</i>
-                  </span>
-                  <span class="left-singleprice-monthly">首付{{property.proPrice * 0.3}}万</span>
+                  <span class="left-price-unit">{{property.proRentPrice }}</span>
+                  {{property.proRentPriceType}}
                 </div>
               </div>
               <!-- 分割线 -->
@@ -144,7 +135,7 @@
                 <span class="contact-name">姓名：{{property.proEmployee1Name}}</span>
                 <span class="contact-tel">
                   电话：
-                  <span>{{property.proEmployee1Phone ? property.proEmployee1Phone : 12345678900}}</span>j
+                  <span>{{property.proEmployee1Phone ? property.proEmployee1Phone : 12345678900}}</span>
                 </span>
               </div>
             </div>
@@ -179,7 +170,6 @@
           <calculator_tool></calculator_tool>
         </el-row>
         <el-divider></el-divider>
-
         <el-row class="main-item">
           <h2>周边配套</h2>
           <around
@@ -192,8 +182,8 @@
         </el-row>
         <el-divider></el-divider>
         <el-row class="main-item">
-          <h2>推荐二手房</h2>
-          <Recommend :recomProperty="recomProperty" :houseType="'old'" />
+          <h2>推荐租房</h2>
+          <Recommend :recomProperty="recomProperty" :houseType="'rent'" />
         </el-row>
         <el-divider></el-divider>
       </div>
@@ -305,10 +295,6 @@ export default {
   computed: {
     ...mapGetters(["name", "imgurl", "mobile", "roles"])
   },
-  created() {
-    this.init();
-  },
-
   watch: {
     $route(to, from) {
       this.$router.go(0);
@@ -324,7 +310,9 @@ export default {
       }
     }
   },
-
+  created() {
+    this.init();
+  },
   mounted() {
     // 切换页面时滚动条自动滚动到顶部
     window.scrollTo(0, 0);
@@ -389,6 +377,18 @@ export default {
       this.houseBaseInfo[1][4].info = this.property.proOwnership; //产权所属
       this.houseBaseInfo[1][5].info = this.property.proMortgate; //抵押状态
       //判断是否收藏该房源
+      console.log(this.isLogin);
+      if (this.isLogin == 1) {
+        let formData = {
+          telephone: this.mobile,
+          propId: this.property.proId
+        };
+        isUserFavProperty(formData).then(res => {
+          if (res.code == 200) {
+            this.isCollect = 1;
+          }
+        });
+      }
     },
     //自定义swiper需要的一些参数
     handlePrevSlide() {
@@ -420,15 +420,6 @@ export default {
     checkLogin() {
       if (getToken()) {
         this.isLogin = 1;
-        let formData = {
-          telephone: this.mobile,
-          propId: this.property.proId
-        };
-        isUserFavProperty(formData).then(res => {
-          if (res.code == 200) {
-            this.isCollect = 1;
-          }
-        });
       } else {
         console.log("eslse");
       }

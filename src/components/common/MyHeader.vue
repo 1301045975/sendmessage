@@ -9,7 +9,7 @@
           class="el-menu-demo"
           mode="horizontal"
           @select="handleSelect"
-          style="padding-left:20%;padding-right:20%;background-color:#f5f5f5"
+          style="width:1150px; margin:0 auto; background-color:#f5f5f5"
         >
           <el-menu-item index="/">首页</el-menu-item>
           <el-menu-item index="/old">二手房</el-menu-item>

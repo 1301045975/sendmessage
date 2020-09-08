@@ -66,9 +66,9 @@ const routes = [
   },
 
   {
-    path: "/Detail_Page",
-    name: "Detail_Page",
-    component: () => import("../views/rent/Detail_Page.vue")
+    path: "/rent/detail",
+    name: "RentDetail",
+    component: () => import("../views/rent/Detail.vue")
   },
   {
     path: "/oldHouse",

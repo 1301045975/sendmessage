@@ -2,7 +2,7 @@
   <div>
     <my-header></my-header>
     <div class="cheader">
-      <div style="width:50%;">
+      <div style="width:720;">
         <el-row class="csearch" type="flex" justify="center">
           <el-col class="topTitle">{{ companyName }}</el-col>
           <el-col>
@@ -89,7 +89,7 @@
       <el-pagination
         @size-change="fetchData"
         @current-change="fetchData"
-        :append-to-body="false"
+        :popper-append-to-body="false"
         :current-page.sync="pageNum"
         :page-size.sync="pageSize"
         :page-sizes="[10,20,30]"
@@ -205,10 +205,11 @@ export default {
   },
   methods: {
     toDetail(proId) {
+      console.log(proId)
       this.$router.push({
-        path: "/Detail_Page",
+        path: "/rent/detail",
         query: {
-          proId: proId
+          proId: proId 
         }
       });
     },
@@ -258,6 +259,7 @@ export default {
       oldHouseApi
         .search(cityPinYin, this.pageNum, this.pageSize, searchParam)
         .then(response => {
+          console.log(response)
           if (response.code == 200) {
             let data = response.data;
             // 设置数据
@@ -268,6 +270,7 @@ export default {
               data.list.forEach((item, i) => {
                 let propertyInfo = {};
                 // 默认封面图片
+                propertyInfo.id = item.proId;
                 propertyInfo.coverImg = item.proCoverUrl
                   ? item.proCoverUrl
                   : this.defaultImg;
@@ -654,7 +657,7 @@ span {
   margin-right: 0.8em;
 }
 .box-body {
-  width: 70%;
+  width: 1100px;
   margin: 0 auto;
 }
 </style>

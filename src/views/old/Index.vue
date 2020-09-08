@@ -2,7 +2,7 @@
   <div>
     <my-header ></my-header>
     <div class="cheader">
-      <div style="width:50%;">
+      <div style="width:1100px;">
         <el-row class="csearch" type="flex" justify="center">
           <el-col class="topTitle">{{ companyName }}</el-col>
           <el-col>
@@ -652,7 +652,7 @@ span {
   margin-right: 0.8em;
 }
 .box-body {
-  width: 70%;
+  width: 1100px;
   margin: 0 auto;
 }
 </style>
