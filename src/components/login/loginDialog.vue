@@ -298,7 +298,7 @@ export default {
               this.$store
                 .dispatch("GetInfo")
                 .then(() => {
-                  // 通知父组件登陆成功
+                  // 通知父组件登录成功
                   // this.noticeParentComp();
                   // this.showDialog(false);
                   location.reload();
@@ -327,7 +327,7 @@ export default {
                 message: response.message,
                 type: response.code == 200 ? "success" : "error"
               });
-              // 切换至登陆
+              // 切换至登录
               if (response.code == 200) {
                 this.loginForm.telephone = this.registerForm.telephone;
                 this.loginForm.password = this.registerForm.password;
@@ -356,7 +356,7 @@ export default {
                 message: response.message,
                 type: response.code == 200 ? "success" : "error"
               });
-              // 切换至登陆
+              // 切换至登录
               if (response.code == 200) {
                 this.loginForm.telephone = this.forgetForm.telephone;
                 this.loginForm.password = this.forgetForm.password;
