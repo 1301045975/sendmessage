@@ -12,7 +12,7 @@
           <h2 style="color: #000">账号密码登录</h2>
         </el-col>
         <el-col style="text-align:right">
-          <a href="http://47.108.202.57:8080/">我是经纪人</a>
+          <a :href="innernetIp">经纪人/物业中心>>></a>
         </el-col>
       </el-row>
       <el-form autocomplete="on" :model="loginForm" :rules="formRules" ref="loginForm">
@@ -224,6 +224,7 @@ export default {
     };
 
     return {
+      innernetIp: "",
       loginForm: {
         telephone: "",
         password: ""
@@ -296,6 +297,9 @@ export default {
   },
   computed: {
     //
+  },
+  mounted() {
+    this.innernetIp = process.env.VUE_APP_INNERNET_IP;
   },
   methods: {
     handleLogin() {
