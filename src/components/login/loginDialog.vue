@@ -1,8 +1,19 @@
 <template>
-  <el-dialog :title="dialog.title" :width="width" :height="height" :visible.sync="dialog.show" :close-on-click-modal="false">
+  <el-dialog
+    :title="dialog.title"
+    :width="width"
+    :height="height"
+    :visible.sync="dialog.show"
+    :close-on-click-modal="false"
+  >
     <el-row v-show="loginShow">
-      <el-row>
-        <h2 style="color: #000">账号密码登录</h2>
+      <el-row style="display:flex; align-items:center; ">
+        <el-col>
+          <h2 style="color: #000">账号密码登录</h2>
+        </el-col>
+        <el-col style="text-align:right">
+          <a href="http://47.108.202.57:8080/">我是经纪人</a>
+        </el-col>
       </el-row>
       <el-form autocomplete="on" :model="loginForm" :rules="formRules" ref="loginForm">
         <el-form-item label prop="telephone">

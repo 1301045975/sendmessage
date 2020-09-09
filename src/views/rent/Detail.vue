@@ -143,22 +143,43 @@
           </el-col>
         </el-row>
 
-        <el-row class="main-item">
+        <el-row class="main-item main-item-content">
           <span>
             <h2>房源特色</h2>
-            <span>总共0条此房源评价记录</span>
           </span>
           <el-divider></el-divider>
           <span>暂无数据</span>
           <el-divider></el-divider>
         </el-row>
-        <el-row class="main-item">
-          <h2>房源评论</h2>
+        <el-row class="main-item main-item-content">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <h2>房源评论</h2>
+            <span style="color:#adafaf;">总共{{commentsList.length}}条此房源评价记录</span>
+          </div>
           <el-divider></el-divider>
-          <span>查看更多照片</span>
+          <div
+            v-for="(item, index) in commentsList"
+            :key="index+'commentsList'"
+            class="comment-box"
+          >
+            <div class="comment-left">
+              <img class="comment-img" :src="item.photoUrl" />
+            </div>
+            <div class="comment-right">
+              <div class="comment-title">
+                <span>
+                  {{item.commentPerson}}
+                  <span style="margin-left:70px">{{item.commentPersonTel}}</span>
+                </span>
+              </div>
+              <div class="comment-content">
+                <span>{{item.content}}</span>
+              </div>
+            </div>
+          </div>
           <el-divider></el-divider>
         </el-row>
-        <el-row class="main-item">
+        <el-row class="main-item main-item-content">
           <h2>房源照片</h2>
           <el-divider></el-divider>
           <span>查看更多照片</span>
@@ -289,7 +310,8 @@ export default {
           { title: "产权所属:", info: "" },
           { title: "抵押状态:", info: "" }
         ]
-      ]
+      ],
+      commentsList:[]
     };
   },
   computed: {
@@ -339,6 +361,14 @@ export default {
         .catch(err => {
           console.log(err);
         });
+      //暂时只有45有数据
+      // getCommentsByPropertyId(this.proId, "chengdu").then(res => {
+      oldHouseApi.getCommentsByPropertyId(45, "chengdu").then(res => {
+        if (res.code == 200) {
+          this.commentsList = res.data;
+          this.formatComment(); //  格式化content内容
+        }
+      });
     },
     //基础信息部分获取区域等信息
     getTopInfoList() {
@@ -347,7 +377,7 @@ export default {
       tempList[1] = this.property.proArea + " " + this.property.proDistrict; //  所在区域
       tempList[2] = "提前预约随时可看"; //  看房时间
       tempList[3] = this.property.proNo; //  房源编号
-      tempList[4] = this.property.proCompanyName + " - "; //信息真实性负责人
+      tempList[4] = "军军房业" + " - "; //信息真实性负责人
       tempList[4] += this.property.proEmployee1Name; //      信息真实性负责人
       this.topInfoListRight = tempList;
       //房源信息-基本信息
@@ -458,7 +488,9 @@ export default {
           this.isCollect = 0;
         }
       });
-    }
+    },
+    //格式化comment的content内容
+    formatComment() {}
   }
 };
 </script>
@@ -467,6 +499,9 @@ export default {
 .detail-container {
   justify-content: center;
   .detail-main {
+    .main-item-content {
+      width: 710px !important;
+    }
     .main-item {
       .el-row {
         margin: 0 !important;
@@ -620,6 +655,41 @@ export default {
               font-weight: bold;
             }
           }
+        }
+      }
+    }
+    .comment-box {
+      box-shadow: 0 0 6px 0 rgba(13, 4, 9, 0.2);
+      margin: 10px 5px;
+      // margin-top: 10px;
+      padding: 15px;
+      height: 120px;
+      display: flex;
+      font-size: 14px;
+      .comment-left {
+        display: flex;
+        align-items: center;
+        .comment-img {
+          height: 70px;
+          width: 70px;
+          border-radius: 20px;
+        }
+      }
+      .comment-right {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        // padding:0 30px ;
+        margin: 10px 40px;
+        .comment-title {
+          font-size: 18px;
+          font-weight: bold;
+          // margin-top: 15px;
+        }
+        .comment-content {
+          margin: 20px 0;
+          // color: red;
+          line-height: 20px;
         }
       }
     }

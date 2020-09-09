@@ -44,8 +44,6 @@
         <label class="filter-title">更多：</label>
         <div class="crow-right">
           <el-select
-            multiple
-            collapse-tags
             class="filter-item filter-more"
             size="mini"
             :popper-append-to-body="false"
@@ -639,7 +637,7 @@ span {
   margin-right: 1.7em;
 }
 .filter-more {
-  width: 6.2em;
+  width: 6.7em;
 }
 .filter-area {
   /* width: 5em; */

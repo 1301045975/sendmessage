@@ -231,15 +231,17 @@
 
       <div class="aroundList" id="mapListContainer">
         <ul class="itemBox">
-          <li v-for="(item, i) in serviceArray" :key="i" @click="reLoadCenter(i)">
+          <li v-for="(item, i) in serviceArray" :key="i" @click="seeDetail(i)">
             <div class="contentBox">
-              <div class="itemContent">
+              <div :class="activeIndex == i ? 'contentActive itemContent' : 'itemContent'">
                 <span class="icon-park"></span>
                 <span class="itemText itemTitle">{{item.name}}</span>
                 <span class="icon-distance"></span>
                 <span class="itemText itemdistance">{{item.detail_info.distance}}米</span>
               </div>
-              <div class="itemInfo">{{item.address}}</div>
+              <div
+                :class="activeIndex == i ? 'contentActive itemInfo' : 'itemInfo'"
+              >{{item.address}}</div>
             </div>
           </li>
         </ul>
@@ -279,13 +281,23 @@
       </bm-overlay>
 
       <!-- 周边点标记覆盖物 -->
-      <div>
+      <div v-for="(item, i) in pointArray.point" :key="i">
         <bm-marker
-          v-for="(item, i) in pointArray.point"
-          :key="i"
           :position="item"
           :icon="{url: theMarkerUrl, size: {width: 24, height: 32}}"
-        ></bm-marker>
+          @click="seeDetail(i)"
+        >
+          <bm-info-window
+            :title="serviceArray[i].name"
+            :position="{lng: item.lng, lat: item.lat}"
+            :show="activeIndex == i"
+            :enableMessage="true"
+            @open="infoWindowOpen(i)"
+          >
+          
+            <p class="info-window-content"><i class="el-icon-location-information"></i> {{serviceArray[i].address}}</p>
+          </bm-info-window>
+        </bm-marker>
       </div>
     </baidu-map>
     <!--地图end-->
@@ -321,6 +333,7 @@ export default {
       width: 0,
       height: 0,
       addrName: "交大智能八期",
+      activeIndex: -1,
       center: { lng: 116.4133836971231, lat: 39.910924547299568 },
       zoom: 16,
       currentLabel: "traffic",
@@ -334,11 +347,11 @@ export default {
         point: []
       },
       labelStyle: {
-        background: "#EE5D5B",
-        border: "1px solid rgb(188, 59, 58)",
+        background: "#2a86ef",
         color: "white",
-        padding: "2px",
+        padding: "10px",
         lineHeight: "28px",
+        boxShadow: "0 0 4px rgba(0,0,0,0.2)",
         whiteSpace: "nowrap",
         fontSize: "16px",
         userSelect: "none",
@@ -355,8 +368,6 @@ export default {
   mounted() {},
   computed: {
     contentLeftOffset() {
-      // console.log(document.getElementsByClassName("content").content.offsetWidth)
-      // return -document.getElementsByClassName("content").content.offsetWidth/2 + 11 + 'px';
       return -40 + "px";
     }
   },
@@ -388,7 +399,6 @@ export default {
           this.pointArray.point = [];
           for (let item in this.serviceArray) {
             let point = {};
-            // console.log(this.serviceArray[item].location);
             point.lat = this.serviceArray[item].location.lat;
             point.lng = this.serviceArray[item].location.lng;
             this.pointArray.point.push(point);
@@ -414,6 +424,7 @@ export default {
         this.currentLabel
       ).firstElementChild.innerText;
       this.addPoint(e.currentTarget.getAttributeNode("data-bl").value);
+      this.activeIndex = -1;
     },
     //二级选项点击触发
     twoLevelClick(e) {
@@ -422,17 +433,16 @@ export default {
       this.currentTwoLabel = e.currentTarget.getAttributeNode("data-bl").value;
       this.currentTwoText = e.currentTarget.innerText;
       this.addPoint(this.pointArray.type);
+      this.activeIndex = -1;
     },
     mouseUpLabel() {
-      this.labelStyle.background = "#6BADCA";
-      this.labelStyle.borderColor = "#0000ff";
-      //   this.addrName = "交大智能八期 416套";
+      // this.labelStyle.background = "#6BADCA";
+      // this.labelStyle.borderColor = "#0000ff";
       this.iconPositionY = "-20px";
     },
     mouseOutLabel() {
-      this.labelStyle.background = "#EE5D5B";
-      this.labelStyle.borderColor = "rgb(188, 59, 58)";
-      //   this.addrName = "交大智能八期";
+      // this.labelStyle.background = "#EE5D5B";
+      // this.labelStyle.borderColor = "rgb(188, 59, 58)";
       this.iconPositionY = "0px";
     },
     //绘制自定义覆盖物，根据坐标设置放置位置
@@ -443,11 +453,11 @@ export default {
       el.style.top = pixel.y - 35 + "px";
     },
     //选择物品重新定位中心
-    reLoadCenter(i) {
-      let location = this.serviceArray[i].location;
-      this.center.lng = location.lng;
-      this.center.lat = location.lat;
-      this.addrName = this.serviceArray[i].name;
+    seeDetail(i) {
+      this.activeIndex = i;
+    },
+    infoWindowOpen(index) {
+      this.activeIndex = index;
     }
   }
 };
@@ -461,6 +471,7 @@ export default {
 .icon {
   background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png)
     no-repeat;
+  color:#2a86ef;
   width: 11px;
   height: 10px;
   overflow: hidden;
@@ -478,6 +489,9 @@ export default {
   /*margin-top: 18px;*/
   position: relative;
   overflow: hidden;
+}
+.contentActive {
+  color: #2a86ef !important;
 }
 
 .tabBox {
@@ -655,5 +669,8 @@ export default {
 
 .levelTwoStyle {
   display: none;
+}
+.info-window-content {
+  color: gray;
 }
 </style>

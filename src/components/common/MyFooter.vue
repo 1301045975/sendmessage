@@ -14,9 +14,9 @@
       <el-row>
         <span
           class="content"
-        >四川军军信息咨询有限公司 | 网络经营许可证 蜀ICP备16057509号-2 | © Copyright©2010-2020 军军网 junjun.com 版权所有 | 营业执照</span>
+        >四川军军信息咨询有限公司 | 网络经营许可证 蜀ICP备16057509号-2 | © Copyright©2010-2020 军军网 junjunhouse.com 版权所有 | 营业执照</span>
         <br />
-        <span class="content">违法和不良信息举报电话：028-86440676 违法和不良信息举报邮箱：admin@junun.com</span>
+        <span class="content">违法和不良信息举报电话：028-61834237 违法和不良信息举报邮箱：1770973601@qq.com</span>
       </el-row>
     </div>
   </div>

@@ -85,4 +85,10 @@ export default {
             method: 'get',
         })
     },
+    getCommentsByPropertyId(proId, cityPinYin) {
+        return request({
+          url: `/property/getCommentsByPropertyId?propId=${proId}&cityPinYin=${cityPinYin}`,
+          method: 'get'
+        })
+      }
 }

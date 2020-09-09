@@ -6,22 +6,24 @@
       <div class="list-info" v-if="propertyInfoArray.length > 0">
         <ul>
           <li v-for="(item, index) in propertyInfoArray" :key="index">
-            <img
-              :src="item.proCoverUrl==null?defaultImg:item.proCoverUrl"
-              @click="toDetail(item.proId)"
-            />
-            <div class="list-right-info" @click="toDetail(item.proId)">
-              <span class="main-info">{{item.proTitle}} {{item.proArea}} {{item.proDistrict}}</span>
-              <span
-                class="sub-info"
-              >{{item.proCountF}}室{{item.proCountT}}厅{{item.proCountW}}卫/{{item.proSquare}}m²/{{item.proDirection}}/{{item.proEstateName}}</span>
-              <span class="price">
-                <span class="total-price">{{item.proPrice}}{{item.proPriceType}}</span>
-                {{item.proUnitPriceitem}}{{item.proUnitPriceType}}
-              </span>
+            <div style="display:flex; flex-direction: row; width:800px">
+              <img
+                :src="item.proCoverUrl==null?defaultImg:item.proCoverUrl"
+                @click="toDetail(item.proId)"
+              />
+              <div class="list-right-info" @click="toDetail(item.proId)">
+                <span class="main-info">{{item.proTitle}} {{item.proArea}} {{item.proDistrict}}</span>
+                <span
+                  class="sub-info"
+                >{{item.proCountF}}室{{item.proCountT}}厅{{item.proCountW}}卫/{{item.proSquare}}m²/{{item.proDirection}}/{{item.proEstateName}}</span>
+                <span class="price">
+                  <span class="total-price">{{item.proPrice}}{{item.proPriceType}}</span>
+                  {{item.proUnitPriceitem}}{{item.proUnitPriceType}}
+                </span>
+              </div>
             </div>
-            <div>
-              <el-button size="mini" type="danger" plain round @click="handleDelete(index, item)">删除</el-button>
+            <div class="delButton">
+              <el-button type="danger" plain round @click="handleDelete(index, item)">删除</el-button>
             </div>
           </li>
         </ul>
@@ -34,7 +36,7 @@
       :append-to-body="false"
       :current-page.sync="pageNum"
       :page-size.sync="pageSize"
-      :page-sizes="[10,20,30]"
+      :page-sizes="[8,16,24]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalRecords"
     ></el-pagination>
@@ -76,7 +78,7 @@ export default {
       defaultImg: require("../../assets/img/noimg.jpg"),
       // 分页
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 8,
       totalRecords: 0,
       propertyInfoArray: []
     };
@@ -160,8 +162,8 @@ export default {
 <style lang="scss" scoped>
 .map-house-list {
   z-index: 99;
-  width: 40em;
-  padding: 0.4em;
+  max-height: 700px;
+  padding: 20px;
   border-radius: 0.2em;
   background-color: #fff;
   -webkit-transition: top 0.5s;
@@ -173,59 +175,65 @@ export default {
     }
   }
 }
-
 .base-info {
+  max-height: 700px;
   height: 3em;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #f0f0f0;
-  padding: 0.7em 1em 0;
+  // padding: 0.7em 1em 0;
 }
 .house-list {
   // height: 25em;
   .list-picker {
   }
   .list-info {
-    // overflow-y: auto;
-    // max-height: 25em;
-    display: flex;
-    flex-direction: column;
-    padding: 0 0.7em;
+    overflow-y: auto;
+    max-height: 650px;
     ul {
       padding: 0px;
     }
     li {
       display: flex;
       flex-direction: row;
-      padding: 0.5em 0;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
       list-style-type: none;
-      height: 5em;
+      height: 100px;
       background-color: #fff;
       border-bottom: 1px solid #f0f0f0;
       overflow: hidden;
+      margin: 14px 0;
+      .delButton {
+        position: relative;
+        right: 12px;
+        
+      }
       img {
-        height: 5em;
-        width: 7em;
+        height: 100px;
+        width: 125px;
+        border-radius: 15px;
       }
       .list-right-info {
         display: flex;
+        padding-left: 40px;
         flex-direction: column;
-        padding-left: 0.9em;
-        justify-content: space-between;
+        line-height: 35px;
         .main-info {
           flex-wrap: nowrap;
-          font-size: 1em;
+          font-size: 20px;
           font-weight: bold;
         }
         .sub-info {
-          font-size: 0.4em;
+          font-size: 14px;
         }
         .price {
-          font-size: 0.8em;
+          font-size: 14px;
           color: gray;
         }
         .total-price {
-          font-size: 1.2em;
+          font-size: 20px;
           color: red;
         }
       }

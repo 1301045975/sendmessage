@@ -44,8 +44,6 @@
         <label class="filter-title">更多：</label>
         <div class="crow-right">
           <el-select
-            multiple
-            collapse-tags
             class="filter-item filter-more"
             size="mini"
             :popper-append-to-body="false"
@@ -55,6 +53,7 @@
             :placeholder="moreFilterName[i].displayName"
           >
             <el-option
+              :v-show="i == moreActive"
               v-for="(item, j) in more"
               :key="'more' + j"
               :label="item.label"
@@ -193,8 +192,9 @@ export default {
       orderFlag: 0,
       propertyInfoArray: [],
       defaultImg: require("../../assets/img/noimg.jpg"),
-      loading: true
+      loading: true,
     };
+    
   },
   mounted() {
     this.companyName = process.env.VUE_APP_COMPANY_NAME;

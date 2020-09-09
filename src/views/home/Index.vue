@@ -63,15 +63,15 @@
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
-          <el-col :span="8" style="text-align: center">
+          <el-col :span="8" style="text-align: center; font-size:22px">
             <span
-              :style="houseType === 'oldHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
+              :class="houseType==='oldHouse'?'houseType activet':'houseType'"
               @click="searchType('oldHouse')"
             >
               <strong>找二手房</strong>
             </span>
             <span
-              :style="houseType === 'rentHouse' ? {color:'#158007',cursor:'pointer','padding-left':'20px'} : {color:'#fff',cursor:'pointer','padding-left':'20px'}"
+              :class="houseType==='rentHouse'?'houseType activet':'houseType' "
               @click="searchType('rentHouse')"
             >
               <strong>找租房</strong>
@@ -131,7 +131,7 @@
           <h1>热门售房</h1>
           <span @click="send('/old')" style="cursor:pointer">查看更多>></span>
         </div>
-        <ul  class="info-title">
+        <ul class="info-title">
           <li class="info-item" v-for="(item, index) in recOldProperties" :key="index">
             <my-recommend :property="item" :houseType="'old'"></my-recommend>
           </li>
@@ -146,11 +146,7 @@
           <span @click="send('/rent')" style="cursor:pointer">查看更多>></span>
         </div>
         <ul class="info-title">
-          <li
-            class="info-item"
-            v-for="(item, index) in recRentProperties"
-            :key="index"
-          >
+          <li class="info-item" v-for="(item, index) in recRentProperties" :key="index">
             <my-recommend :property="item" :houseType="'rent'"></my-recommend>
           </li>
         </ul>
@@ -388,6 +384,7 @@ export default {
       });
     },
     searchType(type) {
+      console.log(type)
       this.houseType = type;
     },
     info(id) {
@@ -471,8 +468,8 @@ export default {
 .cbtn-bg {
   background: #00ae66;
   border: none;
-  border-radius: 0px;
-  height: 50px;
+  border-radius: 20px;
+  // height: 50px;
   width: 140px;
   font-size: 18px;
 }
@@ -508,7 +505,17 @@ export default {
 .info-title {
   padding: 0px;
 }
-.info-item{
-  list-style-type:none; float:left; width:24%;
+.info-item {
+  list-style-type: none;
+  float: left;
+  width: 24%;
+}
+.houseType {
+  color: #fff;
+  cursor: pointer;
+  padding-left: 20px;
+}
+.activet {
+  color: #00ae66;
 }
 </style>
