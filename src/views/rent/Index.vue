@@ -51,6 +51,7 @@
             v-model="moreFilterSelected[i]"
             :key="'moreFilterValues' + i"
             :placeholder="moreFilterName[i].displayName"
+            clearable
           >
             <el-option
               :v-show="i == moreActive"
@@ -122,6 +123,18 @@ export default {
   },
   computed: {
     // ...mapGetters(["name", "uid"]);
+    moreFilterSelectedParams() {
+      let arr = new Array();
+      for (let i = 0; i < this.moreFilterName.length; i++) {
+        let arrItem = new Array();
+        if (this.moreFilterSelected[i] !== "") {
+          arrItem.push(this.moreFilterSelected[i]);
+        }
+        arr.push(arrItem);
+      }
+      // console.log(arr);
+      return arr;
+    }
   },
   created() {
     // 获取区域数据
@@ -179,7 +192,8 @@ export default {
         { displayName: "装修", paramName: "decorations" }
       ],
       moreFilterValues: [[], [], [], [], []],
-      moreFilterSelected: [[], [], [], [], []],
+      moreFilterSelected: ["", "", "", "", ""],
+      // moreFilterSelected: [[], [], [], [], []],
       // 排序
       orderBy: [
         { displayName: "默认排序", paramName: null },
@@ -192,9 +206,8 @@ export default {
       orderFlag: 0,
       propertyInfoArray: [],
       defaultImg: require("../../assets/img/noimg.jpg"),
-      loading: true,
+      loading: true
     };
-    
   },
   mounted() {
     this.companyName = process.env.VUE_APP_COMPANY_NAME;
@@ -205,11 +218,11 @@ export default {
   },
   methods: {
     toDetail(proId) {
-      console.log(proId)
+      console.log(proId);
       this.$router.push({
         path: "/rent/detail",
         query: {
-          proId: proId 
+          proId: proId
         }
       });
     },
@@ -233,9 +246,13 @@ export default {
       });
       // 更多
       this.moreFilterName.forEach((item, index) => {
-        if (this.moreFilterSelected[index].length > 0)
-          searchParam[item.paramName] = this.moreFilterSelected[index];
+        if (this.moreFilterSelectedParams[index].length > 0)
+          searchParam[item.paramName] = this.moreFilterSelectedParams[index];
       });
+      // this.moreFilterName.forEach((item, index) => {
+      //   if (this.moreFilterSelected[index].length > 0)
+      //     searchParam[item.paramName] = this.moreFilterSelected[index];
+      // });
       // 排序
       if (this.orderBy[this.orderByIndex].paramName) {
         this.orderFlag += 1;
@@ -259,7 +276,7 @@ export default {
       oldHouseApi
         .search(cityPinYin, this.pageNum, this.pageSize, searchParam)
         .then(response => {
-          console.log(response)
+          console.log(response);
           if (response.code == 200) {
             let data = response.data;
             // 设置数据

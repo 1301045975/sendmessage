@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-header ></my-header>
+    <my-header></my-header>
     <div class="cheader">
       <div style="width:1100px;">
         <el-row class="csearch" type="flex" justify="center">
@@ -51,6 +51,7 @@
             v-model="moreFilterSelected[i]"
             :key="'moreFilterValues' + i"
             :placeholder="moreFilterName[i].displayName"
+            clearable
           >
             <el-option
               v-for="(item, j) in more"
@@ -120,6 +121,18 @@ export default {
   },
   computed: {
     // ...mapGetters(["name", "uid"]);
+    moreFilterSelectedParams() {
+      let arr = new Array();
+      for (let i = 0; i < this.moreFilterName.length; i++) {
+        let arrItem = new Array();
+        if (this.moreFilterSelected[i] !== "") {
+          arrItem.push(this.moreFilterSelected[i]);
+        }
+        arr.push(arrItem);
+      }
+      // console.log(arr);
+      return arr;
+    }
   },
   created() {
     // 获取区域数据
@@ -176,7 +189,8 @@ export default {
         { displayName: "装修", paramName: "decorations" }
       ],
       moreFilterValues: [[], [], [], [], []],
-      moreFilterSelected: [[], [], [], [], []],
+      moreFilterSelected: ["", "", "", "", ""],
+      // moreFilterSelected: [[], [], [], [], []],
       // 排序
       orderBy: [
         { displayName: "默认排序", paramName: null },
@@ -228,15 +242,20 @@ export default {
       });
       // 更多
       this.moreFilterName.forEach((item, index) => {
-        if (this.moreFilterSelected[index].length > 0)
-          searchParam[item.paramName] = this.moreFilterSelected[index];
+        if (this.moreFilterSelectedParams[index].length > 0)
+          searchParam[item.paramName] = this.moreFilterSelectedParams[index];
       });
+      // this.moreFilterName.forEach((item, index) => {
+      //   if (this.moreFilterSelected[index].length > 0)
+      //     searchParam[item.paramName] = this.moreFilterSelected[index];
+      // });
       // 排序
       if (this.orderBy[this.orderByIndex].paramName) {
         this.orderFlag += 1;
         searchParam[this.orderBy[this.orderByIndex].paramName] =
           this.orderFlag % 2;
       }
+      // console.log(searchParam);
       // 一些特殊处理
       if (searchParam["completeYearRanges"]) {
         searchParam["completeYearRanges"] = searchParam[
