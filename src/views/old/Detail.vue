@@ -9,7 +9,7 @@
             <el-col :span="16">
               <h1
                 class="Title-info"
-              >{{property.proArea}}{{property.proDistrict}}{{property.proEstateName}} {{property.proSquare}}平米{{property.proDecoration}} {{property.proTitle}}</h1>
+              >{{property.proArea}}{{property.proDistrict}}{{property.proEstateName}}  {{property.proTitle}}</h1>
             </el-col>
             <el-col :span="8" class="top-button">
               <el-button
@@ -33,7 +33,7 @@
           <!-- 左边轮播图 -->
           <el-col :span="12">
             <swiper ref="swiper" :autoPlay="false" :showIndicator="true">
-              <slide v-for="(imgUrl, index) in imgUrls" :key="'imgUrls' + index">
+              <slide v-for="(imgUrl, index) in property.proPhotoUrl" :key="'imgUrls' + index">
                 <img class="img-main" :src="imgUrl" />
               </slide>
             </swiper>
@@ -44,7 +44,7 @@
             >
               <div slot="prevBtn" class="prev-btn" @click="handlePrevSlide">&lt;</div>
               <swiper-footer-slide
-                v-for="(imgUrl, index) in imgUrls"
+                v-for="(imgUrl, index) in property.proPhotoUrl"
                 :key="'imgUrlsFooter' + index"
                 @click="hanleSlideTo(index)"
               >
@@ -85,7 +85,7 @@
                 </div>
                 <div class="base-info-item">
                   <span class="base-info-main">{{property.proDirection}}</span>
-                  <span class="base-info-sub">其他</span>
+                  <span class="base-info-sub">{{property.proDecoration}}</span>
                 </div>
                 <div class="base-info-item">
                   <span class="base-info-main">{{property.proSquare}} 平米</span>
@@ -420,7 +420,13 @@ export default {
       this.houseBaseInfo[1][3].info = this.property.proDate.substring(0, 10); //产权日期
       this.houseBaseInfo[1][4].info = this.property.proOwnership; //产权所属
       this.houseBaseInfo[1][5].info = this.property.proMortgate; //抵押状态
-      //判断是否收藏该房源
+      //如果没有轮播图，就用封面图;
+      if(this.property.proPhotoUrl == null){
+        // console.log("没有图片")
+        this.property.proPhotoUrl = [];
+        this.property.proPhotoUrl.push(this.property.proCoverUrl);
+        console.log(this.proPhotoUrl);
+      }
     },
     //自定义swiper需要的一些参数
     handlePrevSlide() {

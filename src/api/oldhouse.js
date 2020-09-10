@@ -43,7 +43,7 @@ export default {
             method: 'get'
         })
     },
-    getByCityCode(cityCode){
+    getByCityCode(cityCode) {
         return request({
             url: `/cityConfig/getByCityCode`,
             method: 'get',
@@ -52,7 +52,7 @@ export default {
             }
         })
     },
-    getByPAreaCode(cityPinYin, pAreaCode){
+    getByPAreaCode(cityPinYin, pAreaCode) {
         return request({
             url: `/area/getAreaByPCode`,
             method: 'get',
@@ -62,7 +62,7 @@ export default {
             }
         })
     },
-    getByPAreaId(cityPinYin, pAreaId){
+    getByPAreaId(cityPinYin, pAreaId) {
         return request({
             url: `/area/getAreaByPId`,
             method: 'get',
@@ -87,8 +87,15 @@ export default {
     },
     getCommentsByPropertyId(proId, cityPinYin) {
         return request({
-          url: `/property/getCommentsByPropertyId?propId=${proId}&cityPinYin=${cityPinYin}`,
-          method: 'get'
+            url: `/property/getCommentsByPropertyId?propId=${proId}&cityPinYin=${cityPinYin}`,
+            method: 'get'
         })
-      }
+    },
+    getFavPropertyNum(proId, cityCode) {
+        return request({
+            url: `/property/getFavPropertyNum?proId=${proId}&cityCode=${cityCode}`,
+            method: 'get'
+        })
+    }
+
 }

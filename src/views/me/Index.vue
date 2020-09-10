@@ -21,24 +21,49 @@
       <div class="left-title">
         <div class="left-title-header">个人中心</div>
         <ul>
-          <li :class="leftActive==1 ? 'li-active':''" @click="showRight(1)">
-            <a>编辑资料</a>
+          <li class="left-sub-header">
+            <a @click="showMore()" style="font-size:18px">
+              编辑资料
+              <i :class="showDetail == 1 ?'el-icon-caret-bottom' : 'el-icon-caret-right'"></i>
+            </a>
           </li>
-          <li :class="leftActive==2 ? 'li-active':''" @click="showRight(2)">
-            <a>收藏房源</a>
+          <a v-if="showDetail == 1">
+            <li :class="leftActive==11 ? 'li-active':''" @click="showRight(11)">
+              <a>修改昵称</a>
+            </li>
+            <li :class="leftActive==12 ? 'li-active':''" @click="showRight(12)">
+              <a>修改密码</a>
+            </li>
+            <li :class="leftActive==13 ? 'li-active':''" @click="showRight(13)">
+              <a>上传头像</a>
+            </li>
+            <li
+              v-if="roles.indexOf('admin')>-1"
+              :class="leftActive==3 ? 'li-active':''"
+              :lazy="true"
+              @click="showRight(2)"
+            >
+              <a>房价管理</a>
+            </li>
+          </a>
+          <li class="left-sub-header">
+            <a @click="showMore2()" style="font-size:18px">
+              我的收藏
+              <i :class="showDetail2 == 1 ?'el-icon-caret-bottom' : 'el-icon-caret-right'"></i>
+            </a>
           </li>
-          <li
-            v-if="roles.indexOf('admin')>-1"
-            :class="leftActive==3 ? 'li-active':''"
-            :lazy="true"
-            @click="showRight(2)"
-          >
-            <a>房价管理</a>
-          </li>
+          <a v-if="showDetail2 == 1">
+            <li :class="leftActive==2 ? 'li-active':''" @click="showRight(2)">
+              <a>收藏房源</a>
+            </li>
+          </a>
         </ul>
       </div>
       <div class="right-detail">
         <my-profile v-if="leftActive == 1"></my-profile>
+        <change-name v-if="leftActive==11"></change-name>
+        <reset-pwd v-if="leftActive==12"></reset-pwd>
+        <upload-photo v-if="leftActive==13"></upload-photo>
         <fav-property v-if="leftActive == 2"></fav-property>
         <city-house-config v-if="leftActive == 3"></city-house-config>
       </div>
@@ -53,9 +78,11 @@ import CityHouseConfig from "@/components/me/CityHouseConfig.vue";
 import MyHeader from "@/components/common/MyHeader.vue";
 import MyFooter from "@/components/common/MyFooter.vue";
 import MyProfile from "@/components/me/MyProfile.vue";
-import FavProperty from "@/components/me/FavProperty.vue";
-import FavEstate from "@/components/me/FavEstate.vue";
-
+import FavProperty from "@/components/me/FavProperty.vue"; //房价管理
+import FavEstate from "@/components/me/FavEstate.vue"; //个人资料
+import UploadPhoto from "@/components/me/UploadPhoto.vue"; //上传头像
+import ChangeName from "@/components/me/ChangeName.vue"; //修改昵称
+import ResetPwd from "@/components/me/ResetPwd.vue"; //重置密码
 export default {
   name: "Me",
   components: {
@@ -64,19 +91,30 @@ export default {
     MyFooter,
     MyProfile,
     FavProperty,
-    FavEstate
+    FavEstate,
+    UploadPhoto,
+    ChangeName,
+    ResetPwd
   },
   computed: {
     ...mapGetters(["name", "imgurl", "mobile", "roles"])
   },
   data() {
     return {
-      leftActive: 0
+      leftActive: 0,
+      showDetail: 0,
+      showDetail2: 0
     };
   },
   methods: {
     showRight(i) {
       this.leftActive = i;
+    },
+    showMore() {
+      this.showDetail = !this.showDetail;
+    },
+    showMore2() {
+      this.showDetail2 = !this.showDetail2;
     }
   }
 };
@@ -101,10 +139,17 @@ export default {
     height: 33px;
     line-height: 33px;
     margin: 0 auto;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: bold;
     padding: 20px 0;
     border-bottom: 1px solid #eaeaea;
+  }
+  .left-sub-header {
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
   }
   ul {
     padding: 0px;
@@ -129,8 +174,9 @@ export default {
   float: right;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   border: 1px solid #e6e5e5;
-  width: 930px;
+  width: 920px;
   padding: 0 20px;
   margin: 0 auto;
+  min-height: 600px;
 }
 </style>
