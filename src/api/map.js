@@ -46,3 +46,26 @@ export function getPropertiesByEstateId(estateId) {
     params: { estateId }
   })
 };
+
+export function getDistrictsByCondition(data) {
+  return request({
+    url: 'map/getDistrictsByCondition',
+    method: 'post',
+    data: data
+  })
+};
+export function getZonesByCondition(data) {
+  return request({
+    url: 'map/getZonesByCondition',
+    method: 'post',
+    data: data
+  })
+};
+export function getRegionsByCondition(data) {
+  return request({
+    url: 'map/getRegionsByCondition',
+    method: 'post',
+    data: data
+  })
+};
+

@@ -536,10 +536,6 @@ export default {
             value: "朝北"
           },
           {
-            label: "朝中",
-            value: "朝中"
-          },
-          {
             label: "朝东",
             value: "朝东"
           },
