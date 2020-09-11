@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-container class="cbody">
-      <div style="width:1150px; margin: 0 auto;">
-        <el-header>
-          <el-row class="cheader" type="flex" justify="center">
+      <div style="width:1150px; margin: 0 auto; height:100px">
+        <el-header style="height:100px">
+          <el-row class="cheader" type="flex" >
             <el-col
               :span="4"
               style="font-size: 32px;cursor: pointer;font-weight: bold;font-family: Arial, Helvetica, 'Microsoft YaHei', Tohoma, sans-serif"
@@ -14,6 +14,7 @@
                 {{city}}
               </span>
             </el-col>
+            <el-col :span="8"></el-col>
             <el-col :span="1" :offset="2" style="cursor: pointer">
               <span @click="send('/sale')">二手房</span>
             </el-col>
@@ -58,8 +59,8 @@
       </div>
       <el-main style="padding-top: 100px;">
         <el-row type="flex" justify="center">
-          <el-col :span="8" style="text-align: center">
-            <h1 style="color: #fff;font-size: 48px;">宣传语待定</h1>
+          <el-col :span="8" style="text-align: center; height:350px">
+            <!-- <h1 style="color: #fff;font-size: 48px;">宣传语待定</h1> -->
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -446,7 +447,7 @@ export default {
   background-repeat: no-repeat;
 }
 .cheader {
-  /* width: 1400px; */
+  width: 1100px; 
   margin: 0 auto;
   line-height: 100px;
   color: #fff;

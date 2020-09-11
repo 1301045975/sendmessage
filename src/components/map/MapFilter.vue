@@ -33,24 +33,13 @@
             </div>
             <div style="margin-top:10px">
               <el-divider></el-divider>
-              <el-form :inline="true" :model="formPrice">
-                <el-form-item label>
-                  <el-input
-                    v-model="formPrice.lowPrice"
-                    placeholder
-                    style="width:100px;margin-left:20px"
-                  ></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <label>-</label>
-                </el-form-item>
-                <el-form-item label>
-                  <el-input v-model="formPrice.lowPrice" placeholder style="width:100px"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <label>（万）</label>
-                </el-form-item>
-              </el-form>
+              <div class="form-price">
+                <el-input v-model="formPrice.lowPrice" placeholder class="form-price-input"></el-input>
+                <label>-</label>
+                <el-input v-model="formPrice.highPrice" placeholder class="form-price-input"></el-input>
+                <label style="font-size:16px">（万）</label>
+              </div>
+              <el-divider></el-divider>
             </div>
             <div>
               <el-row :gutter="20" style="margin-left:10px">
@@ -332,7 +321,7 @@ export default {
       visible1: false,
       visible2: false,
       visible3: false,
-      visible:[false, false, false, false],
+      visible: [false, false, false, false],
       input: "",
       checkList: ["复选框 A", "复选框E"],
       checkListPrice: [],
@@ -410,23 +399,34 @@ export default {
       this.checkListHousePurpose = [];
       this.checkListHouseElevator = [];
     },
-    cancelBtu(id){
+    cancelBtu(id) {
       this.$set(this.visible, id, false);
     },
     //确认
-    confirmBtu(id){
+    confirmBtu(id) {
       this.$set(this.visible, id, false);
     },
     //更多确认
-    confirmMoreBtu(){
+    confirmMoreBtu() {
       this.$set(this.visible, 3, false);
     }
-
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.form-price {
+  height: 50px;
+  width: 300px;
+  display: flex;
+  // justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-price-input {
+  width: 100px;
+  text-align: center;
+}
 .main-container {
   width: 22em;
   // height: 40px;
