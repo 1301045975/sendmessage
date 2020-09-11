@@ -9,7 +9,7 @@
             <el-col :span="16">
               <h1
                 class="Title-info"
-              >{{property.proArea}}{{property.proDistrict}}{{property.proEstateName}}  {{property.proTitle}}</h1>
+              >{{property.proArea}}{{property.proDistrict}}{{property.proEstateName}} {{property.proTitle}}</h1>
             </el-col>
             <el-col :span="8" class="top-button">
               <el-button
@@ -25,7 +25,7 @@
         <!-- 链接信息 -->
         <el-row>
           <el-col :span="16" class="house-regin">军军房产网 > 成都二手房 > 郫都区二手房 > 犀浦二手房 > 当前房源</el-col>
-          <el-col :span="8" class="house-regin">房源发布机构 加入对比 分享此房源</el-col>
+          <!-- <el-col :span="8" class="house-regin">房源发布机构 加入对比 分享此房源</el-col> -->
         </el-row>
         <el-divider></el-divider>
         <!-- 图片及基本信息 -->
@@ -180,7 +180,10 @@
             </div>
             <div class="comment-right">
               <div class="comment-title">
-                <span>{{item.commentPerson}} <span style="margin-left:70px">{{item.commentPersonTel}}</span></span>
+                <span>
+                  {{item.commentPerson}}
+                  <span style="margin-left:70px">{{item.commentPersonTel}}</span>
+                </span>
               </div>
               <div class="comment-content">
                 <span>{{item.content}}</span>
@@ -339,12 +342,15 @@ export default {
     },
     // mobile发生变化是，此函数会执行
     mobile(newValue, oldValue) {
-      // console.log("mobile change");
+      console.log("mobile change");
       if (typeof newValue == "undefined" || newValue == "") {
         // console.log("null");
       } else {
         this.checkLogin();
       }
+    },
+    property(newValue, oldValue){
+      this.checkLogin();
     }
   },
 
@@ -379,7 +385,6 @@ export default {
       oldHouseApi.getCommentsByPropertyId(45, "chengdu").then(res => {
         if (res.code == 200) {
           this.commentsList = res.data;
-          console.log(this.commentsList)
           this.formatComment(); //  格式化content内容
         }
       });
@@ -421,11 +426,10 @@ export default {
       this.houseBaseInfo[1][4].info = this.property.proOwnership; //产权所属
       this.houseBaseInfo[1][5].info = this.property.proMortgate; //抵押状态
       //如果没有轮播图，就用封面图;
-      if(this.property.proPhotoUrl == null){
+      if (this.property.proPhotoUrl == null) {
         // console.log("没有图片")
         this.property.proPhotoUrl = [];
         this.property.proPhotoUrl.push(this.property.proCoverUrl);
-        console.log(this.proPhotoUrl);
       }
     },
     //自定义swiper需要的一些参数
@@ -462,11 +466,14 @@ export default {
           telephone: this.mobile,
           propId: this.property.proId
         };
-        isUserFavProperty(formData).then(res => {
-          if (res.code == 200) {
-            this.isCollect = 1;
-          }
-        });
+        console.log(formData);
+        if (this.mobile && typeof(this.property.proId) != "undefined" ) {
+          isUserFavProperty(formData).then(res => {
+            if (res.code == 200) {
+              this.isCollect = 1;
+            }
+          });
+        }
       } else {
         console.log("eslse");
       }
@@ -676,7 +683,7 @@ export default {
       }
     }
     .comment-box {
-      box-shadow: 0 0 6px 0 rgba(13,4,9,0.2);
+      box-shadow: 0 0 6px 0 rgba(13, 4, 9, 0.2);
       margin: 10px 5px;
       // margin-top: 10px;
       padding: 15px;
@@ -692,19 +699,19 @@ export default {
           border-radius: 20px;
         }
       }
-      .comment-right{
+      .comment-right {
         height: 100%;
         display: flex;
         flex-direction: column;
         // padding:0 30px ;
         margin: 10px 40px;
-        .comment-title{
+        .comment-title {
           font-size: 18px;
           font-weight: bold;
           // margin-top: 15px;
         }
-        .comment-content{
-          margin:20px 0;
+        .comment-content {
+          margin: 20px 0;
           // color: red;
           line-height: 20px;
         }

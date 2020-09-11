@@ -54,7 +54,6 @@
             clearable
           >
             <el-option
-              :v-show="i == moreActive"
               v-for="(item, j) in more"
               :key="'more' + j"
               :label="item.label"
