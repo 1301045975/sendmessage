@@ -16,11 +16,6 @@
               <strong>价格（万）</strong>
             </label>
             <div style="padding-top:20px">
-              <!-- <el-checkbox-group v-model="checkListPrice">
-                <span style="display:inline-block; margin:20px 20px">
-                  <el-checkbox label="0-40" style="width:80px;margin-bottom:20px">40以下</el-checkbox>
-                </span>
-              </el-checkbox-group>-->
               <el-checkbox-group v-model="filterRowsChecked[0]">
                 <el-checkbox
                   class="box-item6em"
@@ -50,7 +45,7 @@
                   <el-button size="medium" @click="cancelBtu(0)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary" @click="confirmBtu(0)">确定</el-button>
+                  <el-button size="medium" type="primary" @click="searchHouse">确定</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -67,26 +62,15 @@
           title
           width="500"
           trigger="hover"
-          content="这是房型过滤器"
+          content="这是面积过滤器"
           :append-to-body="false"
           v-model="visible[1]"
         >
           <div>
             <label for>
-              <strong>房型</strong>
+              <strong>面积</strong>
             </label>
             <div style="margin-top:20px">
-              <!-- <el-checkbox-group v-model="checkListHouseType">
-                <span style="display:block; margin:20px 20px">
-                  <el-checkbox label="oneRoom" style="margin-right:60px">一室</el-checkbox>
-                  <el-checkbox label="twoRoom" style="margin-right:60px">二室</el-checkbox>
-                  <el-checkbox label="threeRoom" style="margin-right:60px">三室</el-checkbox>
-                  <el-checkbox label="fourRoom" style="margin-right:60px">四室</el-checkbox>
-                </span>
-                <span style="display:block; margin:20px 20px">
-                  <el-checkbox label="moreRoom">四室以上</el-checkbox>
-                </span>
-              </el-checkbox-group>-->
               <el-checkbox-group v-model="filterRowsChecked[1]">
                 <el-checkbox
                   class="box-item6em"
@@ -106,13 +90,13 @@
                   <el-button size="medium" @click="cancelBtu(1)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary" @click="confirmBtu(1)">确定</el-button>
+                  <el-button size="medium" type="primary" @click="searchHouse">确定</el-button>
                 </el-col>
               </el-row>
             </div>
           </div>
           <el-button type="text" slot="reference">
-            房型
+            面积
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
@@ -123,29 +107,15 @@
           title
           width="500"
           trigger="hover"
-          content="这是面积过滤器"
+          content="这是房型过滤器"
           :append-to-body="false"
           v-model="visible[2]"
         >
           <div>
             <label for>
-              <strong>面积</strong>
+              <strong>房型</strong>
             </label>
             <div style="margin-top:20px">
-              <!-- <el-checkbox-group v-model="checkListArea">
-                <span style="display:block; margin:20px 20px">
-                  <el-checkbox label="0-50" style="width:80px;">50以下</el-checkbox>
-                  <el-checkbox label="50-70" style="width:80px;">50-70</el-checkbox>
-                  <el-checkbox label="70-90" style="width:80px;">70-90</el-checkbox>
-                  <el-checkbox label="90-110" style="width:80px;">90-110</el-checkbox>
-                </span>
-                <span style="display:block; margin:20px 20px">
-                  <el-checkbox label="110-130" style="width:80px;">110-130</el-checkbox>
-                  <el-checkbox label="130-150" style="width:80px;">130-150</el-checkbox>
-                  <el-checkbox label="150-200" style="width:80px;">150-200</el-checkbox>
-                  <el-checkbox label="200-999" style="width:80px;">200以上</el-checkbox>
-                </span>
-              </el-checkbox-group>-->
               <el-checkbox-group v-model="filterRowsChecked[2]">
                 <el-checkbox
                   class="box-item6em"
@@ -165,13 +135,13 @@
                   <el-button size="medium" @click="cancelBtu(2)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary" @click="confirmBtu(2)">确定</el-button>
+                  <el-button size="medium" type="primary" @click="searchHouse">确定</el-button>
                 </el-col>
               </el-row>
             </div>
           </div>
           <el-button type="text" slot="reference">
-            面积
+            房型
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
@@ -188,96 +158,21 @@
         >
           <div style="height:400px;">
             <el-scrollbar style="height:100%">
-              <label for>
-                <strong>房源特色</strong>
-              </label>
-              <div style="margin-bottom:10px;padding:10px 0">
-                <el-checkbox-group v-model="checkListHouseFeature">
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="必看好房" style="width:80px;">必看好房</el-checkbox>
-                    <el-checkbox label="满五年" style="width:80px;">满五年</el-checkbox>
-                    <el-checkbox label="满两年" style="width:80px;">满两年</el-checkbox>
-                    <el-checkbox label="近地铁" style="width:80px;">近地铁</el-checkbox>
-                  </span>
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="VR房源" style="width:80px;">VR房源</el-checkbox>
-                    <el-checkbox label="VR看装修" style="width:80px;">VR看装修</el-checkbox>
-                    <el-checkbox label="7日新上" style="width:80px;">7日新上</el-checkbox>
-                    <el-checkbox label="随时看房" style="width:80px;">随时看房</el-checkbox>
-                  </span>
-                </el-checkbox-group>
-              </div>
-              <label for>
-                <strong>朝向</strong>
-              </label>
-              <div style="margin-bottom:10px;padding:10px 0">
-                <el-checkbox-group v-model="checkListHouseDirection">
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="南北" style="width:80px;">南北</el-checkbox>
-                    <el-checkbox label="朝南" style="width:80px;">朝南</el-checkbox>
-                    <el-checkbox label="朝东" style="width:80px;">朝东</el-checkbox>
-                    <el-checkbox label="朝北" style="width:80px;">朝北</el-checkbox>
-                  </span>
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="朝西" style="width:80px;">朝西</el-checkbox>
-                  </span>
-                </el-checkbox-group>
-              </div>
-              <label for>
-                <strong>楼层</strong>
-              </label>
-              <div style="margin-bottom:10px;padding:10px 0">
-                <el-checkbox-group v-model="checkListHouseFloor">
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="低楼层" style="width:80px;">低楼层</el-checkbox>
-                    <el-checkbox label="中楼层" style="width:80px;">中楼层</el-checkbox>
-                    <el-checkbox label="高楼层" style="width:80px;">高楼层</el-checkbox>
-                  </span>
-                </el-checkbox-group>
-              </div>
-              <label for>
-                <strong>楼龄</strong>
-              </label>
-              <div style="margin-bottom:10px;padding:10px 0">
-                <el-checkbox-group v-model="checkList">
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="5年以内" style="width:80px;">5年以内</el-checkbox>
-                    <el-checkbox label="10年以内" style="width:80px;">10年以内</el-checkbox>
-                    <el-checkbox label="15年以内" style="width:80px;">15年以内</el-checkbox>
-                    <el-checkbox label="20年以内" style="width:80px;">20年以内</el-checkbox>
-                  </span>
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="20年以上" style="width:80px;">20年以上</el-checkbox>
-                  </span>
-                </el-checkbox-group>
-              </div>
-              <label for>
-                <strong>用途</strong>
-              </label>
-              <div style="margin-bottom:10px;padding:10px 0">
-                <el-checkbox-group v-model="checkListHousePurpose">
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="普通住宅" style="width:80px;">普通住宅</el-checkbox>
-                    <el-checkbox label="商业类" style="width:80px;">商业类</el-checkbox>
-                    <el-checkbox label="别墅" style="width:80px;">别墅</el-checkbox>
-                    <el-checkbox label="四合院" style="width:80px;">四合院</el-checkbox>
-                  </span>
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="车位" style="width:80px;">车位</el-checkbox>
-                    <el-checkbox label="其他" style="width:80px;">其他</el-checkbox>
-                  </span>
-                </el-checkbox-group>
-              </div>
-              <label for>
-                <strong>电梯</strong>
-              </label>
-              <div style="margin-bottom:10px;padding:10px 0">
-                <el-checkbox-group v-model="checkListHouseElevator">
-                  <span style="display:inline-block; margin:10px 20px">
-                    <el-checkbox label="有电梯" style="width:80px;">有电梯</el-checkbox>
-                    <el-checkbox label="无电梯" style="width:80px;">无电梯</el-checkbox>
-                  </span>
-                </el-checkbox-group>
+              <div v-for="(more, i) in moreFilterValues" :key="'moreFilterValues' + i">
+                <label for>
+                  <strong>{{ moreFilterName[i].displayName }}</strong>
+                </label>
+                <div style="margin-bottom:10px;padding:10px 0">
+                  <el-checkbox-group v-model="moreFilterSelected[i]">
+                    <el-checkbox
+                      v-for="(item, j) in more"
+                      :key="'more' + j"
+                      :label="item.label"
+                      :value="item.value"
+                      style="width:80px;margin-top:10px;margin-bottom:10px"
+                    >{{item.label}}</el-checkbox>
+                  </el-checkbox-group>
+                </div>
               </div>
             </el-scrollbar>
             <div style="margin:20px">
@@ -289,7 +184,7 @@
                   <el-button size="medium" @click="cancelBtu(3)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary" @click="confirmMoreBtu()">确定</el-button>
+                  <el-button size="medium" type="primary" @click="searchHouse">确定</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -311,9 +206,12 @@ export default {
   name: "MapFilter",
   components: {},
   props: ["text", "position", "active"],
+  computed: {},
   created() {
     // 获取筛选条件范围数据
     this.fetchCityConfig("510100");
+    // 更多数据
+    this.initialMoreFilterData();
   },
   data() {
     return {
@@ -333,16 +231,92 @@ export default {
       checkListHouseAge: [],
       checkListHousePurpose: [],
       checkListHouseElevator: [],
-      filterRowsName: ["售价", "面积", "房型"],
-      filterRowsRight: [[], [], []],
-      filterRowsChecked: [[], [], []],
       formPrice: {
         lowPrice: "",
         highPrice: ""
-      }
+      },
+
+      companyName: "",
+      center: { lng: 0, lat: 0 },
+      zoom: 3,
+      pojo: {},
+      agent: {},
+      agents: [],
+      centerDialogVisible: false,
+      messageAgent: {},
+      messagePojo: {
+        toId: "",
+        msg: ""
+      },
+      websocket: null,
+      data: "",
+      content: "",
+      requestHouseFlag: false,
+      request: {
+        house_id: ""
+      },
+      searchContent: "",
+      // 分页
+      pageNum: 1,
+      pageSize: 10,
+      totalRecords: 0,
+      // 区域
+      areasArray: [],
+      areaLvSelected: -1,
+      areaIdSelected: -1,
+      // 范围
+      filterRowsName: [
+        { displayName: "售价", paramName: "saleRanges" },
+        { displayName: "面积", paramName: "houseAreaRanges" },
+        { displayName: "房型", paramName: "countFRanges" }
+      ],
+      filterRowsRight: [[], [], []],
+      filterRowsChecked: [[], [], []],
+      // 更多
+      moreFilterName: [
+        { displayName: "建造年代", paramName: "completeYearRanges" },
+        { displayName: "房屋类型", paramName: "houseTypes" },
+        { displayName: "楼层", paramName: "floors" },
+        { displayName: "朝向", paramName: "directions" },
+        { displayName: "装修", paramName: "decorations" }
+      ],
+      moreFilterValues: [[], [], [], [], []],
+      moreFilterSelected: [[], [], [], [], []],
+      // 排序
+      orderBy: [
+        { displayName: "默认排序", paramName: null },
+        { displayName: "最新发布", paramName: "sortByLatest" },
+        { displayName: "房屋总价", paramName: "sortBySoldPrice" },
+        { displayName: "房屋单价", paramName: "sortByUnitPrice" },
+        { displayName: "房屋面积", paramName: "sortByHouseArea" }
+      ],
+      orderByIndex: 0,
+      orderFlag: 0,
+      propertyInfoArray: [],
+      defaultImg: require("../../assets/img/noimg.jpg"),
+      loading: true
     };
   },
   methods: {
+    extractNum(rangeItem) {
+      let item = rangeItem;
+      let reNum = /\d+/g;
+      let res = item.match(reNum);
+      let minValue = 0,
+        maxValue = 99999999;
+      if (res) {
+        res = res.map(val => parseInt(val));
+        if (res.length > 1) (minValue = res[0]), (maxValue = res[1]);
+        else if (item.startsWith("小")) maxValue = res[0];
+        else if (item.startsWith("大")) minValue = res[0];
+        else minValue = maxValue = res[0];
+        return {
+          maxValue,
+          minValue
+        };
+      }
+      return null;
+    },
     // 解析range字符串
     rangeParse(rangeStr, unitType) {
       unitType = unitType ? unitType : "";
@@ -351,20 +325,8 @@ export default {
       ranges.forEach((item, i) => {
         ret[i] = {};
         ret[i].display = item + unitType;
-        let reNum = /\d+/g;
-        let res = item.match(reNum);
-        let minValue = 0,
-          maxValue = 99999999;
-        if (res) {
-          res = res.map(val => parseInt(val));
-          if (res.length > 1) (minValue = res[0]), (maxValue = res[1]);
-          else if (item.startsWith("小")) maxValue = res[0];
-          else minValue = res[0];
-        }
-        ret[i].label = {
-          minValue: minValue,
-          maxValue: maxValue
-        };
+        let rangeItem = this.extractNum(item);
+        if (rangeItem) ret[i].label = rangeItem;
       });
       return ret;
     },
@@ -389,15 +351,14 @@ export default {
     //重置选项
     resetCheckBox(id) {
       this.$set(this.filterRowsChecked, id, []);
+      this.searchHouse();
     },
     //重置更多
     resetMore() {
-      this.checkListHouseFeature = [];
-      this.checkListHouseDirection = [];
-      this.checkListHouseFloor = [];
-      this.checkList = [];
-      this.checkListHousePurpose = [];
-      this.checkListHouseElevator = [];
+      for (let i = 0; i < this.moreFilterSelected.length; i++) {
+        this.$set(this.moreFilterSelected, i, []);
+      }
+      this.searchHouse();
     },
     cancelBtu(id) {
       this.$set(this.visible, id, false);
@@ -409,6 +370,209 @@ export default {
     //更多确认
     confirmMoreBtu() {
       this.$set(this.visible, 3, false);
+    },
+    searchHouse() {
+      this.loading = true;
+      let cityPinYin = "chengdu";
+      let searchParam = {};
+      // 范围
+      this.filterRowsName.forEach((item, index) => {
+        if (this.filterRowsChecked[index].length > 0)
+          searchParam[item.paramName] = this.filterRowsChecked[index];
+      });
+      // 更多
+      // this.moreFilterName.forEach((item, index) => {
+      //   if (this.moreFilterSelectedParams[index].length > 0)
+      //     searchParam[item.paramName] = this.moreFilterSelectedParams[index];
+      // });
+      this.moreFilterName.forEach((item, index) => {
+        if (this.moreFilterSelected[index].length > 0)
+          searchParam[item.paramName] = this.moreFilterSelected[index];
+      });
+      // 排序
+      if (this.orderBy[this.orderByIndex].paramName) {
+        this.orderFlag += 1;
+        searchParam[this.orderBy[this.orderByIndex].paramName] =
+          this.orderFlag % 2;
+      }
+      // console.log(searchParam);
+      // 一些特殊处理
+      if (searchParam["completeYearRanges"]) {
+        searchParam["completeYearRanges"] = searchParam[
+          "completeYearRanges"
+        ].map((item, index) => {
+          let range = this.extractNum(item);
+          let crrYear = new Date().getFullYear();
+          return {
+            minValue: Math.max(0, crrYear - range.maxValue),
+            maxValue: crrYear - range.minValue
+          };
+        });
+      }
+      // console.log(searchParam);
+      for (let i = 0; i <= 3; i++) {
+        this.cancelBtu(i);
+      }
+      this.$emit("transmitParamEvent", searchParam);
+    },
+    // 初始化更多里的值
+    initialMoreFilterData() {
+      this.moreFilterValues = [
+        [
+          {
+            label: "5年以内",
+            value: "0-5"
+          },
+          {
+            label: "10年以内",
+            value: "0-10"
+          },
+          {
+            label: "15年以内",
+            value: "0-15"
+          },
+          {
+            label: "20年以内",
+            value: "0-20"
+          },
+          {
+            label: "大于20年",
+            value: "20-99999999"
+          }
+        ],
+        [
+          {
+            label: "板房",
+            value: "板房"
+          },
+          {
+            label: "砖房",
+            value: "砖房"
+          },
+          {
+            label: "裙楼",
+            value: "裙楼"
+          },
+          {
+            label: "排房",
+            value: "排房"
+          },
+          {
+            label: "多层",
+            value: "多层"
+          },
+          {
+            label: "高层",
+            value: "高层"
+          },
+          {
+            label: "小高层",
+            value: "小高层"
+          },
+          {
+            label: "四合院",
+            value: "四合院"
+          },
+          {
+            label: "多层复式",
+            value: "多层复式"
+          },
+          {
+            label: "高层复式",
+            value: "高层复式"
+          },
+          {
+            label: "多层跃式",
+            value: "多层跃式"
+          },
+          {
+            label: "高层跃式",
+            value: "高层跃式"
+          },
+          {
+            label: "独立别墅",
+            value: "独立别墅"
+          },
+          {
+            label: "联体别墅",
+            value: "联体别墅"
+          },
+          {
+            label: "双拼别墅",
+            value: "双拼别墅"
+          }
+        ],
+        [
+          {
+            label: "低层",
+            value: "低层"
+          },
+          {
+            label: "中层",
+            value: "中层"
+          },
+          {
+            label: "高层",
+            value: "高层"
+          }
+        ],
+        [
+          {
+            label: "朝南",
+            value: "朝南"
+          },
+          {
+            label: "朝北",
+            value: "朝北"
+          },
+          {
+            label: "朝东",
+            value: "朝东"
+          },
+          {
+            label: "东西",
+            value: "东西"
+          },
+          {
+            label: "南北",
+            value: "南北"
+          },
+          {
+            label: "东南",
+            value: "东南"
+          },
+          {
+            label: "东北",
+            value: "东北"
+          },
+          {
+            label: "西南",
+            value: "西南"
+          },
+          {
+            label: "西北",
+            value: "西北"
+          }
+        ],
+        [
+          {
+            label: "精装",
+            value: "精装"
+          },
+          {
+            label: "中装",
+            value: "中装"
+          },
+          {
+            label: "简装",
+            value: "简装"
+          },
+          {
+            label: "清水",
+            value: "清水"
+          }
+        ]
+      ];
     }
   }
 };

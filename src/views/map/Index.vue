@@ -75,13 +75,10 @@
         <map-header></map-header>
       </div>
       <div id="map-filter-wrapper">
-        <map-filter></map-filter>
+        <map-filter @transmitParamEvent="handleTransmitParamEvent"></map-filter>
       </div>
       <div id="map-house-list">
-        <map-house-list
-          ref="mapHouseList"
-          :estates="ChooseIndex == -1 ? -1 : estates[ChooseIndex]"
-        ></map-house-list>
+        <map-house-list ref="mapHouseList" :estates="ChooseIndex == -1 ? -1 : estates[ChooseIndex]"></map-house-list>
       </div>
     </baidu-map>
   </div>
@@ -111,7 +108,9 @@ import {
   getZones,
   getRegions,
   getEstatesByZoneId,
-  
+  getDistrictsByCondition,
+  getZonesByCondition,
+  getRegionsByCondition
 } from "@/api/map";
 
 export default {
@@ -144,10 +143,10 @@ export default {
       input: "",
       height: "100%",
       city: null,
-      districts: null,
-      zones: null,
-      regions: null,
-      estates: null,
+      districts: [],
+      zones: [],
+      regions: [],
+      estates: [],
       polygonPath: "",
       ChooseIndex: -1
     };
@@ -280,9 +279,26 @@ export default {
     clickEstate(index) {
       //更换选择的小区；
       this.ChooseIndex = index;
-      
+
       //houseList重新显示结果
       this.$refs.mapHouseList.chooseShow();
+    },
+    handleTransmitParamEvent(params) {
+      // console.log(params);
+      getDistrictsByCondition(params).then(res => {
+        if (res.code == 200) {
+          // 先清空
+          this.districts.splice(0, this.districts.length);
+          this.districts = res.data;
+          // console.log(this.districts);
+        }
+      });
+      getZonesByCondition(params).then(res => {
+        if (res.code == 200) {
+          this.zones.splice(0, this.zones.length);
+          this.zones = res.data;
+        }
+      });
     }
   }
 };
