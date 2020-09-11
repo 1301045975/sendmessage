@@ -72,13 +72,13 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.$route.params.id);
-    // console.log(this.propertyInfo);
-    if (this.propertyInfo) this.property = this.propertyInfo;
+    if (this.propertyInfo) {
+      this.property = this.propertyInfo;
+      this.FavPropertyNum();
+    }
   },
-  created() {
-    this.FavPropertyNum();
-  },
+  created() {},
+
   data() {
     return {
       property: {
@@ -110,14 +110,11 @@ export default {
   },
   methods: {
     FavPropertyNum() {
-      console.log("*********");
-      //   getFavPropertyNum(this.property.proId, 510100).then(res => {
-      //       if(res.code == 200){
-      //           this.property.numFav = res.data.num + "关注";
-      //           console.log(this.property.numFav)
-      //       }
-      //   });
-    //   getFavPropertyNum().then(res => {});
+      oldHouseApi.getFavPropertyNum(this.propertyInfo.id, 510100).then(res => {
+        if (res.code == 200) {
+          this.property.numFav = res.data.num + "关注";
+        }
+      });
     }
   }
 };

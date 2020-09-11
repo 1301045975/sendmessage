@@ -311,7 +311,7 @@ export default {
           { title: "抵押状态:", info: "" }
         ]
       ],
-      commentsList:[]
+      commentsList: []
     };
   },
   computed: {
@@ -330,6 +330,9 @@ export default {
       } else {
         this.checkLogin();
       }
+    },
+    property(newValue, oldValue) {
+      this.checkLogin();
     }
   },
   created() {
@@ -406,19 +409,14 @@ export default {
       this.houseBaseInfo[1][3].info = this.property.proDate.substring(0, 10); //产权日期
       this.houseBaseInfo[1][4].info = this.property.proOwnership; //产权所属
       this.houseBaseInfo[1][5].info = this.property.proMortgate; //抵押状态
+      //如果没有轮播图，就用封面图;
+      if (this.property.proPhotoUrl == null) {
+        // console.log("没有图片")
+        this.property.proPhotoUrl = [];
+        this.property.proPhotoUrl.push(this.property.proCoverUrl);
+      }
       //判断是否收藏该房源
       console.log(this.isLogin);
-      if (this.isLogin == 1) {
-        let formData = {
-          telephone: this.mobile,
-          propId: this.property.proId
-        };
-        isUserFavProperty(formData).then(res => {
-          if (res.code == 200) {
-            this.isCollect = 1;
-          }
-        });
-      }
     },
     //自定义swiper需要的一些参数
     handlePrevSlide() {
@@ -450,6 +448,17 @@ export default {
     checkLogin() {
       if (getToken()) {
         this.isLogin = 1;
+        let formData = {
+          telephone: this.mobile,
+          propId: this.property.proId
+        };
+        if (this.mobile && typeof this.property.proId != "undefined") {
+          isUserFavProperty(formData).then(res => {
+            if (res.code == 200) {
+              this.isCollect = 1;
+            }
+          });
+        }
       } else {
         console.log("eslse");
       }

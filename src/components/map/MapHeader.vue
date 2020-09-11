@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <el-row :gutter="0">
-      <el-col :span="6">
+      <el-col :span="4">
         <el-popover placement="top-start" title width="400" trigger="click" content="热门城市" :append-to-body="false">
           <div>
             <label for>
@@ -22,7 +22,7 @@
           </el-button>
         </el-popover>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-popover placement="bottom" width="150" trigger="click" content="" :append-to-body="false">
           <div>
             <el-radio v-model="radioType" label="二手房">二手房</el-radio>
@@ -36,7 +36,7 @@
           </el-button>
         </el-popover>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="15">
         <el-input v-model="input" placeholder="输入您的目标地点">
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
@@ -84,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  width: 22em;
+  width: 410px;
   padding: 0.4em;
   border-radius: 0.2em;
   background-color: white;

@@ -2,9 +2,17 @@
   <div class="main-container">
     <el-row :gutter="0">
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这是价格过滤器" :append-to-body="false">
+        <el-popover
+          placement="top-start"
+          title
+          width="500"
+          trigger="hover"
+          content="这是价格过滤器"
+          :append-to-body="false"
+          v-model="visible[0]"
+        >
           <div>
-            <label for>
+            <label>
               <strong>价格（万）</strong>
             </label>
             <div style="padding-top:20px">
@@ -47,13 +55,13 @@
             <div>
               <el-row :gutter="20" style="margin-left:10px">
                 <el-col :span="4" style="padding-left:3px">
-                  <el-button size="medium">重置</el-button>
+                  <el-button size="medium" @click="resetCheckBox(0)">重置</el-button>
                 </el-col>
                 <el-col :span="4" :offset="8">
-                  <el-button size="medium">取消</el-button>
+                  <el-button size="medium" @click="cancelBtu(0)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary">确定</el-button>
+                  <el-button size="medium" type="primary" @click="confirmBtu(0)">确定</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -65,7 +73,15 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这是房型过滤器" :append-to-body="false">
+        <el-popover
+          placement="top-start"
+          title
+          width="500"
+          trigger="hover"
+          content="这是房型过滤器"
+          :append-to-body="false"
+          v-model="visible[1]"
+        >
           <div>
             <label for>
               <strong>房型</strong>
@@ -95,13 +111,13 @@
             <div>
               <el-row :gutter="20" style="margin-left:10px">
                 <el-col :span="4">
-                  <el-button size="medium">重置</el-button>
+                  <el-button size="medium" @click="resetCheckBox(1)">重置</el-button>
                 </el-col>
                 <el-col :span="4" :offset="8">
-                  <el-button size="medium">取消</el-button>
+                  <el-button size="medium" @click="cancelBtu(1)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary">确定</el-button>
+                  <el-button size="medium" type="primary" @click="confirmBtu(1)">确定</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -113,7 +129,15 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这是面积过滤器" :append-to-body="false">
+        <el-popover
+          placement="top-start"
+          title
+          width="500"
+          trigger="hover"
+          content="这是面积过滤器"
+          :append-to-body="false"
+          v-model="visible[2]"
+        >
           <div>
             <label for>
               <strong>面积</strong>
@@ -146,13 +170,13 @@
             <div>
               <el-row :gutter="20" style="margin-left:10px">
                 <el-col :span="4">
-                  <el-button size="medium">重置</el-button>
+                  <el-button size="medium" @click="resetCheckBox(2)">重置</el-button>
                 </el-col>
                 <el-col :span="4" :offset="8">
-                  <el-button size="medium">取消</el-button>
+                  <el-button size="medium" @click="cancelBtu(2)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary">确定</el-button>
+                  <el-button size="medium" type="primary" @click="confirmBtu(2)">确定</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -164,7 +188,15 @@
         </el-popover>
       </el-col>
       <el-col :span="6">
-        <el-popover placement="top-start" title width="500" trigger="hover" content="这里是更多过滤器" :append-to-body="false">
+        <el-popover
+          placement="top-start"
+          title
+          width="500"
+          trigger="hover"
+          content="这里是更多过滤器"
+          :append-to-body="false"
+          v-model="visible[3]"
+        >
           <div style="height:400px;">
             <el-scrollbar style="height:100%">
               <label for>
@@ -262,13 +294,13 @@
             <div style="margin:20px">
               <el-row :gutter="20" style="margin-left:10px">
                 <el-col :span="4">
-                  <el-button size="medium">重置</el-button>
+                  <el-button size="medium" @click="resetMore()">重置</el-button>
                 </el-col>
                 <el-col :span="4" :offset="8">
-                  <el-button size="medium">取消</el-button>
+                  <el-button size="medium" @click="cancelBtu(3)">取消</el-button>
                 </el-col>
                 <el-col :span="4">
-                  <el-button size="medium" type="primary">确定</el-button>
+                  <el-button size="medium" type="primary" @click="confirmMoreBtu()">确定</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -296,7 +328,11 @@ export default {
   },
   data() {
     return {
-      visible: false,
+      visible4: false,
+      visible1: false,
+      visible2: false,
+      visible3: false,
+      visible:[false, false, false, false],
       input: "",
       checkList: ["复选框 A", "复选框E"],
       checkListPrice: [],
@@ -360,7 +396,32 @@ export default {
           });
         }
       });
+    },
+    //重置选项
+    resetCheckBox(id) {
+      this.$set(this.filterRowsChecked, id, []);
+    },
+    //重置更多
+    resetMore() {
+      this.checkListHouseFeature = [];
+      this.checkListHouseDirection = [];
+      this.checkListHouseFloor = [];
+      this.checkList = [];
+      this.checkListHousePurpose = [];
+      this.checkListHouseElevator = [];
+    },
+    cancelBtu(id){
+      this.$set(this.visible, id, false);
+    },
+    //确认
+    confirmBtu(id){
+      this.$set(this.visible, id, false);
+    },
+    //更多确认
+    confirmMoreBtu(){
+      this.$set(this.visible, 3, false);
     }
+
   }
 };
 </script>

@@ -72,7 +72,7 @@
                     >{{property.proPrice * 10000 / property.proSquare}}</span>
                     <i>元/平米</i>
                   </span>
-                  <span class="left-singleprice-monthly">首付{{property.proPrice * 0.3}}万</span>
+                  <span class="left-singleprice-monthly">首付{{property.proFirstPay}}万</span>
                 </div>
               </div>
               <!-- 分割线 -->
@@ -466,10 +466,9 @@ export default {
           telephone: this.mobile,
           propId: this.property.proId
         };
-        console.log(formData);
         if (this.mobile && typeof(this.property.proId) != "undefined" ) {
           isUserFavProperty(formData).then(res => {
-            if (res.code == 200) {
+            if (res.code == 200 && res.data.res == true) {
               this.isCollect = 1;
             }
           });
