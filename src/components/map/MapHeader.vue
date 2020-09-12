@@ -2,7 +2,7 @@
   <div class="main-container">
     <el-row :gutter="0">
       <el-col :span="4">
-        <el-popover placement="top-start" title width="400" trigger="click" content="热门城市" :append-to-body="false">
+        <el-popover placement="top-start" title width="400" trigger="click" content="热门城市" :append-to-body="false" :disabled="true">
           <div>
             <label for>
               <strong>热门城市</strong>

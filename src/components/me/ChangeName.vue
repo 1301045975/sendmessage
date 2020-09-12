@@ -36,11 +36,6 @@ export default {
   },
   data() {
     return {
-      imageUrl: "",
-      imgUploadUrl: process.env.VUE_APP_BASE_API_PORTAL + "/user/uploadImg",
-      imgUploadHeaders: {
-        Authorization: getToken()
-      },
       nameForm: {
         name: "",
         telephone: ""

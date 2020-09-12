@@ -5,7 +5,7 @@
         <el-popover
           placement="top-start"
           title
-          width="500"
+          width="450"
           trigger="hover"
           content="这是价格过滤器"
           :append-to-body="false"
@@ -27,13 +27,14 @@
               </el-checkbox-group>
             </div>
             <div style="margin-top:10px">
-              <el-divider></el-divider>
+              <!-- 价格区间注释 -->
+              <!-- <el-divider></el-divider>
               <div class="form-price">
                 <el-input v-model="formPrice.lowPrice" placeholder class="form-price-input"></el-input>
                 <label>-</label>
                 <el-input v-model="formPrice.highPrice" placeholder class="form-price-input"></el-input>
                 <label style="font-size:16px">（万）</label>
-              </div>
+              </div> -->
               <el-divider></el-divider>
             </div>
             <div>
@@ -60,7 +61,7 @@
         <el-popover
           placement="top-start"
           title
-          width="500"
+          width="450"
           trigger="hover"
           content="这是面积过滤器"
           :append-to-body="false"
@@ -105,7 +106,7 @@
         <el-popover
           placement="top-start"
           title
-          width="500"
+          width="450"
           trigger="hover"
           content="这是房型过滤器"
           :append-to-body="false"
@@ -150,7 +151,7 @@
         <el-popover
           placement="top-start"
           title
-          width="500"
+          width="450"
           trigger="hover"
           content="这里是更多过滤器"
           :append-to-body="false"

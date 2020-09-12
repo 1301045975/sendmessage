@@ -20,7 +20,14 @@ export function updatePwd(formData) {
     params: formDataEn
   })
 };
-
+//上传默认头像
+export function uploadDefaultImg(imgurl, tel) {
+  return request({
+    url: `/user/uploadDefaultImg`,
+    method: 'post',
+    params: {imgurl: imgurl, telephone:tel}
+  })
+};
 //关注房源
 export function addFavProperty(formData) {
   return request({
