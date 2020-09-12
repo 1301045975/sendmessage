@@ -9,7 +9,7 @@
       <div>
         <p>
           {{ text.estateName }} | {{ text.houseCnt }}套
-          <span class="price">6万</span>
+          <span class="price">{{text.salePrice}}万</span>
         </p>
       </div>
     </label>

@@ -21,9 +21,9 @@
             <el-col :span="1" style="cursor: pointer">
               <span @click="send('/rent')">租房</span>
             </el-col>
-            <el-col :span="1" style="cursor: pointer">
+            <!-- <el-col :span="1" style="cursor: pointer">
               <span @click="send('/calculator')">工具</span>
-            </el-col>
+            </el-col> -->
             <!-- <el-col :span="2" style="cursor: pointer">
             <span @click="business()">商业办公</span>
             </el-col>-->
@@ -43,7 +43,7 @@
             <el-col :span="2" style="cursor: pointer">
               <span @click="center">{{loginOrRegis}}</span>
             </el-col>
-            <el-col :span="1" style="cursor: pointer" v-show="!logoutFlag">
+            <el-col :span="2" style="cursor: pointer" v-show="!logoutFlag">
               <span @click="logout">退出</span>
             </el-col>
           </el-row>

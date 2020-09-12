@@ -280,6 +280,8 @@ export default {
       getEstatesByZoneIdAndCondition(item.areaId, this.searchParam)
         .then(res => {
           this.estates = res.data;
+          console.log("*******")
+          console.log(this.estates)
         })
         .catch(err => {
           console.log(err);
