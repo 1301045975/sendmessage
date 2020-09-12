@@ -69,3 +69,18 @@ export function getRegionsByCondition(data) {
   })
 };
 
+export function getEstatesByZoneIdAndCondition(zoneId, data) {
+  return request({
+    url: `map/getEstatesByZoneIdAndCondition?zoneId=${zoneId}`,
+    method: 'post',
+    data: data
+  })
+};
+
+export function getEstateDetail(estateId) {
+  return request({
+    url: `estate/getEstateDetail?estateId=${estateId}`,
+    method: 'get'
+  })
+};
+

@@ -1,7 +1,7 @@
 <template>
   <div class="map-house-list">
     <div class="title">
-      共100个可选项
+      共{{ propertyNum }}个可选项
       <!-- 下拉更多 -->
       <div class="showMoreInfo" @click="showMore">
         <!-- 动态更新下拉箭头 -->
@@ -13,12 +13,14 @@
       <!-- 基本信息 -->
       <div class="base-info">
         <span class="info-name">{{estates.estateName}}</span>
-        <span class="info-subinfo">
-          塔楼 板楼 塔板结合 | 共30栋 15139户 | 2008年建成
-          <span style="color: red;font-size:1.4em;">6万</span>
+        <span class="info-subinfo" v-if="estateDetail">
+          {{ estateDetail.estBuildingType == null ? "暂无数据" : estateDetail.estBuildingType}} | 
+          {{ estateDetail.estTotalBuilding == null ? "暂无数据" : estateDetail.estTotalBuilding}} | 
+          {{ estateDetail.estBuildingTime == null ? "暂无数据" : estateDetail.estBuildingTime}} | 
+          {{ estateDetail.estTotalProperty == null ? "暂无数据" : estateDetail.estTotalProperty}}
         </span>
       </div>
-      <!-- 详细信息 --> 
+      <!-- 详细信息 -->
       <div class="house-list">
         <!-- 自定义排序部分 -->
         <div class="list-picker"></div>
@@ -47,21 +49,25 @@
 
 
 <script>
-import { getPropertiesByEstateId } from "@/api/map";
+import { getPropertiesByEstateId, getEstateDetail } from "@/api/map";
 export default {
   data() {
     return {
       showList: 0,
       Properties: [],
-      defaultImg: require("../../assets/img/noimg.jpg")
+      defaultImg: require("../../assets/img/noimg.jpg"),
+      estateDetail: null,
+      propertyNum: 0,
     };
   },
   props: ["estates", "eststeList"],
   watch: {
     estates(newValue, oldValue) {
+      console.log(newValue);
       //暂时只有1有，因此不传具体的参数
-      // this.updateProperties(newValue.estateId);
-      this.updateProperties(1);
+      this.updateProperties(newValue.estateId);
+      this.updateEstateDetail(newValue.estateId);
+      // this.updateProperties(1);
     }
   },
   methods: {
@@ -77,6 +83,15 @@ export default {
     updateProperties(estateid) {
       getPropertiesByEstateId(estateid).then(res => {
         this.Properties = res.data;
+        this.propertyNum = this.Properties.length;
+      });
+    },
+    //检查到estates变化时更新对应的房源信息
+    updateEstateDetail(estateId) {
+     getEstateDetail(estateId).then(res => {
+       if (res.code == 200) {
+         this.estateDetail = res.data;
+       }
       });
     },
     // 点击前往详情页面
@@ -96,7 +111,7 @@ export default {
 <style lang="scss" scoped>
 .map-house-list {
   z-index: 99;
-  width: 22em;
+  width: 27em;
   padding: 0.4em;
   border-radius: 0.2em;
   background-color: #fff;
@@ -126,13 +141,12 @@ export default {
   padding: 0.7em 1em 0;
 }
 .house-list {
-  height: 25em;
+  height: 30em;
   .list-picker {
-
   }
   .list-info {
     overflow-y: auto;
-    max-height: 25em;
+    max-height: 30em;
     display: flex;
     flex-direction: column;
     padding: 0 0.7em;

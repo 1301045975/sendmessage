@@ -110,7 +110,8 @@ import {
   getEstatesByZoneId,
   getDistrictsByCondition,
   getZonesByCondition,
-  getRegionsByCondition
+  getRegionsByCondition,
+  getEstatesByZoneIdAndCondition
 } from "@/api/map";
 
 export default {
@@ -148,7 +149,8 @@ export default {
       regions: [],
       estates: [],
       polygonPath: "",
-      ChooseIndex: -1
+      ChooseIndex: -1,
+      searchParam: {}
     };
   },
   computed: {
@@ -267,7 +269,15 @@ export default {
       this.$set(this.center, "lat", item.lat);
       // console.log(item);
       // 获取Region信息
-      getEstatesByZoneId(item.areaId)
+      // getEstatesByZoneId(item.areaId)
+      //   .then(res => {
+      //     this.estates = res.data;
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      // 通过ZoneId和搜索参数获取Region信息
+      getEstatesByZoneIdAndCondition(item.areaId, this.searchParam)
         .then(res => {
           this.estates = res.data;
         })
@@ -283,14 +293,15 @@ export default {
       //houseList重新显示结果
       this.$refs.mapHouseList.chooseShow();
     },
+    // 处理MapFilter传递过来的参数
     handleTransmitParamEvent(params) {
-      // console.log(params);
+      this.searchParam = params;
+      console.log(this.searchParam);
       getDistrictsByCondition(params).then(res => {
         if (res.code == 200) {
           // 先清空
           this.districts.splice(0, this.districts.length);
           this.districts = res.data;
-          // console.log(this.districts);
         }
       });
       getZonesByCondition(params).then(res => {
@@ -299,6 +310,14 @@ export default {
           this.zones = res.data;
         }
       });
+    }
+  },
+  // 判断一个对象是否为空对象
+  ifEmptyObj(obj) {
+    if (JSON.stringify(obj) == "{}") {
+      return true;
+    } else {
+      return false;
     }
   }
 };
