@@ -35,12 +35,21 @@ export default {
   methods: {
     toDetail(proid) {
       console.log(proid + " toDetail");
-      this.$router.push({
-        path: "/old/detail",
-        query: {
-          proId: proid
-        }
-      });
+      if (this.houseType == "old") {
+        this.$router.push({
+          path: "/old/detail",
+          query: {
+            proId: proid
+          }
+        });
+      } else {
+        this.$router.push({
+          path: "/rent/detail",
+          query: {
+            proId: proid
+          }
+        });
+      }
     }
   }
 };

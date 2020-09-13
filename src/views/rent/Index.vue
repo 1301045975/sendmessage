@@ -319,7 +319,7 @@ export default {
                 propertyInfo.lastUpdate = calculateLastUpdate(
                   str2Date(item.proModDate)
                 );
-                propertyInfo.isSupportVR = true;
+                propertyInfo.isSupportVR = false;
                 propertyInfo.isAllowView = true;
                 propertyInfo.isOverFiveYears = false;
                 propertyInfo.allPrice = item.proRentPrice;

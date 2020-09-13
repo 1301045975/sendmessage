@@ -85,8 +85,8 @@ export default {
       loading: false,
       loadingText: "正在加载，请稍后...",
       defaultImg: [
-        require("D:/Code/gitcode/extranet-web/src/assets/myprofile/head1.jpg"),
-        require("D:/Code/gitcode/extranet-web/src/assets/myprofile/head2.jpg")
+        require("../../assets/myprofile/head1.jpg"),
+        require("../../assets/myprofile/head2.jpg")
       ],
       imageUrl2: "",
       defaultImg2: [
