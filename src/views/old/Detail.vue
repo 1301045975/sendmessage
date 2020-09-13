@@ -342,9 +342,8 @@ export default {
     },
     // mobile发生变化是，此函数会执行
     mobile(newValue, oldValue) {
-      console.log("mobile change");
       if (typeof newValue == "undefined" || newValue == "") {
-        // console.log("null");
+        console.log("null");
       } else {
         this.checkLogin();
       }
@@ -427,7 +426,6 @@ export default {
       this.houseBaseInfo[1][5].info = this.property.proMortgate; //抵押状态
       //如果没有轮播图，就用封面图;
       if (this.property.proPhotoUrl == null) {
-        // console.log("没有图片")
         this.property.proPhotoUrl = [];
         this.property.proPhotoUrl.push(this.property.proCoverUrl);
       }
@@ -487,9 +485,7 @@ export default {
       };
       addFavProperty(formData)
         .then(res => {
-          console.log(res);
           if (res.code == 200) {
-            console.log("yes");
             this.isCollect = 1;
           }
         })
@@ -507,7 +503,6 @@ export default {
       };
       deleteFavPropertyV2(formData).then(res => {
         if (res.code == 200) {
-          console.log("取消成功");
           this.isCollect = 0;
         }
       });

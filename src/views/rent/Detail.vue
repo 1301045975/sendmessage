@@ -22,10 +22,10 @@
             </el-col>
           </div>
         </el-row>
-        <!-- 链接信息 -->
+       <!-- 链接信息 -->
         <el-row>
           <el-col :span="16" class="house-regin">军军房产网 > 成都二手房 > 郫都区二手房 > 犀浦二手房 > 当前房源</el-col>
-          <el-col :span="8" class="house-regin">房源发布机构 加入对比 分享此房源</el-col>
+          <!-- <el-col :span="8" class="house-regin">房源发布机构 加入对比 分享此房源</el-col> -->
         </el-row>
         <el-divider></el-divider>
         <!-- 图片及基本信息 -->
@@ -33,7 +33,7 @@
           <!-- 左边轮播图 -->
           <el-col :span="12">
             <swiper ref="swiper" :autoPlay="false" :showIndicator="true">
-              <slide v-for="(imgUrl, index) in imgUrls" :key="'imgUrls' + index">
+              <slide v-for="(imgUrl, index) in property.proPhotoUrl" :key="'imgUrls' + index">
                 <img class="img-main" :src="imgUrl" />
               </slide>
             </swiper>
@@ -44,7 +44,7 @@
             >
               <div slot="prevBtn" class="prev-btn" @click="handlePrevSlide">&lt;</div>
               <swiper-footer-slide
-                v-for="(imgUrl, index) in imgUrls"
+                v-for="(imgUrl, index) in property.proPhotoUrl"
                 :key="'imgUrlsFooter' + index"
                 @click="hanleSlideTo(index)"
               >
@@ -76,7 +76,7 @@
                 </div>
                 <div class="base-info-item">
                   <span class="base-info-main">{{property.proDirection}}</span>
-                  <span class="base-info-sub">其他</span>
+                  <span class="base-info-sub">{{property.proDecoration}}</span>
                 </div>
                 <div class="base-info-item">
                   <span class="base-info-main">{{property.proSquare}} 平米</span>
@@ -415,8 +415,6 @@ export default {
         this.property.proPhotoUrl = [];
         this.property.proPhotoUrl.push(this.property.proCoverUrl);
       }
-      //判断是否收藏该房源
-      console.log(this.isLogin);
     },
     //自定义swiper需要的一些参数
     handlePrevSlide() {
@@ -469,13 +467,11 @@ export default {
         propertyId: this.property.proId,
         telephone: this.mobile,
         cityCode: 510100,
-        type: 1
+        type: 2
       };
       addFavProperty(formData)
         .then(res => {
-          console.log(res);
           if (res.code == 200) {
-            console.log("yes");
             this.isCollect = 1;
           }
         })
@@ -493,7 +489,6 @@ export default {
       };
       deleteFavPropertyV2(formData).then(res => {
         if (res.code == 200) {
-          console.log("取消成功");
           this.isCollect = 0;
         }
       });
