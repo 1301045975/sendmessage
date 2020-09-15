@@ -81,12 +81,22 @@ export default {
 
   methods: {
     toDetail(proid) {
-      this.$router.push({
-        path: "/" + this.houseType + "/detail",
-        query: {
-          proId: proid
-        }
-      });
+      // console.log(proid + " toDetail");
+      if (this.houseType == "old") {
+        this.$router.push({
+          path: "/old/detail",
+          query: {
+            proId: proid
+          }
+        });
+      } else {
+        this.$router.push({
+          path: "/rent/detail",
+          query: {
+            proId: proid
+          }
+        });
+      }
     }
   }
 };
@@ -111,7 +121,7 @@ export default {
   height: 158px;
 }
 .item-price {
-  margin:5px 0;
+  margin: 5px 0;
   display: flex;
   flex-direction: row;
   font-size: 14px;
@@ -119,14 +129,14 @@ export default {
   .price {
     color: red;
   }
-  .num{
+  .num {
     font-size: 20px;
   }
-  .house{
+  .house {
     color: #999;
     margin-left: 10px;
   }
-  .item-area{
+  .item-area {
     font-size: 22px;
     margin-top: 5px;
   }

@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     toDetail(proid) {
-      console.log(proid + " toDetail");
+      // console.log(proid + " toDetail");
       if (this.houseType == "old") {
         this.$router.push({
           path: "/old/detail",
