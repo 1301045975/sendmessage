@@ -8,18 +8,17 @@
           :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
-          @select="handleSelect"
           style="width:1150px; margin:0 auto; background-color:#f5f5f5"
         >
-          <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/old">二手房</el-menu-item>
+          <el-menu-item index="/" @click="gotoPage('/')">首页</el-menu-item>
+          <el-menu-item index="/old" @click="gotoPage('/old')">二手房</el-menu-item>
           <!-- <el-menu-item index="/newHouse">新房</el-menu-item> -->
-          <el-menu-item index="/rent">租房</el-menu-item>
+          <el-menu-item index="/rent" @click="gotoPage('/rent')">租房</el-menu-item>
           <!-- <el-menu-item index="/agent">经纪人</el-menu-item> -->
           <!-- <el-menu-item index="/publish">发布房源</el-menu-item> -->
           <!-- <el-menu-item index="/tool">工具</el-menu-item> -->
           <!--                <el-menu-item @click="download">万径APP</el-menu-item>-->
-          <el-menu-item index="/map">地图找房</el-menu-item>
+          <el-menu-item index="/map" @click="gotoPage('/map')">地图找房</el-menu-item>
           <el-menu-item @click="toggleLoginDialog" style="float: right" v-show="!logoutFlag">登录/注册</el-menu-item>
           <el-menu-item @click="logout" style="float: right" v-show="logoutFlag">退出</el-menu-item>
           <el-menu-item @click="center" style="float: right;" v-show="logoutFlag">
@@ -106,6 +105,9 @@ export default {
     handleSelect(key, keyPath) {
       this.activeIndex = key;
       this.$router.push({ path: key });
+    },
+    gotoPage(path) {
+      this.$router.push({ path: path });
     },
     ready() {
       var geolocation = new window.BMap.Geolocation();
