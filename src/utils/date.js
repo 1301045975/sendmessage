@@ -66,7 +66,7 @@ export function calculateLastUpdate(date) {
     return "刚刚发布"
   }
   if (dayNum <= 30) {
-    return dayNum + "天发布";
+    return dayNum + "天前发布";
   } else if (dayNum <= 356) {
     return parseInt(dayNum / 30) + "个月前发布";
   } else {

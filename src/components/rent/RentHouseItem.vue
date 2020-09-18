@@ -33,7 +33,7 @@
             <el-row class="crow">
               <i class="el-icon-star-off"></i>&nbsp;
               <span>{{property.numFav}} | </span>
-              <span>{{property.lastUpdate}} | </span>
+              <span>{{property.lastUpdate}}</span>
             </el-row>
             <el-row class="crow">
               <el-tag v-if="property.isSupportVR">VR房源</el-tag>&nbsp;
@@ -110,7 +110,7 @@ export default {
     FavPropertyNum() {
       oldHouseApi.getFavPropertyNum(this.propertyInfo.id, 510100).then(res => {
         if (res.code == 200) {
-          this.property.numFav = res.data.num + "关注";
+          this.property.numFav = res.data.num + "人关注";
         }
       });
     }
