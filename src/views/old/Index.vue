@@ -2,14 +2,16 @@
   <div>
     <my-header></my-header>
     <div class="cheader">
-      <div style="width:1100px;">
-        <el-row class="csearch" type="flex" justify="center">
-          <el-col class="topTitle">{{ companyName }}</el-col>
-          <el-col>
-            <el-input placeholder="请输入内容" v-model="searchContent" class="input"></el-input>
-          </el-col>
+      <div style="width:1100px;display:flex;flex-direction:row;justify-content:space-between">
+        <div>
+          <span
+            style="font-size:32px;cursor:pointer;font-weight:bold;color:white;color:#00ae66"
+          >{{ companyName }}</span>
+        </div>
+        <div style="display:flex;flex-direction:row;justify-content:space-between">
+          <el-input placeholder="请输入内容" v-model="searchContent" class="input" style="width:300px;height:40px;"></el-input>
           <el-button type="success" class="cbtn-bg" @click="searchHouse">开始找房</el-button>
-        </el-row>
+        </div>
       </div>
     </div>
     <div class="box-body">
@@ -74,7 +76,7 @@
       </el-menu>
       <!-- <el-row>
         <span style="font-size:16px"><strong>共找到{{totalRecords}}套成都二手房</strong></span>
-      </el-row> -->
+      </el-row>-->
       <!-- <el-divider></el-divider> -->
       <div v-if="!loading">
         <old-house-item
@@ -604,14 +606,14 @@ export default {
 }
 
 .topTitle {
-  font-size: 1.5em;
+  font-size: 32px;
   cursor: pointer;
   color: #00ae66;
   font-weight: bold;
 }
 .cheader {
   width: 100%;
-  height: 6em;
+  height: 80px;
   background: #f5f5f6;
   display: flex;
   align-items: center;
@@ -628,6 +630,8 @@ span {
 .cbtn-bg {
   background: #00ae66;
   border: none;
+  border-radius: 15px;
+  height: 40px;
 }
 .crow {
   line-height: 20px;
@@ -649,10 +653,10 @@ span {
   border: none;
 }
 .filter-item {
-  margin-right: 1.7em;
+  margin-right: 30px;
 }
 .filter-more {
-  width: 6.7em;
+  width: 100px;
 }
 .filter-area {
   /* width: 5em; */
@@ -660,9 +664,9 @@ span {
 }
 .filter-title {
   width: 5%;
-  font-size: 0.7em;
+  font-size: 14px;
   font-weight: bold;
-  margin-right: 0.8em;
+  margin-right: 0px;
 }
 .box-body {
   width: 1100px;
