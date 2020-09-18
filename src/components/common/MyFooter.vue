@@ -1,13 +1,13 @@
 <template>
   <div class="cfooter">
-    <div style="width: 60%;margin: 0 auto">
-      <el-row style="color: #fff;line-height: 80px">
-        <span>关于军军</span>
-        <span>联系我们</span>
-        <span>加入我们</span>
-        <span>隐私声明</span>
-        <span>网站地图</span>
-        <span>友情链接</span>
+    <div style="width: 70%;margin: 0 auto">
+      <el-row style="color:#fff;line-height:80px;">
+        <span style="font-size:16px;">关于军军</span>
+        <span style="font-size:16px;">联系我们</span>
+        <span style="font-size:16px;">加入我们</span>
+        <span style="font-size:16px;">隐私声明</span>
+        <span style="font-size:16px;">网站地图</span>
+        <span style="font-size:16px;">友情链接</span>
         <!-- 2020/09/02 没有客服电话，此项内容注释 -->
         <!-- <span style="float: right;color: #7dcfa0;">官方客服 4008123123</span> -->
       </el-row>

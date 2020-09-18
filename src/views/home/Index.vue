@@ -1,52 +1,34 @@
 <template>
   <div>
     <el-container class="cbody">
-      <div style="width:1150px; margin: 0 auto; height:100px">
+      <div style="width:1000px; margin: 0 auto; height:100px">
         <el-header style="height:100px">
-          <el-row class="cheader" type="flex" >
-            <el-col
-              :span="4"
-              style="font-size: 32px;cursor: pointer;font-weight: bold;font-family: Arial, Helvetica, 'Microsoft YaHei', Tohoma, sans-serif"
-            >{{ companyName }}</el-col>
-            <el-col :span="2">
-              <span>
+          <div style="display:flex;flex-direction:row;justify-content:space-between">
+            <div>
+              <span
+                style="font-size:24px;cursor:pointer;font-weight:bold;font-family:Arial,Helvetica,'Microsoft YaHei',Tohoma,sans-serif;color:white"
+              >{{ companyName }}</span>
+              <span style="font-size:12px;color:white">
                 <i class="el-input__icon el-icon-location-outline"></i>
                 {{city}}
               </span>
-            </el-col>
-            <el-col :span="8"></el-col>
-            <el-col :span="1" :offset="2" style="cursor: pointer">
-              <span @click="send('/old')">二手房</span>
-            </el-col>
-            <el-col :span="1" style="cursor: pointer">
-              <span @click="send('/rent')">租房</span>
-            </el-col>
-            <!-- <el-col :span="1" style="cursor: pointer">
-              <span @click="send('/calculator')">工具</span>
-            </el-col> -->
-            <!-- <el-col :span="2" style="cursor: pointer">
-            <span @click="business()">商业办公</span>
-            </el-col>-->
-            <!-- <el-col :span="1" style="cursor: pointer">
-            <span @click="send('/agent')">经纪人</span>
-            </el-col>-->
-            <!-- <el-col :span="1" style="cursor: pointer">
-            <span @click="send('/housePrice')">房价</span>
-            </el-col>-->
-            <!-- <el-col :span="1" style="cursor: pointer">
-            <span @click="send('/tool')">工具</span>
-            </el-col>-->
-            <el-col :span="2" style="cursor: pointer">
-              <span @click="send('/map')">地图找房</span>
-              <!-- <span><router-link to="/map">地图找房</router-link></span> -->
-            </el-col>
-            <el-col :span="2" style="cursor: pointer">
-              <span @click="center">{{loginOrRegis}}</span>
-            </el-col>
-            <el-col :span="2" style="cursor: pointer" v-show="!logoutFlag">
-              <span @click="logout">退出</span>
-            </el-col>
-          </el-row>
+            </div>
+            <div style="display:flex;flex-direction:row;justify-content:space-between;width:40%">
+              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/old')">二手房</span>
+              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/rent')">租房</span>
+              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/map')">地图找房</span>
+              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/old')">二手房</span>
+              <span
+                style="font-size:16px;cursor:pointer;color:white"
+                @click="center"
+              >{{loginOrRegis}}</span>
+              <span
+                style="font-size:18px;cursor:pointer;color:white"
+                @click="logout"
+                v-show="!logoutFlag"
+              >退出</span>
+            </div>
+          </div>
           <div>
             <login-dialog
               ref="loginDialog"
@@ -58,11 +40,6 @@
         </el-header>
       </div>
       <el-main style="padding-top: 100px;">
-        <el-row type="flex" justify="center">
-          <el-col :span="8" style="text-align: center; height:350px">
-            <!-- <h1 style="color: #fff;font-size: 48px;">宣传语待定</h1> -->
-          </el-col>
-        </el-row>
         <el-row type="flex" justify="center">
           <el-col :span="8" style="text-align: center; font-size:22px">
             <span
@@ -79,7 +56,6 @@
             </span>
           </el-col>
         </el-row>
-
         <el-row class="csearch" type="flex" justify="center">
           <el-col :span="8">
             <el-input
@@ -127,31 +103,79 @@
     </el-container>
 
     <el-container>
-      <div class="recommend-info">
-        <div class="recommend-title">
-          <h1>热门售房</h1>
-          <span @click="send('/old')" style="cursor:pointer">查看更多>></span>
+      <el-main>
+        <div style="display:flex;justify-content:center;align-items:center;padding-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;">
+            <span style="font-size:24px"><strong>热门售房</strong></span>
+            <span style="font-size:16px" @click="send('/old')">查看更多>></span>
+          </div>
         </div>
-        <ul class="info-title">
-          <li class="info-item" v-for="(item, index) in recOldProperties" :key="index">
-            <my-recommend :property="item" :houseType="'old'"></my-recommend>
-          </li>
-        </ul>
-      </div>
+
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recOldProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
+          >
+            <my-recommend
+              v-for="(item, index) in recOldProperties.slice(0,4)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'old'"
+            ></my-recommend>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recOldProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
+          >
+            <my-recommend
+              v-for="(item, index) in recOldProperties.slice(4,8)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'old'"
+            ></my-recommend>
+          </div>
+        </div>
+      </el-main>
     </el-container>
 
     <el-container>
-      <div class="recommend-info">
-        <div class="recommend-title">
-          <h1>热门租房</h1>
-          <span @click="send('/rent')" style="cursor:pointer">查看更多>></span>
+      <el-main>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;padding-bottom:20px;">
+            <span style="font-size:24px"><strong>热门租房</strong></span>
+            <span style="font-size:16px" @click="send('/rent')">查看更多>></span>
+          </div>
         </div>
-        <ul class="info-title">
-          <li class="info-item" v-for="(item, index) in recRentProperties" :key="index">
-            <my-recommend :property="item" :houseType="'rent'"></my-recommend>
-          </li>
-        </ul>
-      </div>
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recRentProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
+          >
+            <my-recommend
+              v-for="(item, index) in recRentProperties.slice(0,4)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'rent'"
+            ></my-recommend>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <div
+            v-if="recRentProperties.length > 0"
+            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
+          >
+            <my-recommend
+              v-for="(item, index) in recRentProperties.slice(4,8)"
+              :key="'recOldProperties2'+index"
+              :property="item"
+              :houseType="'rent'"
+            ></my-recommend>
+          </div>
+        </div>
+      </el-main>
     </el-container>
 
     <my-footer></my-footer>
@@ -385,7 +409,7 @@ export default {
       });
     },
     searchType(type) {
-      console.log(type)
+      console.log(type);
       this.houseType = type;
     },
     info(id) {
@@ -437,7 +461,7 @@ export default {
 .cbody {
   background-image: url("../../assets/img/bannerV4.jpg");
   width: 100%;
-  height: 700px;
+  height: 500px;
   padding-top: 30px;
   background-position: center 0;
   background-attachment: fixed;
@@ -447,7 +471,7 @@ export default {
   background-repeat: no-repeat;
 }
 .cheader {
-  width: 1100px; 
+  width: 1100px;
   margin: 0 auto;
   line-height: 100px;
   color: #fff;

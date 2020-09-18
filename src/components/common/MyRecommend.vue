@@ -2,16 +2,18 @@
   <div class="property-info" @click="toDetail(property.id)">
     <img style="height:200px;width:240px;" :src="property.coverImg" />
     <span
-      style="height:40px;width:80px;color:red;background-color:rgba(66,66,66,0.3);position:absolute;left:0px;top:0px;text-align:center;line-height:40px"
+      style="height:40px;width:80px;color:red;background-color:rgba(66,66,66,0.3);position:absolute;left:0px;top:0px;text-align:center;line-height:40px;font-size:16px"
     >{{ houseType === "old" ? property.allPrice : property.rentPrice}}</span>
-    <h3>{{ property.title }}</h3>
     <el-row>
-      <span>{{ property.location }}</span> |
-      <span>{{ property.countFT }}</span> |
-      <span>{{ property.houseArea }}</span>
+      <span style="font-size:16px"><strong>{{ property.title }}</strong></span>
     </el-row>
     <el-row>
-      <span>{{ companyName }} &nbsp;推荐房源</span>
+      <span style="font-size:16px">{{ property.location }} | </span>
+      <span style="font-size:16px">{{ property.countFT }} | </span>
+      <span style="font-size:16px">{{ property.houseArea }}</span>
+    </el-row>
+    <el-row>
+      <span style="font-size:14px;color:#bcb2b1">{{ companyName }} &nbsp;推荐房源</span>
     </el-row>
   </div>
 </template>

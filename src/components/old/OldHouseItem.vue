@@ -11,7 +11,7 @@
           <el-col :span="16">
             <el-row class="crow">
               <a :href="property.detailUrl">
-                <span style="font-size:16pt">
+                <span style="font-size:16px">
                   <strong>{{property.title}}</strong>
                 </span>
               </a>
@@ -22,17 +22,17 @@
             </el-row>
             <el-row class="crow">
               <i class="el-icon-house"></i>&nbsp;
-              <span>{{property.countFT}}</span> |
-              <span>{{property.houseArea}}</span> |
-              <span>{{property.direction}}</span> |
-              <span>{{property.decoration}}</span> |
-              <span>{{property.floor}}</span> |
-              <span>{{property.completeYear}}</span> |
+              <span>{{property.countFT}} | </span>
+              <span>{{property.houseArea}} | </span>
+              <span>{{property.direction}} | </span>
+              <span>{{property.decoration}} | </span>
+              <span>{{property.floor}} | </span>
+              <span>{{property.completeYear}} | </span>
               <span>{{property.houseType}}</span>
             </el-row>
             <el-row class="crow">
               <i class="el-icon-star-off"></i>&nbsp;
-              <span>{{property.numFav}}</span> |
+              <span>{{property.numFav}} | </span>
               <span>{{property.lastUpdate}}</span>
             </el-row>
             <el-row class="crow">
@@ -128,6 +128,10 @@ export default {
 }
 span {
   color: #000;
+  font-size: 14px;
+}
+i {
+  font-size: 14px;
 }
 .csearch {
   width: 100%;

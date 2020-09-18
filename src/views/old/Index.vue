@@ -72,10 +72,10 @@
           :index="i+''"
         >{{item.displayName}}</el-menu-item>
       </el-menu>
-      <el-row>
-        <h2>共找到{{totalRecords}}套成都二手房</h2>
-      </el-row>
-      <el-divider></el-divider>
+      <!-- <el-row>
+        <span style="font-size:16px"><strong>共找到{{totalRecords}}套成都二手房</strong></span>
+      </el-row> -->
+      <!-- <el-divider></el-divider> -->
       <div v-if="!loading">
         <old-house-item
           v-for="(propertyInfo, i) in propertyInfoArray"
@@ -630,13 +630,13 @@ span {
   border: none;
 }
 .crow {
-  line-height: 2em;
+  line-height: 20px;
   display: flex;
   flex-direction: row;
-  margin-top: 0.5em;
+  margin-top: 10px;
 }
 .area-crow {
-  border-bottom: 1px solid #e6e6e6;
+  /* border-bottom: 1px solid #e6e6e6; */
 }
 .crow-right {
   width: 94%;
