@@ -67,8 +67,9 @@
         <fav-property v-if="leftActive == 2"></fav-property>
         <city-house-config v-if="leftActive == 3"></city-house-config>
       </div>
+      <div class="clear"></div>
     </div>
-    <my-footer style="position:fixed; bottom: 10px"></my-footer>
+    <my-footer></my-footer>
   </div>
 </template>
 
@@ -123,7 +124,7 @@ export default {
 <style lang="scss" scoped>
 .main-content {
   padding: 30px 0;
-  width: 1150px;
+  width: 1050px;
   margin: 0 auto;
 }
 .left-title {
@@ -171,12 +172,18 @@ export default {
   }
 }
 .right-detail {
-  float: right;
+  // float: right;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   border: 1px solid #e6e5e5;
-  width: 920px;
+  width: 820px;
   padding: 0 20px;
-  margin: 0 auto;
+  margin-left: 200px;
+  // margin: 0 auto;
   min-height: 600px;
+}
+.clear{
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 </style>

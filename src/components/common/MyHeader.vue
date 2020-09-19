@@ -8,7 +8,7 @@
           :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
-          style="width:1150px; margin:0 auto; background-color:#f5f5f5"
+          style="width:1050px; margin:0 auto; background-color:#f5f5f5"
         >
           <el-menu-item index="/" @click="gotoPage('/')">首页</el-menu-item>
           <el-menu-item index="/old" @click="gotoPage('/old')">二手房</el-menu-item>
