@@ -531,7 +531,7 @@ export default {
       color: gray;
     }
     .el-row {
-      width: 1150px;
+      width: 1050px;
     }
     .top-title {
       position: relative;
@@ -540,7 +540,7 @@ export default {
       .top-title-info {
         vertical-align: middle;
         display: inline-block;
-        width: 1150px;
+        width: 1050px;
         justify-content: center;
         .Title-info {
           display: table-cell;
