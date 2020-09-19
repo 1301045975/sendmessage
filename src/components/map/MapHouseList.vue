@@ -14,9 +14,9 @@
       <div class="base-info">
         <span class="info-name">{{estates.estateName}}</span>
         <span class="info-subinfo" v-if="estateDetail">
-          {{ estateDetail.estBuildingType == null ? "暂无数据" : estateDetail.estBuildingType}} | 
-          {{ estateDetail.estTotalBuilding == null ? "暂无数据" : estateDetail.estTotalBuilding}} | 
-          {{ estateDetail.estBuildingTime == null ? "暂无数据" : estateDetail.estBuildingTime}} | 
+          {{ estateDetail.estBuildingType == null ? "暂无数据" : estateDetail.estBuildingType}} |
+          {{ estateDetail.estTotalBuilding == null ? "暂无数据" : estateDetail.estTotalBuilding}} |
+          {{ estateDetail.estBuildingTime == null ? "暂无数据" : estateDetail.estBuildingTime}} |
           {{ estateDetail.estTotalProperty == null ? "暂无数据" : estateDetail.estTotalProperty}}
         </span>
       </div>
@@ -57,7 +57,7 @@ export default {
       Properties: [],
       defaultImg: require("../../assets/img/noimg.jpg"),
       estateDetail: null,
-      propertyNum: 0,
+      propertyNum: 0
     };
   },
   props: ["estates", "eststeList"],
@@ -88,10 +88,10 @@ export default {
     },
     //检查到estates变化时更新对应的房源信息
     updateEstateDetail(estateId) {
-     getEstateDetail(estateId).then(res => {
-       if (res.code == 200) {
-         this.estateDetail = res.data;
-       }
+      getEstateDetail(estateId).then(res => {
+        if (res.code == 200) {
+          this.estateDetail = res.data;
+        }
       });
     },
     // 点击前往详情页面
@@ -112,18 +112,19 @@ export default {
 .map-house-list {
   z-index: 99;
   max-height: calc(100vh - 120px);
-  width: 27em;
-  padding: 0.4em;
-  border-radius: 0.2em;
+  width: 380px;
+  padding: 0 15px;
+  border-radius: 10px;
+  overflow-y: hidden;;
   background-color: #fff;
   -webkit-transition: top 0.5s;
 }
 .title {
   display: flex;
   justify-content: space-between;
-  padding: 0 1em;
-  line-height: 2em;
-  font-size: 0.9em;
+  padding: 0 16px;
+  line-height: 50px;
+  font-size: 14px;
   border-bottom: 1px solid #f0f0f0;
 }
 .showMoreInfo {
@@ -135,57 +136,57 @@ export default {
 }
 
 .base-info {
-  height: 3em;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid #f0f0f0;
-  padding: 0.7em 1em 0;
+  padding: 15px 15px 0;
 }
 .house-list {
-  height: 30em;
+  height: calc(100vh - 290px);
+  overflow-y: auto;
   .list-picker {
   }
   .list-info {
     overflow-y: auto;
-    
     display: flex;
     flex-direction: column;
-    padding: 0 0.7em;
     ul {
       padding: 0px;
     }
     li {
       display: flex;
       flex-direction: row;
-      padding: 0.5em 0;
+      padding: 12px 0;
       list-style-type: none;
-      height: 5em;
+      height: 85px;
       background-color: #fff;
       border-bottom: 1px solid #f0f0f0;
       overflow: hidden;
       img {
-        height: 5em;
-        width: 7em;
+        height:85px;
+        width: 110px;
+        border-radius: 3px;
       }
       .list-right-info {
         display: flex;
         flex-direction: column;
-        padding-left: 0.9em;
+        max-width: 240px;
+        margin-left: 16px;
         justify-content: space-between;
         .main-info {
           flex-wrap: nowrap;
-          font-size: 1em;
+          font-size: 16px;
           font-weight: bold;
         }
         .sub-info {
-          font-size: 0.4em;
+          font-size: 12px;
         }
         .price {
-          font-size: 0.8em;
+          font-size: 14px;
           color: gray;
         }
         .total-price {
-          font-size: 1.2em;
+          font-size: 15px;
           color: red;
         }
       }
@@ -193,12 +194,12 @@ export default {
   }
 }
 .info-name {
-  font-size: 1.1em;
-  line-height: 0.9em;
+  font-size: 18px;
+  line-height: 18px;
 }
 .info-subinfo {
   color: gray;
-  padding-top: 0.7em;
-  font-size: 0.7em;
+  padding-top: 12px;
+  font-size: 12px;
 }
 </style>

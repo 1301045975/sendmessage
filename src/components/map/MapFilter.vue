@@ -1,7 +1,6 @@
 <template>
   <div class="main-container">
-    <el-row :gutter="0">
-      <el-col :span="6">
+      <div class="filter-item">
         <el-popover
           placement="top-start"
           title
@@ -56,8 +55,8 @@
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
-      </el-col>
-      <el-col :span="6">
+      </div>
+      <div class="filter-item">
         <el-popover
           placement="top-start"
           title
@@ -101,8 +100,8 @@
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
-      </el-col>
-      <el-col :span="6">
+      </div>
+      <div class="filter-item">
         <el-popover
           placement="top-start"
           title
@@ -146,8 +145,8 @@
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
-      </el-col>
-      <el-col :span="6">
+      </div>
+      <div class="filter-item">
         <el-popover
           placement="top-start"
           title
@@ -195,8 +194,7 @@
             <i class="el-icon-caret-bottom"></i>
           </el-button>
         </el-popover>
-      </el-col>
-    </el-row>
+      </div>
   </div>
 </template>
 
@@ -593,12 +591,21 @@ export default {
   text-align: center;
 }
 .main-container {
-  width: 22em;
+
   // height: 40px;
-  padding: 0.4em;
+  display: flex;
+  line-height: 24px;
+  padding: 12px 0;
   background-color: white;
   text-align: center;
   z-index: 100;
+}
+.filter-item{
+  width:90px;
+  padding-left: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;  
 }
 #logo {
   background-color: white;

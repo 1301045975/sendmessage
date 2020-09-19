@@ -61,13 +61,14 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #fff;
-  font-size: 0.7em;
+  font-size: 12px;
   text-align: center;
   position: absolute;
-  border-radius: 1.2em;
+  border-radius: 15px;
   box-shadow: 0 0 0.2em #999;
+  height: 31px;
   box-sizing: border-box;
-  padding: 0.02em 0.6em;
+  padding: 8px 4px 8px 12px;
 
   &:hover {
     z-index: 1;
@@ -89,7 +90,7 @@ export default {
       white-space: nowrap;
       width: 100%;
       text-align: center;
-      line-height: 1.1em;
+      line-height: 15px;
     }
   }
   .price {
