@@ -6,18 +6,17 @@
           <div style="display:flex;flex-direction:row;justify-content:space-between">
             <div>
               <span
-                style="font-size:24px;cursor:pointer;font-weight:bold;font-family:Arial,Helvetica,'Microsoft YaHei',Tohoma,sans-serif;color:white"
+                style="font-size:24px;cursor:pointer;font-weight:bold;color:white"
               >{{ companyName }}</span>
               <span style="font-size:12px;color:white">
                 <i class="el-input__icon el-icon-location-outline"></i>
                 {{city}}
               </span>
             </div>
-            <div style="display:flex;flex-direction:row;justify-content:space-between;width:40%">
+            <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;width:35%">
               <span style="font-size:16px;cursor:pointer;color:white" @click="send('/old')">二手房</span>
               <span style="font-size:16px;cursor:pointer;color:white" @click="send('/rent')">租房</span>
               <span style="font-size:16px;cursor:pointer;color:white" @click="send('/map')">地图找房</span>
-              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/old')">二手房</span>
               <span
                 style="font-size:16px;cursor:pointer;color:white"
                 @click="center"

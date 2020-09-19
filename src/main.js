@@ -6,9 +6,6 @@ import ElementUI from "element-ui";
 import { Message, MessageBox } from 'element-ui'
 import "element-ui/lib/theme-chalk/index.css";
 import VueJsonp from 'vue-jsonp'
-//阿里可伸缩布局方案, 实现分辨率适配
-import 'amfe-flexible'
-
 
 Vue.use(ElementUI);
 Vue.use(router);
