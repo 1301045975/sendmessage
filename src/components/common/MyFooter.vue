@@ -14,7 +14,7 @@
       <el-row>
         <span
           class="content"
-        >四川军军信息咨询有限公司 | 网络经营许可证 蜀ICP备16057509号-2 | © Copyright©2010-2020 军军网 junjunhouse.com 版权所有 | 营业执照</span>
+        >四川军军信息咨询有限公司 | 网络经营许可证 <span><a href="http://beian.miit.gov.cn/" style="color:#888c8e;">蜀ICP备2020027776号</a></span> | © Copyright©2010-2020 军军网 junjunhouse.com 版权所有 | 营业执照</span>
         <br />
         <span class="content">违法和不良信息举报电话：028-61834237 违法和不良信息举报邮箱：1770973601@qq.com</span>
       </el-row>

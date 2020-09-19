@@ -332,21 +332,22 @@ export default {
 }
 #map-header-wrapper {
   position: absolute;
-  top: 2em;
-  left: 2em;
+  top: 24px;
+  left: 24px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-filter-wrapper {
   position: absolute;
-  top: 2em;
-  left: 32em;
+  top: 24px;
+  left: 460px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 #map-house-list {
   position: absolute;
-  left: 2em;
-  top: 7em;
-  border-radius: 3em;
+  left: 24px;
+  top: 90px;
+  border-radius: 5px;
+  
   // z-index: 20;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }

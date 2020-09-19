@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
-    <el-row :gutter="0">
-      <el-col :span="4">
+    <el-row  style="width:380px">
+      <el-col style="width:80px">
         <el-popover placement="top-start" title width="400" trigger="click" content="热门城市" :append-to-body="false" :disabled="true">
           <div>
             <label for>
@@ -22,7 +22,7 @@
           </el-button>
         </el-popover>
       </el-col>
-      <el-col :span="5">
+      <el-col style="width:80px">
         <el-popover placement="bottom" width="150" trigger="click" content="" :append-to-body="false">
           <div>
             <el-radio v-model="radioType" label="二手房">二手房</el-radio>
@@ -36,9 +36,9 @@
           </el-button>
         </el-popover>
       </el-col>
-      <el-col :span="15">
-        <el-input v-model="input" placeholder="输入您的目标地点">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+      <el-col style="width:204px; height:24px">
+        <el-input class="myinput" v-model="input" placeholder="输入您的目标地点">
+          <el-button slot="append" icon="el-icon-search" style="height:24px!important;width:24px!important"></el-button>
         </el-input>
       </el-col>
     </el-row>
@@ -84,18 +84,25 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  width: 410px;
-  padding: 0.4em;
-  border-radius: 0.2em;
+  margin: 0;
+  border: 0;
+  width: 380px;
+  font-size: 14px;
+  height: 48px;
+  line-height: 24px;
+  padding: 12px 16px;
+  border-radius: 5px;
   background-color: white;
   text-align: center;
+  display: flex;
+  align-items: center;
   z-index:100;
 }
 #logo {
   background-color: white;
 }
 .el-row {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   &:last-child {
     margin-bottom: 0;
   }
@@ -117,7 +124,21 @@ export default {
   min-height: 36px;
 }
 .row-bg {
-  padding: 10px 0;
+  // padding: 10px 0;
   background-color: #f9fafc;
+}
+.el-col{
+  height:24px;
+}
+.myinput{
+  display:inline-block;
+  border: 0;
+  margin: 0;
+  // width: 130px;
+  float:left;
+  font-size: 12px;
+  padding: 0;
+  line-height: 24px;
+  height: 24px;
 }
 </style>

@@ -111,6 +111,7 @@ export default {
 <style lang="scss" scoped>
 .map-house-list {
   z-index: 99;
+  max-height: calc(100vh - 120px);
   width: 27em;
   padding: 0.4em;
   border-radius: 0.2em;
@@ -146,7 +147,7 @@ export default {
   }
   .list-info {
     overflow-y: auto;
-    max-height: 30em;
+    
     display: flex;
     flex-direction: column;
     padding: 0 0.7em;
