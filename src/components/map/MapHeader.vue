@@ -152,14 +152,15 @@ export default {
   display: inline-block;
   border: 0;
   margin: 0;
-   width: 200px;
+  width: 200px;
   float: left;
   font-size: 12px ;
   padding: 0;
   line-height: 24px ;
   height: 24px;
   display: flex;
-  border:1px solid gray;  
+  border: 1px solid #c1c1c1;
+  border-radius: 5px; 
 }
 
 .myinput .el-input__inner {
