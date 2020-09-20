@@ -5,7 +5,8 @@ import store from "./store";
 import ElementUI from "element-ui";
 import { Message, MessageBox } from 'element-ui'
 import "element-ui/lib/theme-chalk/index.css";
-import VueJsonp from 'vue-jsonp'
+import VueJsonp from 'vue-jsonp';
+import "babel-polyfill";
 
 Vue.use(ElementUI);
 Vue.use(router);
