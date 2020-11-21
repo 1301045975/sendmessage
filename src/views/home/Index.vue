@@ -1,545 +1,404 @@
 <template>
-  <div>
-    <el-container class="cbody">
-      <div style="width:1000px; margin: 0 auto; height:100px">
-        <el-header style="height:100px">
-          <div style="display:flex;flex-direction:row;justify-content:space-between">
-            <div>
-              <span
-                style="font-size:24px;cursor:pointer;font-weight:bold;color:white"
-              >{{ companyName }}</span>
-              <span style="font-size:12px;color:white">
-                <i class="el-input__icon el-icon-location-outline"></i>
-                {{city}}
-              </span>
+    <div style="width: 100%;">
+        <el-container class="cbody" style="text-align: center">
+            <div style="margin-top: 80px;margin-bottom: 80px">
+                <h1>短信跟进平台</h1>
             </div>
-            <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;width:35%">
-              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/old')">二手房</span>
-              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/rent')">租房</span>
-              <span style="font-size:16px;cursor:pointer;color:white" @click="send('/map')">地图找房</span>
-              <span
-                style="font-size:16px;cursor:pointer;color:white"
-                @click="center"
-              >{{loginOrRegis}}</span>
-              <span
-                style="font-size:18px;cursor:pointer;color:white"
-                @click="logout"
-                v-show="!logoutFlag"
-              >退出</span>
+            <div style="margin: 0 auto;width: 400px;height: auto;background-color: white;text-align: center">
+                <el-row v-show="loginShow" style="margin-left: 30px;margin-right:30px ">
+                    <el-row style="display:flex; align-items:center; ">
+                        <el-col>
+                            <h2 style="color: #000">账号密码登录</h2>
+                        </el-col>
+                    </el-row>
+                    <el-form autocomplete="on" :model="loginForm" :rules="formRules" ref="loginForm">
+                        <el-form-item label prop="telephone">
+                            <el-input type="text" v-model="loginForm.telephone" placeholder="请输入手机号"></el-input>
+                        </el-form-item>
+                        <el-form-item label prop="password">
+                            <el-input
+                                    type="password"
+                                    v-model="loginForm.password"
+                                    @keyup.enter.native="handleLogin"
+                                    placeholder="请输入密码"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button style="width: 100px"
+                                       type="success"
+                                       :loading="loading"
+                                       @click.native.prevent="handleLogin"
+                                       class="cbtn-bg"
+                            >立即登录
+                            </el-button>
+                        </el-form-item>
+                    </el-form>
+                    <el-row style="line-height: 30px;color: #376699;font-size: 14px;display: flex;justify-content: space-between">
+                        <span style="cursor: pointer" @click="tabForm(2)">立即注册</span>
+                    </el-row>
+
+                </el-row>
+                <el-row v-show="registerShow" style="margin-left: 30px;margin-right:30px ">
+                    <el-row>
+                        <h2 style="color: #000">欢迎注册</h2>
+                    </el-row>
+                    <el-form autocomplete="on" :model="registerForm" :rules="formRules" ref="registerForm">
+                        <el-form-item label prop="telephone">
+                            <el-input type="text" v-model="registerForm.telephone" placeholder="请输入手机号"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label prop="password">
+                            <el-input
+                                    type="password"
+                                    v-model="registerForm.password"
+                                    @keyup.enter.native="handleRegis"
+                                    placeholder="请输入密码"
+                            ></el-input>
+                        </el-form-item>
+                        <el-form-item label prop="password2">
+                            <el-input
+                                    type="password"
+                                    v-model="foo.password2"
+                                    @keyup.enter.native="handleRegis"
+                                    placeholder="确认密码"
+                            ></el-input>
+                        </el-form-item>
+                        <!--                        <el-form-item label prop="groups">-->
+                        <!--                            <el-select v-model="selected" placeholder="请选择分组">-->
+                        <!--                                <el-option-->
+                        <!--                                        v-for="item in options"-->
+                        <!--                                        :key="item.value"-->
+                        <!--                                        :label="item.label"-->
+                        <!--                                        :value="item.value">-->
+                        <!--                                </el-option>-->
+                        <!--                            </el-select>-->
+                        <!--                        </el-form-item>-->
+                        <el-form-item>
+                            <el-button
+                                    style="width: 100px"
+                                    type="success"
+                                    :loading="loading"
+                                    @click.native.prevent="handleRegis"
+                                    class="cbtn-bg"
+                            >立即注册
+                            </el-button>
+                        </el-form-item>
+                    </el-form>
+                    <el-row style="line-height: 30px;color: #376699;font-size: 14px;display: flex;justify-content: space-between">
+                        <span style="cursor: pointer" @click="tabForm(1)">已有账号？登录</span>
+                    </el-row>
+                </el-row>
+
+                <el-row v-show="forgetShow" style="margin-left: 30px;margin-right:30px ">
+                    <el-row>
+                        <h2 style="color: #000">重置密码</h2>
+                    </el-row>
+                    <el-form autocomplete="on" :model="forgetForm" :rules="formRules" ref="forgetForm">
+                        <el-form-item label prop="telephone">
+                            <el-input type="text" v-model="forgetForm.telephone" placeholder="请输入手机号"></el-input>
+                        </el-form-item>
+                        <el-form-item label prop="password">
+                            <el-input
+                                    type="password"
+                                    v-model="forgetForm.password"
+                                    @keyup.enter.native="handleForget"
+                                    placeholder="请输入密码"
+                            ></el-input>
+                        </el-form-item>
+
+                        <el-form-item label prop="password3">
+                            <el-input
+                                    type="password"
+                                    v-model="foo.password3"
+                                    @keyup.enter.native="handleForget"
+                                    placeholder="确认密码"
+                            ></el-input>
+                        </el-form-item>
+
+                        <el-form-item>
+                            <el-button
+                                    style="width: 100px"
+                                    type="success"
+                                    :loading="loading"
+                                    @click.native.prevent="handleForget"
+                                    class="cbtn-bg"
+                            >立即重置
+                            </el-button>
+                        </el-form-item>
+                    </el-form>
+                    <el-row style="line-height: 30px;color: #376699;font-size: 14px;display: flex;justify-content: space-between">
+                        <span style="cursor: pointer" @click="tabForm(1)">已有账号？登录</span>
+                        <span style="float: right;cursor: pointer" @click="tabForm(2)">注册账号</span>
+                    </el-row>
+                </el-row>
             </div>
-          </div>
-          <div>
-            <login-dialog
-              ref="loginDialog"
-              :width="'460px'"
-              :height="'600px'"
-              @loginSuccess="loginCallback"
-            ></login-dialog>
-          </div>
-        </el-header>
-      </div>
-      <el-main style="padding-top: 100px;">
-        <el-row type="flex" justify="center">
-          <el-col :span="8" style="text-align: center; font-size:22px">
-            <span
-              :class="houseType==='oldHouse'?'houseType activet':'houseType'"
-              @click="searchType('oldHouse')"
-            >
-              <strong>找二手房</strong>
-            </span>
-            <span
-              :class="houseType==='rentHouse'?'houseType activet':'houseType' "
-              @click="searchType('rentHouse')"
-            >
-              <strong>找租房</strong>
-            </span>
-          </el-col>
-        </el-row>
-        <el-row class="csearch" type="flex" justify="center">
-          <el-col :span="8">
-            <el-input
-              :placeholder="searchPlaceHolder"
-              v-model="searchContent"
-              class="input"
-              style="border-radius: 0px;"
-            ></el-input>
-          </el-col>
-          <el-button type="success" class="cbtn-bg" @click="searchHouse">开始找房</el-button>
-        </el-row>
-      </el-main>
-    </el-container>
-    <el-container>
-      <div style="width:50%;margin:20px auto;height: 200px;">
-        <el-row>
-          <el-col :span="12" style="text-align: center;">
-            <el-row>
-              <el-image
-                @click="send('/old')"
-                :src="require('../../assets/OldHouse.png')"
-                style="width:80px;height:80px"
-              ></el-image>
-            </el-row>
-            <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/old')" style="cursor:pointer;">找二手房</span>
-            </el-row>
-            <el-row style="line-height:40px;font-size:12px;color:grey">海量真实房源，数量不重复，点击开启看房旅程</el-row>
-          </el-col>
-          <el-col :span="12" style="text-align: center;">
-            <el-row>
-              <el-image
-                @click="send('/rent')"
-                :src="require('../../assets/RentHouse.png')"
-                style="width:80px;height:80px"
-              ></el-image>
-            </el-row>
-            <el-row style="line-height:40px;font-size:18px;">
-              <span @click="send('/rent')" style="cursor:pointer;">找租房</span>
-            </el-row>
-            <el-row style="line-height:40px;font-size:12px;color:grey">整租、短租公寓信息量大一应俱全</el-row>
-          </el-col>
-        </el-row>
-      </div>
-    </el-container>
-
-    <el-container>
-      <el-main>
-        <div style="display:flex;justify-content:center;align-items:center;padding-bottom:20px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;">
-            <span style="font-size:24px"><strong>热门售房</strong></span>
-            <span style="font-size:16px" @click="send('/old')">查看更多>></span>
-          </div>
-        </div>
-
-        <div style="display:flex;justify-content:center;align-items:center;">
-          <div
-            v-if="recOldProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
-          >
-            <my-recommend
-              v-for="(item, index) in recOldProperties.slice(0,4)"
-              :key="'recOldProperties2'+index"
-              :property="item"
-              :houseType="'old'"
-            ></my-recommend>
-          </div>
-        </div>
-        <div style="display:flex;justify-content:center;align-items:center;">
-          <div
-            v-if="recOldProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
-          >
-            <my-recommend
-              v-for="(item, index) in recOldProperties.slice(4,8)"
-              :key="'recOldProperties2'+index"
-              :property="item"
-              :houseType="'old'"
-            ></my-recommend>
-          </div>
-        </div>
-      </el-main>
-    </el-container>
-
-    <el-container>
-      <el-main>
-        <div style="display:flex;justify-content:center;align-items:center;">
-          <div style="display:flex;justify-content:space-between;align-items:center;width:1100px;padding-bottom:20px;">
-            <span style="font-size:24px"><strong>热门租房</strong></span>
-            <span style="font-size:16px" @click="send('/rent')">查看更多>></span>
-          </div>
-        </div>
-        <div style="display:flex;justify-content:center;align-items:center;">
-          <div
-            v-if="recRentProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
-          >
-            <my-recommend
-              v-for="(item, index) in recRentProperties.slice(0,4)"
-              :key="'recOldProperties2'+index"
-              :property="item"
-              :houseType="'rent'"
-            ></my-recommend>
-          </div>
-        </div>
-
-        <div style="display:flex;justify-content:center;align-items:center;">
-          <div
-            v-if="recRentProperties.length > 0"
-            style="display:flex;justify-content:space-between;align-items:center;width:1100px;"
-          >
-            <my-recommend
-              v-for="(item, index) in recRentProperties.slice(4,8)"
-              :key="'recOldProperties2'+index"
-              :property="item"
-              :houseType="'rent'"
-            ></my-recommend>
-          </div>
-        </div>
-      </el-main>
-    </el-container>
-
-    <my-footer></my-footer>
-  </div>
+        </el-container>
+    </div>
 </template>
 
 <script>
-import oldHouseApi from "@/api/oldhouse";
-import { getToken } from "@/utils/auth"; // 验权
-import store from "@/store";
-import MyRecommend from "@/components/common/MyRecommend.vue";
-import { getOldHouseRec, getRentHouseRec } from "@/api/home";
+    import {validate11PhoneNum, validatePassword} from "@/utils/validate";
+    import qs from 'qs'
 
-(function(m, ei, q, i, a, j, s) {
-  m[i] =
-    m[i] ||
-    function() {
-      (m[i].a = m[i].a || []).push(arguments);
-    };
-  (j = ei.createElement(q)), (s = ei.getElementsByTagName(q)[0]);
-  j.async = true;
-  j.charset = "UTF-8";
-  j.src = "https://static.meiqia.com/dist/meiqia.js?_=t";
-  s.parentNode.insertBefore(j, s);
-})(window, document, "script", "_MEIQIA");
-// _MEIQIA("entId", "204239");
-//_MEIQIA('manualInit');
-// import BMap from "BMap";
-
-import MyHeader from "@/components/common/MyHeader.vue";
-import MyFooter from "@/components/common/MyFooter.vue";
-import loginDialog from "@/components/login/loginDialog";
-import { getOldHouse, getRentHouse } from "@/api/map";
-import { str2Date, dateDiff, calculateLastUpdate } from "@/utils/date";
-
-export default {
-  name: "Home",
-  components: {
-    MyHeader,
-    MyFooter,
-    loginDialog,
-    MyRecommend
-  },
-  data() {
-    return {
-      companyName: "",
-      city: "",
-      searchPlaceHolder: "请输入区域、商圈或小区名",
-      houseType: "oldHouse",
-      searchMap: {},
-      list: [],
-      activeIndex: "1",
-      activeIndex2: "1",
-      searchContent: "",
-      getDownloadImage:
-        "https://ajax.api.lianjia.com/qr/getDownloadQr?location=site_middle&ljweb_channel_key=site_index",
-      ershouImage:
-        "http://117.51.142.27:9003/5eb404d9-76d8-4048-ad69-24ef1243fa67.jpg",
-      loginOrRegis: "登录/注册",
-      logoutFlag: false,
-      recRentProperties: [],
-      recOldProperties: [],
-      defaultImg: require("../../assets/img/noimg.jpg")
-    };
-  },
-  created() {
-    if (getToken()) {
-      store
-        .dispatch("GetInfo")
-        .then(res => {
-          // 拉取用户信息
-          this.loginOrRegis = this.$store.getters.mobile;
-          this.logoutFlag = false;
-        })
-        .catch(err => {
-          this.$message.error("获取用户信息失败");
-        });
-    } else {
-      this.logoutFlag = true;
-    }
-    getOldHouseRec()
-      .then(res => {
-        if (res.code === 200) {
-          // this.recOldProperties = res.data;
-          let data = res.data;
-          // 清空
-          this.recOldProperties.splice(0, this.recOldProperties.length);
-          if (data) {
-            data.forEach((item, i) => {
-              let propertyInfo = {};
-              // 默认封面图片
-              propertyInfo.id = item.proId;
-              propertyInfo.coverImg = item.proCoverUrl
-                ? item.proCoverUrl
-                : this.defaultImg;
-              // 详细页面链接
-              propertyInfo.detailUrl = "#";
-              // 标题
-              propertyInfo.title = item.proTitle;
-              // 位置
-              propertyInfo.location = item.proDistrict + "-" + item.proArea;
-              // x室y厅
-              propertyInfo.countFT =
-                item.proCountF +
-                "室" +
-                item.proCountT +
-                "厅" +
-                item.proCountW +
-                "卫";
-              // 面积
-              propertyInfo.houseArea = item.proSquare + "m²";
-              // 朝向
-              propertyInfo.direction = item.proDirection;
-              // 装修
-              propertyInfo.decoration = item.proDecoration;
-              // 楼层
-              propertyInfo.floor =
-                item.proFloor + "(共" + item.proFloorAll + "层)";
-              propertyInfo.completeYear = item.proCompleteYear + "建";
-              propertyInfo.houseType = item.proType;
-              propertyInfo.numFav = Math.round(Math.random() * 1000) + "关注";
-              propertyInfo.lastUpdate = calculateLastUpdate(
-                str2Date(item.proModDate)
-              );
-              propertyInfo.isSupportVR = true;
-              propertyInfo.isAllowView = true;
-              propertyInfo.isOverFiveYears = false;
-              propertyInfo.allPrice = item.proPrice + item.proPriceType;
-              propertyInfo.unitPrice =
-                "单价：" + item.proUnitPrice + item.proUnitPriceType;
-              propertyInfo.rentPrice =
-                item.proRentPrice + item.proRentPriceType;
-              this.recOldProperties.push(propertyInfo);
-            });
-          }
-        } else {
-          this.$message.error("二手房推荐获取失败");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    getRentHouseRec()
-      .then(res => {
-        if (res.code === 200) {
-          // this.recRentProperties = res.data;
-          let data = res.data;
-          // 清空
-          this.recRentProperties.splice(0, this.recRentProperties.length);
-          if (data) {
-            data.forEach((item, i) => {
-              let propertyInfo = {};
-              // 默认封面图片
-              propertyInfo.id = item.proId;
-              propertyInfo.coverImg = item.proCoverUrl
-                ? item.proCoverUrl
-                : this.defaultImg;
-              // 详细页面链接
-              propertyInfo.detailUrl = "#";
-              // 标题
-              propertyInfo.title = item.proTitle;
-              // 位置
-              propertyInfo.location = item.proDistrict + "-" + item.proArea;
-              // x室y厅
-              propertyInfo.countFT = item.proTitle.split("，")[0];
-              // 面积
-              propertyInfo.houseArea = item.proSquare + "m²";
-              // 朝向
-              propertyInfo.direction = item.proDirection;
-              // 装修
-              propertyInfo.decoration = item.proDecoration;
-              // 楼层
-              propertyInfo.floor =
-                item.proFloor + "(共" + item.proFloorAll + "层)";
-              propertyInfo.completeYear = item.proCompleteYear + "建";
-              propertyInfo.houseType = item.proType;
-              propertyInfo.numFav = Math.round(Math.random() * 1000) + "关注";
-              propertyInfo.lastUpdate = calculateLastUpdate(
-                str2Date(item.proModDate)
-              );
-              propertyInfo.isSupportVR = true;
-              propertyInfo.isAllowView = true;
-              propertyInfo.isOverFiveYears = false;
-              propertyInfo.allPrice = item.proPrice + item.proPriceType;
-              propertyInfo.unitPrice =
-                "单价：" + item.proUnitPrice + item.proUnitPriceType;
-              propertyInfo.rentPrice =
-                item.proRentPrice + item.proRentPriceType;
-              this.recRentProperties.push(propertyInfo);
-            });
-          }
-        } else {
-          this.$message.error("租房推荐获取失败");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  },
-  mounted() {
-    this.ready();
-    this.companyName = process.env.VUE_APP_COMPANY_NAME;
-    // console.log(process.env.VUE_APP_COMPANY_NAME);
-    // console.log(process.env.VUE_APP_BASE_API_PORTAL);
-    // this.initOldHose();
-  },
-  methods: {
-    ready() {
-      var geolocation = new window.BMap.Geolocation();
-      geolocation.getCurrentPosition(
-        r => {
-          console.log(r.address.city);
-          this.city = r.address.city;
+    export default {
+        props: {
+            width: {
+                type: String,
+                default: "480px"
+            },
+            height: {
+                type: String,
+                default: "480px"
+            }
         },
-        { enableHighAccuracy: true }
-      );
-    },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-      this.$router.push({ path: key });
-    },
-    send(path) {
-      this.$router.push({ path: path });
-    },
-    business() {
-      window.location.href = "https://shangye.lianjia.com/bj/xzl/rent/mlist";
-    },
-    initOldHose() {
-      oldHouseApi.search(1, 4, this.searchMap).then(response => {
-        this.list = response.data.rows;
-      });
-    },
-    searchType(type) {
-      console.log(type);
-      this.houseType = type;
-    },
-    info(id) {
-      this.$router.push("/oldHouse/info/" + id);
-    },
-    searchHouse() {
-      console.log(this.houseType);
-      if (this.houseType === "oldHouse") {
-        this.$router.push({
-          name: "Old",
-          params: { searchContent: this.searchContent }
-        });
-      } else {
-        this.$router.push({
-          name: "Rent",
-          params: { searchContent: this.searchContent }
-        });
-      }
-      // this.$router.push("/" + this.houseType + "/" + this.searchContent);
-    },
-    showLoginDialog() {
-      this.$refs.loginDialog.showDialog(true);
-    },
-    loginCallback() {
-      // 获取用户电话
-      // this.telephone = this.$store.getters.mobile;
-      // 修改登陆状态
-      // this.loginFlg = true;
-    },
-    center() {
-      if (this.loginOrRegis == "登录/注册") {
-        this.showLoginDialog();
-      } else {
-        this.$router.push({ path: "/me" });
-        // alert('go to center');
-      }
-    },
-    logout() {
-      this.$store.dispatch("LogOut").then(() => {
-        this.$message.success("登出成功");
-        location.reload(); // 为了重新实例化vue-router对象 避免bug
-      });
-    }
-  }
-};
+        data() {
+            const isValidate11PhoneNum = (rule, value, callback) => {
+                if (!validate11PhoneNum(value)) {
+                    callback(new Error("请输入合法的电话号码"));
+                } else {
+                    callback();
+                }
+            };
+            const isValidatePass = (rule, value, callback) => {
+                if (value === "") {
+                    callback(new Error("请输入密码"));
+                } else if (!validatePassword(value)) {
+                    callback(new Error("密码必须包含字母和数字，且长度不能小于6位"));
+                } else {
+                    callback();
+                }
+            };
+
+            return {
+                groupId: '',
+                innernetIp: "",
+                loginForm: {
+                    telephone: "",
+                    password: "",
+                    result: ""
+                },
+                registerForm: {
+                    telephone: "",
+                    password: "",
+                    authCode: "",
+                },
+                options: [{
+                    value: '1',
+                    label: '组1'
+                }, {
+                    value: '2',
+                    label: '组2'
+                }, {
+                    value: '3',
+                    label: '组3'
+                }, {
+                    value: '4',
+                    label: '组4'
+                }, {
+                    value: '5',
+                    label: '组5'
+                }, {
+                    value: '6',
+                    label: '组6'
+                }, {
+                    value: '7',
+                    label: '组7'
+                }, {
+                    value: '8',
+                    label: '组8'
+                }, {
+                    value: '9',
+                    label: '组9'
+                }, {
+                    value: '10',
+                    label: '组10'
+                }],
+                selected: '',
+                forgetForm: {
+                    telephone: "",
+                    password: "",
+                    authCode: ""
+                },
+                formRules: {
+                    telephone: [
+                        {
+                            required: true,
+                            trigger: "blur",
+                            validator: isValidate11PhoneNum
+                        }
+                    ],
+                    password: [
+                        {
+                            required: true,
+                            trigger: "blur",
+                            validator: isValidatePass
+                        }
+                    ]
+                },
+                loading: false,
+                dialog: {
+                    show: false,
+                    title: "登录"
+                },
+                loginShow: true,
+                registerShow: false,
+                forgetShow: false,
+                foo: {
+                    password2: "",
+                    password3: ""
+                },
+                intervalHandler: "",
+                canSendAuthCode: true
+            };
+        },
+        computed: {
+            //
+        },
+        mounted() {
+            this.innernetIp = process.env.VUE_APP_INNERNET_IP;
+        },
+        methods: {
+            tabForm(id) {
+                if (id === 1) {
+                    this.dialog.title = "登录";
+                    this.forgetShow = false;
+                    this.registerShow = false;
+                    this.loginShow = true;
+                }
+                if (id === 2) {
+                    this.dialog.title = "注册";
+                    this.forgetShow = false;
+                    this.loginShow = false;
+                    this.registerShow = true;
+                }
+            },
+            handleRegis() {
+                if (this.telephone === '') {
+                    alert('用户名不能为空')
+                    return
+                }
+                if (this.password === '') {
+                    alert('密码不能为空')
+                    return
+                }
+
+                var url = process.env.VUE_APP_URL+'register'
+                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
+                this.$axios.post(url, qs.stringify({
+                    telephone: this.registerForm.telephone,
+                    password: this.registerForm.password,
+                    groupId: this.selected
+                }))
+                    // axios({
+                    //    url:'http://localhost:8083/login',
+                    //    method:'post',
+                    //    data: {
+                    //      telephone: this.telephone,
+                    //      password: this.password
+                    //    }
+                    //    }
+                    //  )
+                    .then(res => {
+                        if (res.data.mydata === '注册成功') {
+                            alert("注册成功");
+                            this.loginForm.telephone = this.registerForm.telephone;
+                            this.loginForm.password = this.registerForm.password;
+                            this.tabForm(1);
+                        } else {
+                            alert("注册失败");
+                            this.result = res.data.mydata
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            handleLogin() {
+                if (this.loginForm.telephone === '') {
+                    alert('用户名不能为空')
+                    return
+                }
+                if (this.loginForm.password === '') {
+                    alert('密码不能为空')
+                    return
+                }
+                var url = process.env.VUE_APP_URL+'login'
+                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
+                this.$axios.post(url, qs.stringify({
+                    telephone: this.loginForm.telephone,
+                    password: this.loginForm.password
+                }))
+                    .then(res => {
+                        if (res.data.mydata === '管理员登录') {
+                            this.$router.push({
+                                path: "/detail",
+                                name: "detail",
+                            });
+                        } else {
+                            if (res.data.mydata !== '登录成功') {
+                                alert(res.data.mydata + "hhhh")
+                            }
+                        }
+
+                        if (res.data.mydata === '登录成功') {
+                            this.$router.push({
+                                path: "/detail",
+                                name: "detail",
+                            });
+                            // this.$router.replace({path: '/detail'})
+                        } else {
+                            if (res.data.mydata !== '管理员登录') {
+                                alert(res.data.mydata+"ggg")
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
+        }
+    };
 </script>
 
-<style  lang="scss" scoped>
-.cbody {
-  background-image: url("../../assets/img/bannerV4.jpg");
-  width: 100%;
-  height: 500px;
-  padding-top: 30px;
-  background-position: center 0;
-  background-attachment: fixed;
-  display: block;
-  position: relative;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-.cheader {
-  width: 1100px;
-  margin: 0 auto;
-  line-height: 100px;
-  color: #fff;
-  text-align: center;
-}
-.csearch {
-  width: 100%;
-  padding-top: 10px;
-}
-.el-input__inner {
-  border-radius: 0px;
-}
-.capp {
-  width: 100%;
-  height: 600px;
-  background-image: url("../../assets/img/bg-app.jpg");
-  background-repeat: no-repeat;
-}
-.cbtn-bg {
-  background: #00ae66;
-  border: none;
-  border-radius: 20px;
-  // height: 50px;
-  width: 140px;
-  font-size: 18px;
-}
-.cefooter {
-  width: 100%;
-  height: 260px;
-  background-image: url("../../assets/img/truth-bgV2.jpg");
-}
+<style lang="scss" scoped>
+    .cbody {
+        background-image: url("../../assets/img/bg.jpg");
+        width: 100%;
+        height: 800px;
+        padding-top: 30px;
+        background-position: center 0;
+        background-attachment: fixed;
+        display: block;
+        position: relative;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
 
-.input >>> .el-input__inner {
-  height: 50px;
-  border-radius: 0px;
-}
+    .bg {
+        background-image: url("../../assets/img/bg-login.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        height: 700px;
+        color: #e9eef3;
+        padding-top: 150px;
+    }
 
-.crow {
-  padding: 10px 0px;
-}
+    .el-form-item__label {
+        color: #000000;
+    }
 
-.citem {
-  background: none;
-  color: #fff;
-}
-.recommend-info {
-  width: 1100px;
-  margin: 0 auto;
-}
-.recommend-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 1100px;
-}
-.info-title {
-  padding: 0px;
-}
-.info-item {
-  list-style-type: none;
-  float: left;
-  width: 24%;
-}
-.houseType {
-  color: #fff;
-  cursor: pointer;
-  padding-left: 20px;
-}
-.activet {
-  color: #00ae66;
-}
+    .el-form-item__label {
+        color: #e9eef3;
+    }
+
+    .cbtn-bg {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        background: #00ae66;
+        border: none;
+        border-radius: 0px;
+    }
+
+
 </style>

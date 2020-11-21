@@ -7,6 +7,10 @@ import { Message, MessageBox } from 'element-ui'
 import "element-ui/lib/theme-chalk/index.css";
 import VueJsonp from 'vue-jsonp';
 import "babel-polyfill";
+import axios from 'axios'
+
+Vue.prototype.$axios = axios
+// axios.defaults.withCredentials = true
 
 Vue.use(ElementUI);
 Vue.use(router);
@@ -14,9 +18,9 @@ Vue.use(VueJsonp);
 
 Vue.config.productionTip = false;
 
-// 
+//
 // 未登录时，通过url访问需要登录后才能访问的页面，跳转到首页
-// 
+//
 router.beforeEach((to, from, next) => {
   if (to.meta.needLogin) {
     if (store.getters.token) {

@@ -12,89 +12,29 @@ VueRouter.prototype.push = function push(location) {
 }
 
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "Home",
+  //   component: Home
+  // },
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: () => import("../views/home/Index.vue")
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/about/Index.vue")
+    path: "/detail",
+    name: "detail",
+    component: () => import("../views/messagedetail/detail")
   },
   {
-    path: "/map",
-    name: "Map",
-    component: () => import("../views/map/Index.vue")
-  },
-  {
-    path: "/me",
-    name: "Me",
-    component: () => import("../views/me/Index.vue"),
-    meta: {
-      needLogin: true
-    }
-  },
-  {
-    path: "/rent",
-    name: "Rent",
-    component: () => import("../views/rent/Index.vue")
-  },
-  {
-    path: "/old",
-    name: "Old",
-    component: () => import("../views/old/Index.vue"),
-  },
-  {
-    path: "/sale",
-    name: "Sale",
-    component: () => import("../views/old/Index.vue"),
-  },
-  {
-    path: "/old/detail",
-    name: "OldDetail",
-    component: () => import("../views/old/Detail.vue")
-  },
-  {
-    path: "/personcenter",
-    name: "PersonCenter",
-    component: () => import("../views/shared/PersonCenter.vue")
-  },
+    path: "/client",
+    name: "Client",
+    component: () => import("../views/client/client.vue")
+  }
 
-  {
-    path: "/rent/detail",
-    name: "RentDetail",
-    component: () => import("../views/rent/Detail.vue")
-  },
-  {
-    path: "/oldHouse",
-    name: "OldHouse",
-    component: () => import("../views/oldHouse/Index.vue")
-  },
-  {
-    path: "/calculator_tool",
-    name: "calculator_tool",
-    component: () => import("../components/calculator_tool")
-  },
-  {
-    path: "/around",
-    name: "Around",
-    component: () => import("../components/Around.vue")
-  },
-  {
-    path: "/recommend",
-    name: "recommend",
-    component: () => import("../components/Recommend.vue")
-  },
-  {
-    path: "/calculator",
-    name: "calculator",
-    component: () => import("../views/tool/calculator.vue")
-  },
+
+
 ];
 
 const router = new VueRouter({

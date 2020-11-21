@@ -1,25 +1,31 @@
 <template>
-  <div id="app" :style="{'zoom':zoomValue}">
-    <router-view />
+  <div id="app">
+    <router-view v-if="isShow"></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: "App",
-  data() {
-    return {
-      zoomValue: 1
-    };
-  },
-  created() {
-    // if (window.screen.width >= 1920) {
-    //   this.zoomValue = 1;
-    // } else {
-    //   this.zoomValue = 0.7;
-    // }
+  export default {
+    name: 'App',
+    provide () {
+      return {
+        reload: this.reload
+      }
+    },
+    data () {
+      return {
+        isShow: true
+      }
+    },
+    methods: {
+      reload () {
+        this.isShow= false
+        this.$nextTick(function () {
+          this.isShow= true
+        })
+      }
+    }
   }
-};
 </script>
 
 <style lang="scss">
