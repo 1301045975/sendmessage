@@ -42,6 +42,13 @@ export function logout() {
     url: '/user/logout',
     method: 'get'
   })
+};
+
+export function performanceSelect(currentPage, pageSize) {
+  return request({
+    url: `perform/getAll?currentPage=${currentPage}&pageSize=${pageSize}`,
+    method: 'get'
+  })
 }
 
 export function resetPwd(userInfo) {

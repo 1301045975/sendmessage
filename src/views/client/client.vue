@@ -46,36 +46,36 @@
                     <div style="margin-top: 50px">
                         <el-col style="">
                             <div>
-                                <el-table :data="brokerList" stripe style="border: 1px solid lightblue;width: 1700px;height: 100%">
+                                <el-table :data="performanceList" stripe style="border: 1px solid lightblue;width: 1160px;height: 100%">
                                     <!-- prop为tableData对象中的属性名 -->
                                     <el-table-column v-if="false" align="center" label="id" prop="id">
                                     </el-table-column>
-                                    <el-table-column width="100" align="center" label="排名" prop="brokerNum">
+                                    <el-table-column width="100" align="center" label="排名" prop="perNum">
                                         <template scope="scope">
                                             <span>{{(currentPage-1)*pagesize+ scope.$index + 1}}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column width="300" align="center" label="编号" prop="brokerID">
+                                    <el-table-column width="300" align="center" label="编号" prop="perId">
                                     </el-table-column>
-                                    <el-table-column width="150" align="center" label="姓名" prop="brokerName">
+                                    <el-table-column width="150" align="center" label="姓名" prop="perName">
                                     </el-table-column>
-                                    <el-table-column align="center" label="短信发送" prop="brokerGrade">
+                                    <el-table-column align="center" label="短信发送" prop="perGradeMessage">
                                     </el-table-column>
-                                    <el-table-column align="center" label="电话拨打" prop="brokerGradeTel">
+                                    <el-table-column align="center" label="电话拨打" prop="perGroupTel">
                                     </el-table-column>
-                                    <el-table-column align="center" label="客户下载情况" prop="brokerGradeAgree">
+                                    <el-table-column align="center" label="客户下载情况" prop="perGroupAgree">
                                     </el-table-column>
-                                    <el-table-column align="center" label="客户注册情况" prop="brokerGradeLogin">
+                                    <el-table-column align="center" label="客户注册情况" prop="perGroupLogon">
                                     </el-table-column>
-                                    <el-table-column align="center" label="备注" prop="brokerRemark"></el-table-column>
-                                    <el-table-column align="center">
-                                        <template slot-scope="scope">
-                                            <!-- handleEdit和handleDelete两个函数需要在vue实例的method中定义 -->
-                                            <el-button icon="el-icon-edit" size="mini" type="primary"
-                                                       @click="handleEdit(scope.$index, scope.row)">编辑
-                                            </el-button>
-                                        </template>
-                                    </el-table-column>
+<!--                                    <el-table-column align="center" label="备注" prop="brokerRemark"></el-table-column>-->
+<!--                                    <el-table-column align="center">-->
+<!--                                        <template slot-scope="scope">-->
+<!--                                            &lt;!&ndash; handleEdit和handleDelete两个函数需要在vue实例的method中定义 &ndash;&gt;-->
+<!--                                            <el-button icon="el-icon-edit" size="mini" type="primary"-->
+<!--                                                       @click="handleEdit(scope.$index, scope.row)">编辑-->
+<!--                                            </el-button>-->
+<!--                                        </template>-->
+<!--                                    </el-table-column>-->
                                 </el-table>
                             </div>
                         </el-col>
@@ -95,34 +95,35 @@
         </el-container>
 
 
-        <el-dialog title="编辑经纪人信息" width="500px" style="width: auto" :visible="editagentForm" :modal-append-to-body='false' @close='quit()'>
-            <el-form ref="editsForm" :model="editsForm" label-width="180px" label-position="left">
-                <el-form-item label="经纪人编号">
-                    <el-input  style="width: auto" v-model="editsForm.agent_id" disabled="disabled"></el-input>
-                </el-form-item>
-                <el-form-item label="姓名">
-                    <el-input  style="width: auto" v-model="editsForm.agent_name" max-length="10"></el-input>
-                </el-form-item>
-                <el-form-item label="业绩">
-                    <el-input style="width: auto" v-model="editsForm.agent_grade" max-length="10"></el-input>
-                </el-form-item>
-                <el-form-item label="类型">
-                    <el-input style="width: auto" v-model="editsForm.agent_type" max-length="10"></el-input>
-                </el-form-item>
-                <el-form-item label="备注">
-                    <el-input type="textarea" style="width: auto;" v-model="editsForm.agent_remarks"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="brokerEdit()">确定</el-button>
-                    <el-button @click="quit()">取消</el-button>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
+<!--        <el-dialog title="编辑经纪人信息" width="500px" style="width: auto" :visible="editagentForm" :modal-append-to-body='false' @close='quit()'>-->
+<!--            <el-form ref="editsForm" :model="editsForm" label-width="180px" label-position="left">-->
+<!--                <el-form-item label="经纪人编号">-->
+<!--                    <el-input  style="width: auto" v-model="editsForm.agent_id" disabled="disabled"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="姓名">-->
+<!--                    <el-input  style="width: auto" v-model="editsForm.agent_name" max-length="10"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="业绩">-->
+<!--                    <el-input style="width: auto" v-model="editsForm.agent_grade" max-length="10"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="类型">-->
+<!--                    <el-input style="width: auto" v-model="editsForm.agent_type" max-length="10"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item label="备注">-->
+<!--                    <el-input type="textarea" style="width: auto;" v-model="editsForm.agent_remarks"></el-input>-->
+<!--                </el-form-item>-->
+<!--                <el-form-item>-->
+<!--                    <el-button type="primary" @click="brokerEdit()">确定</el-button>-->
+<!--                    <el-button @click="quit()">取消</el-button>-->
+<!--                </el-form-item>-->
+<!--            </el-form>-->
+<!--        </el-dialog>-->
     </div>
 </template>
 
 <script>
     import qs from "qs";
+    import {performanceSelect} from "../../api/login";
 
     export default {
         inject:['reload'],
@@ -132,7 +133,8 @@
                 isRouterAlive:true,
                 editagentForm:false,
                 brokerList: [],
-                data_total:'',
+                performanceList: [],
+                data_total: 0,
                 message_select: '',
                 dialog_select: '',
                 use_select: '',
@@ -140,16 +142,10 @@
                 dialog_dial:'',
                 dialog_use:'',
                 anotherCon: '',
-                currentPage:1,
-                pagesize:10,
-                brokerNum: 1,
-                // options0: [{
-                //     value: '0',
-                //     label: '(推广组)'
-                // }, {
-                //     value: '1',
-                //     label: '(客户组)'
-                // }],
+                currentPage: 1,
+                pagesize: 10,
+                perNum: 1,
+
                 editsForm:{
                     agent_id:'',
                     agent_name:'',
@@ -164,17 +160,10 @@
             }
         },
         mounted() {
-
+            this.getAllBrokers();
         },
         created() {
-            this.getAllCount();
-            // var reg = new RegExp('\\d+')
-            // this.currentPage = reg.exec(window.sessionStorage.getItem("currentPage"));
-            // if(this.currentPage == null)
-            // {
-            //     this.currentPage = 1;
-            // }
-            this.getAllBrokers();
+
         },
         watch:{
 
@@ -183,38 +172,11 @@
             //分页用到的一些方法
             handleSizeChange(size) {
                 this.pagesize = size;
-                if(this.message_select.length == 0 && this.dialog_select.length == 0 && this.use_select == 0 && this.anotherCon.length == 0){
-                    this.getAllBrokers()
-                }else{
-                    this.getBrokerList()
-                }
-            },
-            // 编辑框退出
-            quit(){
-                this.editagentForm = false;
+                this.getAllBrokers()
             },
             handleCurrentChange(currentPage) {
                 this.currentPage = currentPage;
-                if(this.message_select.length == 0 && this.dialog_select.length == 0 && this.use_select == 0 && this.anotherCon.length == 0){
-                    this.getAllBrokers()
-                }else{
-                    this.getBrokerList()
-                }
-            },
-            handleEdit(index,row){
-                this.editsForm.agent_id= this.brokerList[index].brokerID
-                this.editsForm.agent_name = this.brokerList[index].brokerName
-                this.editsForm.agent_grade_message= this.brokerList[index].brokerGradeMessage
-                this.editsForm.agent_grade_tel= this.brokerList[index].brokerGradeTel
-                this.editsForm.agent_grade_agree= this.brokerList[index].brokerGradeAgree
-                this.editsForm.agent_grade_login= this.brokerList[index].brokerGradeLogin
-                this.editsForm.agent_type= this.brokerList[index].brokerType
-                // this.editsForm.agent_dial = this.brokerList[index].brokerDialog
-                // this.editsForm.agent_phone = this.brokerList[index].brokerMobile
-                // this.editsForm.agent_send = this.brokerList[index].brokerMessage
-                // this.editsForm.agent_use = this.brokerList[index].brokerUse
-                this.editsForm.agent_remarks = this.brokerList[index].brokerRemark
-                this.editagentForm = true; //编辑信息模态框显示
+                this.getAllBrokers()
             },
             //程序退出
             exit() {
@@ -222,72 +184,16 @@
                 this.$router.replace({path: '/'})
             },
             //修改经纪人
-            brokerEdit(){
-                var url = process.env.VUE_APP_URL+'update';
-                var that = this;
-                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-                this.$axios.post(url, qs.stringify({
-                    // brokerMessage: this.editsForm.agent_send,
-                    // brokerDialog: this.editsForm.agent_dial,
-                    // brokerUse: this.editsForm.agent_use,
-                    brokeName: this.editsForm.agent_name,
-                    brokerGrade: this.editsForm.agent_remarks,
-                    brokerType: this.editsForm.agent_type,
-                    brokerRemark: this.editsForm.agent_remarks,
-                    // brokerMobile: this.editsForm.agent_phone
-                })).then(res => {
-                    this.quit()
-                    var url = process.env.VUE_APP_URL+'selectAll';
-                    var that = this;
-                    //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-                    this.$axios.post(url, qs.stringify({
-                        currentPage: that.currentPage,
-                        pagesize: that.pagesize
-                    })).then(res => {
-                        window.sessionStorage.setItem("currentPage",JSON.stringify(this.currentPage))
-                        if(this.message_select.length == 0 && this.dialog_select.length == 0 && this.use_select == 0 && this.anotherCon.length == 0){
-                            this.getAllBrokers()
-                        }else{
-                            this.getBrokerList()
-                        }
-                    }).catch(error => {
-                        alert(error)
-                    });
-                }).catch(error => {
-                    alert(error)
-                });
-            },
-            getBrokerList() {
-                this.getSelectCount();
-                var url = process.env.VUE_APP_URL+'select';
-                var that = this;
-                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-                this.$axios.post(url, qs.stringify({
-                    message_select: this.message_select,
-                    dialog_select: this.dialog_select,
-                    use_select: this.use_select,
-                    other_con: this.anotherCon,
-                    currentPage: this.currentPage,
-                    pagesize: this.pagesize,
-
-                }
-                )).then(res => {
-                    that.brokerList = res.data.selectBrokers;
-                    console.log(that.brokerList)
-                }).catch(error => {
-                    alert(error)
-                });
-            },
             getAllBrokers() {
-                var url = process.env.VUE_APP_URL+'selectAll';
+                var url = process.env.VUE_APP_URL+'perform/getAll';
                 var that = this;
                 //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
                 this.$axios.post(url, qs.stringify({
                     currentPage: this.currentPage,
-                    pagesize: this.pagesize
+                    pageSize: this.pagesize
                 })).then(res => {
-                    that.brokerList = res.data.allBrokers;
-
+                    that.performanceList = res.data.performance;
+                    that.data_total = res.data.count;
                 }).catch(error => {
                     alert(error)
                 });
@@ -300,32 +206,6 @@
             //         this.getBrokerList()
             //     }
             // },
-            getAllCount() {
-                var url = process.env.VUE_APP_URL+'selectCountById';
-                var that = this;
-                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-                this.$axios.post(url, qs.stringify({
-                })).then(res => {
-                    that.data_total = res.data.count;
-                }).catch(error => {
-                    alert(error)
-                });
-            },
-            getSelectCount(){
-                var url = process.env.VUE_APP_URL+'selectCount';
-                var that = this;
-                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-                this.$axios.post(url, qs.stringify({
-                    message_select: this.message_select,
-                    dialog_select: this.dialog_select,
-                    use_select: this.use_select,
-                    other_con: this.anotherCon
-                })).then(res => {
-                    that.data_total = res.data.count
-                }).catch(error => {
-                    alert(error)
-                });
-            }
         }
     }
 </script>
